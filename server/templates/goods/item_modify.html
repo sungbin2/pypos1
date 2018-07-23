@@ -1,0 +1,681 @@
+{% extends "layout.html" %}
+{% block body %}
+<HTML><HEAD><META content="IE=5.0000" http-equiv="X-UA-Compatible">
+<TITLE></TITLE></HEAD>
+<BODY><LINK rel=stylesheet type=text/css href="/common/css/bok.css">
+<SCRIPT src="/common/js/common.js"></SCRIPT>
+
+<SCRIPT src="/common/js/udfMainFrm.js?ver=20180418"></SCRIPT>
+
+<SCRIPT src="/common/js/IBSheetInfo.js"></SCRIPT>
+
+<SCRIPT src="/common/js/IBSheetConfig.js"></SCRIPT>
+
+<SCRIPT src="/common/js/showitem.js"></SCRIPT>
+<!-- <script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script> -->
+<SCRIPT language=javascript> if(top.MainFrm) { set_url('/master/product_info/info_jump010.jsp'); }</SCRIPT>
+
+<SCRIPT language=javascript>
+function fnSessionCheck()
+{
+    if(top.SessionForm
+    && top.SessionForm.user_id)
+    {
+        if(top.SessionForm.user_id.value != "s92694")
+        {
+            alert("같은 세션으로 다른 사용자로 로그인 하였습니다.\n다시 로그인 하시기 바랍니다.");
+            top.close();
+        }
+    }
+    else
+    if(opener
+    && opener.closed == false
+    && opener.top.SessionForm
+    && opener.top.SessionForm.user_id)
+    {
+        if(opener.top.SessionForm.user_id.value != "s92694")
+        {
+            alert("같은 세션으로 다른 사용자로 로그인 하였습니다.\n다시 로그인 하시기 바랍니다.");
+            top.close();
+            opener.top.close();
+        }
+    }
+    else
+    if(opener
+    && opener.closed == false
+    && opener.opener
+    && opener.opener.closed == false
+    && opener.opener.top.SessionForm
+    && opener.opener.top.SessionForm.user_id)
+    {
+        if(opener.opener.top.SessionForm.user_id.value != "s92694")
+        {
+            alert("같은 세션으로 다른 사용자로 로그인 하였습니다.\n다시 로그인 하시기 바랍니다.");
+            top.close();
+            opener.top.close();
+            opener.opener.top.close();
+        }
+    }
+}
+setTimeout("fnSessionCheck()",0);
+
+if(window.name == 'MainFrm' && parent.SessionForm.pass_ch_option.value == '1')
+{
+    showModalDialog('/master/emp/passwd010.jsp?popup_fg=Y'
+                   ,self
+                   ,'dialogWidth:400px;dialogHeight:340px;dialogTop:100px;dialogLeft:100px;status:no;resizable:yes;scroll:no;');
+}
+</SCRIPT>
+
+<SCRIPT language=javascript>
+var pgm_type_fg     = "1";
+var brand_mgr_yn    = "N";
+var salemg_mgr_yn   = "N";
+var ogn_fg          = "S";
+var hd_shop_cd      = "0000";
+var ENV_112         = "Y";
+var ENV_539         = "N";
+var ENV_183         = "P";
+
+function InitTab()
+{
+    var sRootUrl = "http://" + location.hostname + ":" + location.port;
+    var i = 1;
+    myTab1.ImageUrl (0)= sRootUrl+'/image/tab_img/tab_icon.gif';
+    if(  ogn_fg == "H" || hd_shop_cd == "0000"
+      || (hd_shop_cd != "0000" && ENV_112 == "Y"))
+       {
+                                                            myTab1.InsertTab(i++, '상품정보', 0);
+       }
+                                                            myTab1.InsertTab(i++, '안전재고', 0);
+    if(pgm_type_fg == "1")                                  myTab1.InsertTab(i++, '추가금액', 0);
+    if(ENV_539 == "Y")                                      myTab1.InsertTab(i++, '층전용출력', 0);
+    if(pgm_type_fg != "2")                                  myTab1.InsertTab(i++, '포인트', 0);
+    if(pgm_type_fg != "2")                                  myTab1.InsertTab(i++, '상품명', 0);
+}
+
+/////////////////////////////////////// window.onload ///////////////////////////////////////
+window.onload = function() { setTimeout("onloadFunctions()",0); }; function onloadFunctions()
+{
+    InitTab();
+    myTab1.SelectedIndex = 0;
+    fnResize();
+}
+/////////////////////////////////////// window.onresize ///////////////////////////////////////
+window.onresize = function()
+{
+    fnResize();
+}
+/////////////////////////////////////// fnResize ///////////////////////////////////////
+function fnResize()
+{
+    setObjHeight('TableNm2', 5);
+}
+</SCRIPT>
+
+<SCRIPT for=myTab1 type=text/javascript event=onChange(TabIndex)>
+var i = 0;
+    if(  ogn_fg == "H"|| hd_shop_cd == "0000" || (hd_shop_cd != "0000" && ENV_112 == "Y"))
+    {
+                            if(TabIndex == i) { iframe1.location.replace("product010.jsp");       } i++;
+    }
+                            if(TabIndex == i) { iframe1.location.replace("safe_stock010.jsp");    } i++;
+    if(pgm_type_fg == "1"){ if(TabIndex == i) { iframe1.location.replace("delivery010.jsp");      } i++; }
+    if(ENV_539 == "Y")    { if(TabIndex == i) { iframe1.location.replace("print010.jsp");         } i++; }
+    if(pgm_type_fg != "2"){ if(TabIndex == i) { iframe1.location.replace("point010.jsp");         } i++; }
+    if(pgm_type_fg != "2"){ if(TabIndex == i) { iframe1.location.replace("prod_update010.jsp");   } i++; }
+</SCRIPT>
+
+<SCRIPT>if(parent && parent.HistoryFrm && parent.HistoryFrm.MainFrmPage && parent.HistoryFrm.MainFrmPage.pgm_nm && parent.HistoryFrm.MainFrmPage.pgm_nm.value != '') {document.write("<table width='100%' border='0' cellpadding='0' cellspacing='0' background='/image/title_bg.gif'><tr height='30'><td width='10'></td><td>  <table border='0' cellpadding='0' cellspacing='0'>  <tr>  <td><img src='/image/title_icon.gif'></td>  <td width='10'></td>  <td>    <table border='0' cellpadding='0' cellspacing='0'><tr><td height='3'></td></tr><tr>    <td><font color='#FFFFFF' style='font-size:14px;'><b>"+parent.HistoryFrm.MainFrmPage.pgm_nm.value+"</b></font></td>    </tr></table>  </td>  <td width='40'></td>  <td><span id='span_mymenu'></span></td>  <td width='10'></td>  <td><img src='/image/icon01/btn_column.gif'  onclick='parent.set_menu_item();' style='cursor:hand;'></td>  </tr>  </table></td><td align='right'><font color='#FFFFFF'>"+parent.HistoryFrm.MainFrmPage.pgm_lcls_nm.value+((parent.HistoryFrm.MainFrmPage.pgm_mcls_nm.value == '') ? '' : ' &gt; '+parent.HistoryFrm.MainFrmPage.pgm_mcls_nm.value)+' &gt; '+parent.HistoryFrm.MainFrmPage.pgm_nm.value+"</font></td><td width='10'></td></tr></table>");fnSetPgmId(parent.HistoryFrm.MainFrmPage.pgm_id.value);document.getElementById('span_mymenu').innerHTML = parent.HistoryFrm.getMyMenuStr(parent.HistoryFrm.MainFrmPage.pgm_id.value);}</SCRIPT>
+
+<TABLE cellSpacing=0 cellPadding=0 width="100%" background=/image/title_bg.gif border=0>
+<TBODY>
+<TR height=30>
+<TD width=10></TD>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD><IMG src="/image/title_icon.gif"></TD>
+<TD width=10></TD>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD height=3></TD></TR>
+<TR>
+<TD><FONT style="FONT-SIZE: 14px" color=#ffffff><B>상품정보일괄변경</B></FONT></TD></TR></TBODY></TABLE></TD>
+<TD width=40></TD>
+<TD><SPAN id=span_mymenu><IMG onclick="top.HistoryFrm.fnEditMyMenu('Y','000461')" style="CURSOR: hand" src="https://asp.netusys.com/image/icon01/mymenu_plus.gif"></SPAN></TD>
+<TD width=10></TD>
+<TD><IMG onclick=parent.set_menu_item(); style="CURSOR: hand" src="/image/icon01/btn_column.gif"></TD></TR></TBODY></TABLE></TD>
+<TD align=right><FONT color=#ffffff>기초관리 &gt; 상품관리 &gt; 상품정보일괄변경</FONT></TD>
+<TD width=10></TD></TR></TBODY></TABLE>
+<TABLE height=6 cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD></TD></TR></TBODY></TABLE>
+<TABLE id=TableNm2 style="HEIGHT: 546px" cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR vAlign=bottom>
+<TD height=26 width="100%">
+
+<HTML><HEAD><META content="IE=5.0000" http-equiv="X-UA-Compatible">
+<TITLE></TITLE></HEAD>
+<BODY><LINK rel=stylesheet type=text/css href="/common/css/bok.css">
+<SCRIPT src="/common/js/common.js"></SCRIPT>
+
+<SCRIPT src="/common/js/udfMainFrm.js?ver=20180418"></SCRIPT>
+
+<SCRIPT src="/common/js/IBSheetInfo.js"></SCRIPT>
+
+<SCRIPT src="/common/js/IBSheetConfig.js"></SCRIPT>
+
+<SCRIPT src="/common/js/showitem.js"></SCRIPT>
+<!-- <script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script> -->
+<SCRIPT language=javascript> if(top.MainFrm) { set_url('/master/product_info/product010.jsp'); }</SCRIPT>
+
+<SCRIPT language=javascript>
+function fnSessionCheck()
+{
+    if(top.SessionForm
+    && top.SessionForm.user_id)
+    {
+        if(top.SessionForm.user_id.value != "s92694")
+        {
+            alert("같은 세션으로 다른 사용자로 로그인 하였습니다.\n다시 로그인 하시기 바랍니다.");
+            top.close();
+        }
+    }
+    else
+    if(opener
+    && opener.closed == false
+    && opener.top.SessionForm
+    && opener.top.SessionForm.user_id)
+    {
+        if(opener.top.SessionForm.user_id.value != "s92694")
+        {
+            alert("같은 세션으로 다른 사용자로 로그인 하였습니다.\n다시 로그인 하시기 바랍니다.");
+            top.close();
+            opener.top.close();
+        }
+    }
+    else
+    if(opener
+    && opener.closed == false
+    && opener.opener
+    && opener.opener.closed == false
+    && opener.opener.top.SessionForm
+    && opener.opener.top.SessionForm.user_id)
+    {
+        if(opener.opener.top.SessionForm.user_id.value != "s92694")
+        {
+            alert("같은 세션으로 다른 사용자로 로그인 하였습니다.\n다시 로그인 하시기 바랍니다.");
+            top.close();
+            opener.top.close();
+            opener.opener.top.close();
+        }
+    }
+}
+setTimeout("fnSessionCheck()",0);
+
+if(window.name == 'MainFrm' && parent.SessionForm.pass_ch_option.value == '1')
+{
+    showModalDialog('/master/emp/passwd010.jsp?popup_fg=Y'
+                   ,self
+                   ,'dialogWidth:400px;dialogHeight:340px;dialogTop:100px;dialogLeft:100px;status:no;resizable:yes;scroll:no;');
+}
+</SCRIPT>
+
+<SCRIPT src="/common/js/udfPage.js"></SCRIPT>
+
+<SCRIPT src="/common/js/select_box.js"></SCRIPT>
+
+<FORM name=formAJAX action=/common/jsp/select_qry.jsp><INPUT id=select_source type=hidden value=/master/product_info/product010.jsp name=select_source> <INPUT id=select_idx size=100 type=hidden value=3 name=select_idx> <INPUT id=select_objidx size=100 type=hidden value=0 name=select_objidx> <INPUT id=select_name size=100 type=hidden value=ORG_PLACE_CD name=select_name> <INPUT id=select_value size=100 type=hidden name=select_value> <INPUT id=select_option size=100 type=hidden value=# name=select_option> <INPUT id=select_query size=100 type=hidden value="SP_SCD_CODEM_T_S01♪C1♪'S92694⊥003'" name=select_query> <INPUT id=select_title size=100 type=hidden name=select_title> <INPUT id=select_change size=100 type=hidden name=select_change> <INPUT id=select_etc size=100 type=hidden name=select_etc> </FORM>
+<SCRIPT language=javascript>
+function init_sheet()
+{
+    mySheet1 = fnGetObjectIdName("mySheet1");
+    with(mySheet1)
+    {
+        //SheetWidth = document.body.clientWidth - 25;
+        InitHostInfo(location.hostname, location.port, "");
+        MergeSheet = msHeaderOnly;
+        Editable = true;
+        InitRowInfo( 1, 1, 1);
+        InitColumnInfo(20, 8, 0, true);
+        InitHeadRow(0,"상태||상품코드|상품명|대분류|중분류|소분류|브랜드|판매상품\n여부|원산지|재고관리\n여부|품절여부|과세여부|일반상품\n할인여부|서비스상품\n할인여부|회원상품\n할인여부|모바일주문\n구분|사용여부|주문상품\n구분|봉사료\n부과여부");
+        //ObjId.InitDataProperty( DataRow, DataCol, [DataType], [Width], [DataAlign], [ColMerge], [SaveName], [KeyField]
+        //                      , [CalcuLogic], [DataFormat],[PointCount], [UpdateEdit], [InsertEdit], [EditLen], [FullInput]
+        //                      , [SortEnable],[ToolTip], [AllCheck], [SaveStatus], [FormatFix])
+        var i = 0;
+        InitDataProperty(0,i++, dtHiddenStatus              , 0, daCenter   , false, "sStatus");
+        InitDataProperty(0,i++, dtCheckBox                  , 0, daCenter   , false ,"sCheckBox");
+
+          //일반 외식
+            InitDataProperty(0,i++, dtData              , 0, daCenter , true  ,"PROD_CD"      , false, "", dfEngKey     , 0, false, false );
+            InitDataProperty(0,i++, dtData              , 0, daLeft   , false ,"PROD_NM"      , false, "", dfEngKey     , 0, false, false );
+            InitDataProperty(0,i++, dtData              , 0, daLeft   , true  ,"LCLS_NM"      , false, "", dfEngKey     , 0, false, false );
+            InitDataProperty(0,i++, dtHidden    , 0, daLeft   , true  ,"MCLS_NM"      , false, "", dfEngKey     , 0, false, false );
+            InitDataProperty(0,i++, dtHidden    , 0, daLeft   , true  ,"SCLS_NM"      , false, "", dfEngKey     , 0, false, false );
+            InitDataProperty(0,i++, dtData              , 0, daLeft   , false ,"BRAND_NM"     , false, "", dfEngKey     , 0, false, false );
+            InitDataProperty(0,i++, dtCombo             , 0, daCenter , false ,"SALE_PROD_YN" , false, "", dfEngKey     , 0, true , false);
+            InitDataProperty(0,i++, dtCombo             , 0, daCenter , false, "ORG_PLACE_CD" , false, "", dfEngKey     , 0, true , false);
+            InitDataProperty(0,i++, dtCombo             , 0, daCenter , false ,"STOCK_MGR_YN" , false, "", dfEngKey     , 0, true , false );
+            InitDataProperty(0,i++, dtCombo             , 0, daCenter , false ,"STOCK_OUT_YN" , false, "", dfEngKey     , 0, true , false );
+            InitDataProperty(0,i++, dtCombo             , 0, daCenter , false ,"TAX_YN"       , false, "", dfEngKey     , 0, true , false );
+            InitDataProperty(0,i++, dtHidden , 0, daCenter , false ,"DC_RULE_FG_01"   , false, "", dfEngKey     , 0, true , false );
+            InitDataProperty(0,i++, dtHidden , 0, daCenter , false ,"DC_RULE_FG_02"   , false, "", dfEngKey     , 0, true , false );
+            InitDataProperty(0,i++, dtHidden , 0, daCenter , false ,"DC_RULE_FG_03"   , false, "", dfEngKey     , 0, true , false );
+            InitDataProperty(0,i++, dtCombo             , 0, daCenter , false, "MOBILE_ORDER_FG" , false, "", dfEngKey     , 0, true , false);
+            InitDataCombo(0,"STOCK_MGR_YN","Yes|No","Y|N","","")
+            InitDataCombo(0,"STOCK_OUT_YN","Yes|No|분배허용","Y|N|H","","")
+            InitDataCombo(0,"TAX_YN","Yes|No","Y|N","","")
+            InitDataCombo(0,"DC_RULE_FG_01","DC불허|DC허용","0|1","","")
+            InitDataCombo(0,"DC_RULE_FG_02","DC불허|DC허용","0|1","","")
+            InitDataCombo(0,"DC_RULE_FG_03","DC불허|DC허용","0|1","","")
+            InitDataCombo(0,"MOBILE_ORDER_FG","일반/POS|MOBILE 전용|공통","0|1|2","","")
+
+
+        InitDataProperty(0,i++, dtCombo             , 0, daCenter , false, "USE_YN"          , false, "", dfEngKey     , 0, true , false);
+
+        InitDataCombo(0,"SALE_PROD_YN","Yes|No","Y|N","","")
+        InitDataCombo(0,"ORG_PLACE_CD","","","","")
+        InitDataCombo(0,"USE_YN","Yes|No","Y|N","","")
+
+
+
+        InitDataProperty(0,i++, dtCombo , 0, daCenter   , false ,"ORD_PROD_YN", false, "", dfEngKey     , 0, true , false );
+
+        InitDataCombo(0,"ORD_PROD_YN","사입상품|주문불가","S|N","","")
+
+
+        InitDataProperty(0,i++, dtCombo                     , 0, daCenter   , false ,"TIP_MENU_YN"     , false, "", dfEngKey     , 0, true , false );
+        InitDataCombo(0,"TIP_MENU_YN","Yes|No","Y|N","","")
+
+
+        HeadRowHeight = 35;
+        Visible = true;
+    }
+
+}
+function doAction(str, idx)
+{
+    document.form1.S_METHOD.value = str;
+    document.form1.SHEETSEQ.value = idx;
+    sheet_obj = fnGetObjectIdName("mySheet"+idx);
+
+    switch(str)
+    {
+        case "search":
+            sheet_obj.ShowDebugMsg = false;
+            if(!jsSaveName(form1, sheet_obj)) { return false; }
+            var param = FormQueryStringEnc(document.form1, sheet_obj);
+            sheet_obj.DoSearch4Post("ddd.sheetAction",param);
+
+            //조회 끝나고 나서 페이지 인덱스를 생성
+            var sTD = MakePageButton("document.form1.page_no"        // 페이징 인덱스를 관리할 OBJ
+                                    ,"10"                            // 페이지 목록 나열 갯수
+                                    ,document.form1.page_size.value  // 한 페이지당 레코드 겟수
+                                    ,document.form1.page_no.value    // 현재 페이지의 인덱스
+                                    ,sheet_obj.EtcData("total_rows") // 총레코드갯수
+                                    );
+            fnGetObjectIdName('PAGEBUTTON').innerHTML = sTD;
+            fn_ResizeColWidth(mySheet1,[0, 20, 60, 180, 80, 0, 0, 80, 80, 60, 80, 60, 60, 0, 0, 0, 80, 60, 80, 60]);
+            break;
+
+        case "save":
+            var param = FormQueryStringEnc(document.form1, sheet_obj);
+            sheet_obj.DoSave("ddd.sheetAction",param,-1,false);
+            if(sheet_obj.EtcData("retMsg") == "0000")
+            {
+                sheet_obj.CheckAll(1) = 0;
+                doAction('search', 1);
+            }
+            break;
+
+    }
+    if(sheet_obj.EtcData("retMsg") && sheet_obj.EtcData("retMsg") != '' && sheet_obj.EtcData("retMsg") != '0000')
+    {
+        ErrorShow(sheet_obj.EtcData("retMsg")+'╋'+'https://asp.netusys.com/master/product_info/product010.jsp', "popup", "");
+    }
+}
+
+
+/////////////////////////////////////// window.onload ///////////////////////////////////////
+window.onload = function() { setTimeout("onloadFunctions()",0); }; function onloadFunctions()
+{
+    init_sheet(); set_item();
+    fnResize();
+   // doAction('search',1);
+}
+/////////////////////////////////////// window.onresize ///////////////////////////////////////
+window.onresize = function()
+{
+    fnResize();
+}
+/////////////////////////////////////// fnResize ///////////////////////////////////////
+function fnResize()
+{
+    setObjHeight('mySheet1', 40);
+    fn_ResizeColWidth(mySheet1,[0, 20, 60, 180, 80, 0, 0, 80, 80, 60, 80, 60, 60, 0, 0, 0, 80, 60, 80, 60]);
+}
+
+function fnSet(str)
+{
+    var setValue = fnGetObjectIdName(str).value;
+    sheet_obj = fnGetObjectIdName("mySheet1");
+    var sRow = sheet_obj.FindCheckedRow("sCheckBox");
+    var arrRow = sRow.split("|");
+    sheet_draw(sheet_obj,'false');
+    for(var i = 0; i<arrRow.length-1; i++)
+    {
+        if(str=="ORG_PLACE_CD")
+        {
+            var setIndex = fnGetObjectIdName(str).selectedIndex;
+
+            if(setIndex>0)
+            {
+                sheet_obj.CellValue(arrRow[i],"COM_CD_NM") = fnGetObjectIdName(str).options[setIndex].text;
+                sheet_obj.CellValue(arrRow[i], str) = setValue;
+            }
+        }
+        else
+        {
+            sheet_obj.CellValue(arrRow[i], str) = setValue;
+        }
+
+    }
+    sheet_draw(sheet_obj,'true');
+}
+</SCRIPT>
+
+<FORM name=form1><!-- IBFrame 을 위한 변수 선언 (필수)--><INPUT type=hidden value=master.product_info.product010 name=S_CONTROLLER> <INPUT type=hidden name=S_METHOD> <INPUT type=hidden name=S_SAVENAME> <!-- IBFrame 을 위한 변수 선언 (선택)--><INPUT type=hidden name=sSelect> <INPUT type=hidden name=S_FORWARD> <INPUT type=hidden name=SHEETSEQ> <INPUT type=hidden value=1 name=page_no>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" bgColor=#e9e9e9 border=0>
+<TBODY>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=27>
+<TD width=10></TD>
+<TD><!-- 조회조건 시작 -->
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR height=26>
+<TD><IMG src="/image/s_icon.gif"> 분류조회
+<DIV style="DISPLAY: none"><INPUT type=hidden name=LCLS_CD><INPUT type=hidden name=MCLS_CD><INPUT type=hidden name=SCLS_CD><INPUT type=hidden name=SIZE_CLS_CD></DIV><INPUT onclick="prod_cls_tree_win('0','S','S92694')" id=cls_text class=read1h style="CURSOR: hand" readOnly size=30 value=전체 name=cls_text>
+<DIV id=span_cls style="BORDER-TOP: 0px; BORDER-RIGHT: 0px; BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; Z-INDEX: 99; DISPLAY: none"></DIV></TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> 브랜드
+<SCRIPT>
+select_name[0] = new Array();
+select_value[0] = new Array();
+select_option[0] = new Array();
+select_query[0] = new Array();
+select_title[0] = new Array();
+select_change[0] = new Array();
+select_etc[0] = new Array();
+</SCRIPT>
+ <SPAN id=divAjax_0_BrandCD style="OVERFLOW-Y: scroll"><SELECT onchange="ajax_nextload(0,0); " id=SelectObj_0_0 name=BrandCD> <OPTION selected value="">-전체-</OPTION> <OPTION value=0>기본</OPTION></SELECT></SPAN>
+<SCRIPT>
+select_name[0][0] = "BrandCD";
+select_title[0][0] = "";
+select_value[0][0] = "";
+select_option[0][0] = "%";
+select_query[0][0] = "SP_SCD_BRAND_T_S01♪C1♪S92694";
+select_change[0][0] = "";
+select_etc[0][0] = "";
+</SCRIPT>
+
+<SCRIPT>
+select_step2(0,0);
+</SCRIPT>
+</TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> 검색줄수 <INPUT class=input1hr onkeydown="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','1');fnResize(); }" size=5 value=500 name=page_size></TD>
+<TD width=10></TD>
+<TD>
+<TABLE onclick="doAction('search',1)" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_black_l_bg.gif"></TD>
+<TD background=/image/btn_black_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>조회</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_black_r_bg.gif"></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR height=26>
+<TD><IMG src="/image/s_icon.gif"> 상품코드 <INPUT class="input1hc imeEng" onkeydown="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','1'); }" size=12 name=s_PROD_CD></TD>
+<TD width=5></TD>
+<TD><IMG src="/image/s_icon.gif"> 상품명 <INPUT class="input1h imeHan" onkeydown="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','1'); }" size=16 name=s_PROD_NM></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR height=26>
+<TD><IMG src="/image/s_icon.gif"> 거래처
+<SCRIPT>
+select_name[1] = new Array();
+select_value[1] = new Array();
+select_option[1] = new Array();
+select_query[1] = new Array();
+select_title[1] = new Array();
+select_change[1] = new Array();
+select_etc[1] = new Array();
+</SCRIPT>
+ <SPAN id=divAjax_1_s_VENDOR_CD style="OVERFLOW-Y: scroll"><SELECT onchange="ajax_nextload(1,0); " id=SelectObj_1_0 name=s_VENDOR_CD> <OPTION selected value="">-전체-</OPTION> <OPTION value=0001>[매입]테스트거래처</OPTION></SELECT></SPAN>
+<SCRIPT>
+select_name[1][0] = "s_VENDOR_CD";
+select_title[1][0] = "";
+select_value[1][0] = "";
+select_option[1][0] = "%";
+select_query[1][0] = "SP_SCD_VENDR_T_S01♪C3♪S92694";
+select_change[1][0] = "";
+select_etc[1][0] = "";
+</SCRIPT>
+
+<SCRIPT>
+select_step2(1,0);
+</SCRIPT>
+</TD>
+<TD width=5></TD>
+<TD><IMG src="/image/s_icon.gif"> 판매상품여부 <SELECT name=s_SALE_PROD_YN> <OPTION selected value="">-전체-</OPTION> <OPTION value=Y>Yes</OPTION> <OPTION value=N>No</OPTION></SELECT></TD>
+<TD width=5></TD>
+<TD><IMG src="/image/s_icon.gif"> 원산지
+<SCRIPT>
+select_name[2] = new Array();
+select_value[2] = new Array();
+select_option[2] = new Array();
+select_query[2] = new Array();
+select_title[2] = new Array();
+select_change[2] = new Array();
+select_etc[2] = new Array();
+</SCRIPT>
+ <SPAN id=divAjax_2_s_ORG_PLACE_CD style="OVERFLOW-Y: scroll"><SELECT onchange="ajax_nextload(2,0); " id=SelectObj_2_0 name=s_ORG_PLACE_CD> <OPTION selected value="">-전체-</OPTION></SELECT></SPAN>
+<SCRIPT>
+select_name[2][0] = "s_ORG_PLACE_CD";
+select_title[2][0] = "";
+select_value[2][0] = "";
+select_option[2][0] = "%";
+select_query[2][0] = "SP_SCD_CODEM_T_S01♪C1♪'S92694⊥003'";
+select_change[2][0] = "";
+select_etc[2][0] = "";
+</SCRIPT>
+
+<SCRIPT>
+select_step2(2,0);
+</SCRIPT>
+</TD>
+<TD width=5></TD>
+<TD><IMG src="/image/s_icon.gif"> 재고관리여부 <SELECT name=s_STOCK_MGR_YN> <OPTION selected value="">-전체-</OPTION> <OPTION value=Y>Yes</OPTION> <OPTION value=N>No</OPTION></SELECT></TD>
+<TD width=5></TD>
+<TD><IMG src="/image/s_icon.gif"> 품절여부 <SELECT name=s_STOCK_OUT_YN> <OPTION selected value="">-전체-</OPTION> <OPTION value=Y>Yes</OPTION> <OPTION value=N>No</OPTION> <OPTION value=H>분배허용</OPTION></SELECT></TD>
+<TD width=5></TD>
+<TD><IMG src="/image/s_icon.gif"> 과세여부 <SELECT name=s_TAX_YN> <OPTION selected value="">-전체-</OPTION> <OPTION value=Y>Yes</OPTION> <OPTION value=N>No</OPTION></SELECT></TD></TR></TBODY></TABLE><INPUT type=hidden name=s_DC_RULE_FG_01> <INPUT type=hidden name=s_DC_RULE_FG_02> <INPUT type=hidden name=s_DC_RULE_FG_03>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR height=26>
+<TD><IMG src="/image/s_icon.gif"> 사용여부 <SELECT name=s_USE_YN> <OPTION selected value="">-전체-</OPTION> <OPTION value=Y>Yes</OPTION> <OPTION value=N>No</OPTION></SELECT></TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> 주문상품구분 <SELECT name=s_ORD_PROD_YN> <OPTION selected value="">-전체-</OPTION> <OPTION value=S>사입상품</OPTION> <OPTION value=N>주문불가</OPTION></SELECT></TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> 봉사료부과여부 <SELECT name=s_TIP_MENU_YN> <OPTION selected value="">-전체-</OPTION> <OPTION value=Y>Yes</OPTION> <OPTION value=N>No</OPTION></SELECT></TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> 모바일주문구분 <SELECT name=s_MOBILE_ORDER_FG> <OPTION selected value="">-전체-</OPTION> <OPTION value=0>일반/POS</OPTION> <OPTION value=1>MOBILE</OPTION> <OPTION value=2>공통</OPTION></SELECT></TD></TR></TBODY></TABLE></TD></TD>
+<TD width=10></TD></TR>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=1 bgColor=#d6d6d6>
+<TD colSpan=3></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" bgColor=#e9e9e9 border=0>
+<TBODY>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=27>
+<TD width=10></TD>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR height=26>
+<TD><IMG src="/image/s_icon.gif"> 판매상품여부 <SELECT name=SALE_PROD_YN> <OPTION selected value=Y>Yes</OPTION> <OPTION value=N>No</OPTION></SELECT></TD>
+<TD>
+<TABLE onclick="fnSet('SALE_PROD_YN')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>적용</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> 원산지
+<SCRIPT>
+select_name[3] = new Array();
+select_value[3] = new Array();
+select_option[3] = new Array();
+select_query[3] = new Array();
+select_title[3] = new Array();
+select_change[3] = new Array();
+select_etc[3] = new Array();
+</SCRIPT>
+ <SPAN id=divAjax_3_ORG_PLACE_CD style="OVERFLOW-Y: scroll"><SELECT onchange="ajax_nextload(3,0); " id=SelectObj_3_0 name=ORG_PLACE_CD> <OPTION selected value="">-선택-</OPTION></SELECT></SPAN>
+<SCRIPT>
+select_name[3][0] = "ORG_PLACE_CD";
+select_title[3][0] = "";
+select_value[3][0] = "";
+select_option[3][0] = "#";
+select_query[3][0] = "SP_SCD_CODEM_T_S01♪C1♪'S92694⊥003'";
+select_change[3][0] = "";
+select_etc[3][0] = "";
+</SCRIPT>
+
+<SCRIPT>
+select_step2(3,0);
+</SCRIPT>
+</TD>
+<TD>
+<TABLE onclick="fnSet('ORG_PLACE_CD')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>적용</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> 재고관리여부 <SELECT name=STOCK_MGR_YN> <OPTION selected value=Y>Yes</OPTION> <OPTION value=N>No</OPTION></SELECT></TD>
+<TD>
+<TABLE onclick="fnSet('STOCK_MGR_YN')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>적용</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> 품절여부 <SELECT name=STOCK_OUT_YN> <OPTION value=Y>Yes</OPTION> <OPTION selected value=N>No</OPTION> <OPTION value=H>분배허용</OPTION></SELECT></TD>
+<TD>
+<TABLE onclick="fnSet('STOCK_OUT_YN')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>적용</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> 과세적용여부 <SELECT name=TAX_YN> <OPTION selected value=Y>Yes</OPTION> <OPTION value=N>No</OPTION></SELECT></TD>
+<TD>
+<TABLE onclick="fnSet('TAX_YN')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>적용</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD>
+<TD vAlign=top align=right>
+<TABLE onclick="doAction('save',1)" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_black_l_bg.gif"></TD>
+<TD background=/image/btn_black_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>저장</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_black_r_bg.gif"></TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD colSpan=2>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR height=26>
+<TD><IMG src="/image/s_icon.gif"> 사용여부 <SELECT name=USE_YN> <OPTION selected value=Y>Yes</OPTION> <OPTION value=N>No</OPTION></SELECT></TD>
+<TD>
+<TABLE onclick="fnSet('USE_YN')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>적용</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=1></TD>
+<TD><IMG src="/image/s_icon.gif"> 주문상품구분 <SELECT name=ORD_PROD_YN> <OPTION selected value=S>사입상품</OPTION> <OPTION value=N>주문불가</OPTION></SELECT></TD>
+<TD>
+<TABLE onclick="fnSet('ORD_PROD_YN')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>적용</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=1></TD>
+<TD><IMG src="/image/s_icon.gif"> 봉사료부과여부 <SELECT name=TIP_MENU_YN> <OPTION value=Y>Yes</OPTION> <OPTION selected value=N>No</OPTION></SELECT></TD>
+<TD>
+<TABLE onclick="fnSet('TIP_MENU_YN')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>적용</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=1></TD>
+<TD><IMG src="/image/s_icon.gif"> 모바일주문구분 <SELECT name=MOBILE_ORDER_FG> <OPTION selected value=0>일반/POS</OPTION> <OPTION value=1>MOBILE</OPTION> <OPTION value=2>공통</OPTION></SELECT></TD>
+<TD>
+<TABLE onclick="fnSet('MOBILE_ORDER_FG')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>적용</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><!-- 조회조건 끝 --></TD></TD>
+<TD width=10></TD></TR>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=1 bgColor=#d6d6d6>
+<TD colSpan=3></TD></TR></TBODY></TABLE>
+<TABLE height=6 cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD></TD></TR></TBODY></TABLE>
+<TABLE id=TableNm1 height=30 cellSpacing=1 cellPadding=4 width="100%" bgColor=#aaaaaa border=0 name="TableNm1">
+<TBODY>
+<TR bgColor=#ffffff vAlign=top>
+<TD height="100%" width="100%">
+<SCRIPT>makeIBSheet('mySheet1');</SCRIPT>
+
+<OBJECT id=mySheet1 style="HEIGHT: 296px" name=mySheet1 codeBase="/common/object/IBSheet3.CAB#version=3,4,0,387" classid=CLSID:341FBC5F-2AE4-41B8-BFE5-A03170569A27 width="100%" height="100%"><PARAM NAME="_ExtentX" VALUE="25982"><PARAM NAME="_ExtentY" VALUE="7832"><PARAM NAME="ConfigXml" VALUE="/common/gridstyle/GridConfig.xml"><PARAM NAME="Version" VALUE="3.4.0.387"></OBJECT>
+<SCRIPT>document.getElementById('mySheet1').SetExcelColDialog(0);</SCRIPT>
+</TD></TR></TBODY></TABLE>
+<DIV id=PAGEBUTTON></DIV></FORM></BODY></HTML>
+
+</TD></TR>
+<TR height=2>
+<TD></TD></TR>
+<TR>
+<TD><IFRAME style="HEIGHT: 100%; WIDTH: 100%" marginHeight=0 src="" frameBorder=0 name=iframe1 marginWidth=0 scrolling=no></IFRAME></TD></TR></TBODY></TABLE></BODY></HTML>
+{% endblock %}
+

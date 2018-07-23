@@ -1,0 +1,620 @@
+{% extends "layout.html" %}
+{% block body %}
+<HTML><HEAD><META content="IE=5.0000" http-equiv="X-UA-Compatible">
+<TITLE></TITLE><LINK rel=stylesheet type=text/css href="/common/css/bok.css">
+<SCRIPT src="/common/js/common.js"></SCRIPT>
+
+<SCRIPT src="/common/js/udfMainFrm.js?ver=20180418"></SCRIPT>
+
+<SCRIPT src="/common/js/IBSheetInfo.js"></SCRIPT>
+
+<SCRIPT src="/common/js/IBSheetConfig.js"></SCRIPT>
+
+<SCRIPT src="/common/js/showitem.js"></SCRIPT>
+<!-- <script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script> -->
+<SCRIPT language=javascript> if(top.MainFrm) { set_url('/master/barcode/barcode010.jsp'); }</SCRIPT>
+
+<SCRIPT language=javascript>
+function fnSessionCheck()
+{
+    if(top.SessionForm
+    && top.SessionForm.user_id)
+    {
+        if(top.SessionForm.user_id.value != "s92694")
+        {
+            alert("같은 세션으로 다른 사용자로 로그인 하였습니다.\n다시 로그인 하시기 바랍니다.");
+            top.close();
+        }
+    }
+    else
+    if(opener
+    && opener.closed == false
+    && opener.top.SessionForm
+    && opener.top.SessionForm.user_id)
+    {
+        if(opener.top.SessionForm.user_id.value != "s92694")
+        {
+            alert("같은 세션으로 다른 사용자로 로그인 하였습니다.\n다시 로그인 하시기 바랍니다.");
+            top.close();
+            opener.top.close();
+        }
+    }
+    else
+    if(opener
+    && opener.closed == false
+    && opener.opener
+    && opener.opener.closed == false
+    && opener.opener.top.SessionForm
+    && opener.opener.top.SessionForm.user_id)
+    {
+        if(opener.opener.top.SessionForm.user_id.value != "s92694")
+        {
+            alert("같은 세션으로 다른 사용자로 로그인 하였습니다.\n다시 로그인 하시기 바랍니다.");
+            top.close();
+            opener.top.close();
+            opener.opener.top.close();
+        }
+    }
+}
+setTimeout("fnSessionCheck()",0);
+
+if(window.name == 'MainFrm' && parent.SessionForm.pass_ch_option.value == '1')
+{
+    showModalDialog('/master/emp/passwd010.jsp?popup_fg=Y'
+                   ,self
+                   ,'dialogWidth:400px;dialogHeight:340px;dialogTop:100px;dialogLeft:100px;status:no;resizable:yes;scroll:no;');
+}
+</SCRIPT>
+
+<SCRIPT src="/common/js/select_box.js"></SCRIPT>
+
+<FORM name=formAJAX action=/common/jsp/select_qry.jsp><INPUT id=select_source type=hidden value=/master/barcode/barcode010.jsp name=select_source><INPUT id=select_idx size=100 type=hidden value=0 name=select_idx><INPUT id=select_objidx size=100 type=hidden value=0 name=select_objidx><INPUT id=select_name size=100 type=hidden value=BRAND_CD name=select_name><INPUT id=select_value size=100 type=hidden name=select_value><INPUT id=select_option size=100 type=hidden value=% name=select_option><INPUT id=select_query size=100 type=hidden value=SP_SCD_BRAND_T_S01♪C1♪S92694 name=select_query><INPUT id=select_title size=100 type=hidden name=select_title><INPUT id=select_change size=100 type=hidden name=select_change><INPUT id=select_etc size=100 type=hidden name=select_etc></FORM>
+<SCRIPT src="/common/js/udfPage.js"></SCRIPT>
+</HEAD>
+<BODY>
+<SCRIPT type=text/javascript>
+function init_sheet()
+{
+    mySheet1 = fnGetObjectIdName("mySheet1");
+    with(mySheet1)
+    {
+        //SheetWidth = document.body.clientWidth - 25;
+        InitHostInfo(location.hostname, location.port, "");
+
+        MergeSheet = msHeaderOnly;
+        Editable = true
+        InitRowInfo( 1, 1, 10);
+        InitColumnInfo(7, 0, 0, true);
+        InitHeadRow(0,"상태|No.|상품코드|상품명|삭제|기존바코드|신규바코드");
+        //ObjId.InitDataProperty( DataRow, DataCol, [DataType], [Width], [DataAlign], [ColMerge], [SaveName], [KeyField]
+        //                      , [CalcuLogic], [DataFormat],[PointCount], [UpdateEdit], [InsertEdit], [EditLen], [FullInput]
+        //                      , [SortEnable],[ToolTip], [AllCheck], [SaveStatus], [FormatFix])
+        var i = 0;
+        InitDataProperty(0,i++, dtHiddenStatus, 0, daCenter , false, "sStatus");
+        InitDataProperty(0,i++, dtDataSeq     , 0, daCenter , false, "SEQ"    );
+        InitDataProperty(0,i++, dtData        , 0, daCenter , false, "PROD_CD"    , false, "", dfEngKey , 0, false, false);
+        InitDataProperty(0,i++, dtData        , 0, daLeft   , false, "PROD_NM"    , false, "", dfEngKey , 0, false, false);
+
+        InitDataProperty(0,i++, dtDelCheck    , 0, daCenter , false, "sDelete");
+        InitDataProperty(0,i++, dtData        , 0, daCenter , false, "BAR_CD"     , false, "", dfNone   , 0, false, false);
+        InitDataProperty(0,i++, dtData        , 0, daCenter , false, "NEW_BARCODE", false, "", dfNone   , 0, true , true , 26);
+
+        Visible = true;
+    }
+    mySheet2 = fnGetObjectIdName("mySheet2");
+    with(mySheet2)
+    {
+        //SheetWidth = document.body.clientWidth - 25;
+        InitHostInfo(location.hostname, location.port, "");
+
+        MergeSheet = msHeaderOnly;
+        Editable = true
+        InitRowInfo( 1, 1, 10);
+        InitColumnInfo(3, 0, 0, true);
+        InitHeadRow(0,"상태|상품코드|신규바코드");
+        //ObjId.InitDataProperty( DataRow, DataCol, [DataType], [Width], [DataAlign], [ColMerge], [SaveName], [KeyField]
+        //                      , [CalcuLogic], [DataFormat],[PointCount], [UpdateEdit], [InsertEdit], [EditLen], [FullInput]
+        //                      , [SortEnable],[ToolTip], [AllCheck], [SaveStatus], [FormatFix])
+        var i = 0;
+        InitDataProperty(0,i++, dtHiddenStatus  , 0, daCenter, false, "sStatus");
+        InitDataProperty(0,i++, dtData          , 0, daLeft  , false, "PROD_CD", false, "", dfNone , 0, true , true , 26);
+        InitDataProperty(0,i++, dtData          , 0, daLeft  , false, "BAR_CD" , false, "", dfNone , 0, true , true , 26);
+        Visible = true;
+    }
+}
+function doDataInsert(idx)
+{
+    sheet_obj = fnGetObjectIdName("mySheet1");
+    sheet_obj.DataInsert();
+}
+function doAction(str, idx)
+{
+    fnGetObjectIdName("S_METHOD").value = str;
+    fnGetObjectIdName("SHEETSEQ").value = idx;
+    sheet_obj = fnGetObjectIdName("mySheet"+idx);
+    switch(str)
+    {
+        case "search":
+            if(!valueCheck(document.form1.s_PROD_CD, '상품코드', 'Char'  ,  0,  26)) { return false; }
+            if(!valueCheck(document.form1.s_PROD_NM, '상품명'  , 'Char'  ,  0,  50)) { return false; }
+            if(!jsSaveName(form1, sheet_obj)) { return false; }
+            var param = FormQueryStringEnc(document.form1, sheet_obj);
+            sheet_obj.DoSearch4Post("ddd.sheetAction",param);
+            sheet_obj.ShowDebugMsg = false;
+            if(idx == "1")
+            {
+                fn_ResizeColWidth(sheet_obj,[0, 30, 120, 180, 60, 120, 120]);
+                sheet_obj.ColFontColor('PROD_CD') = sheet_obj.RgbColor(0,0,255);
+                sheet_obj.CheckAll('sDelete') = 0;
+            }
+            //조회 끝나고 나서 페이지 인덱스를 생성
+            if(sheet_obj.EtcData("total_rows") != null && sheet_obj.EtcData("total_rows") != '')
+            {
+                var sTD = MakePageButton("document.form1.page_no"        // 페이징 인덱스를 관리할 OBJ
+                                        ,"10"                            // 페이지 목록 나열 갯수
+                                        ,document.form1.page_size.value  // 한 페이지당 레코드 겟수
+                                        ,document.form1.page_no.value    // 현재 페이지의 인덱스
+                                        ,sheet_obj.EtcData("total_rows") // 총레코드갯수
+                                        );
+                fnGetObjectIdName('PAGEBUTTON').innerHTML = sTD;
+            }
+            break;
+
+        case "save":
+            var param = FormQueryStringEnc(document.form1, sheet_obj);
+            sheet_obj.CheckAll("sDelete") = 0 ;
+
+            if(document.form1.uploadYN.value == 'Y')
+                sheet_obj.DoAllSave("ddd.sheetAction",param);
+            else
+                sheet_obj.DoSave("ddd.sheetAction",param, -1, false);
+
+            if(sheet_obj.EtcData("retMsg") == "0000")
+            {
+                alert("저장이 완료되었습니다.");
+                sheet_obj.CheckAll("sDelete") = 0 ;
+                document.form1.uploadYN.value = 'N';
+                doAction('search', idx);
+            }
+            break;
+
+        case "delete":
+            var param = FormQueryStringEnc(document.form1, sheet_obj);
+            if(sheet_obj.CheckedRows("sDelete") < 1)    return alert('처리할 내역이 없습니다.'), false;
+            else if(confirm('삭제하시겠습니까'))        sheet_obj.DoSave("ddd.sheetAction",param,"sDelete", false);
+            if(sheet_obj.EtcData("retMsg") == "0000")
+            {
+                sheet_obj.CheckAll("sDelete") = 0 ;
+                doAction('search', idx);
+            }
+            break;
+
+        case "save_tmp":
+            var param = FormQueryStringEnc(document.form1, sheet_obj);
+            sheet_obj.DoSave("ddd.sheetAction",param, -1, false);
+            if(sheet_obj.EtcData("retMsg") == "0000")
+            {
+                document.form1.uploadYN.value = 'Y';
+                doAction('search', '1');
+                fnGetObjectIdName('PAGEBUTTON').innerHTML = '';
+            }
+            break;
+
+        case "down2Excel" :
+            /*
+            Down2Excel([Mode], [UseOpenFile], [NewSheet], [Merge],
+                       [SaveAsName],[ReportPageUrl],[HideExcelMsg],
+                       [WriteTreeLevel], [WorkSheetName], [FocusFirstSheet]
+                       [ColumnSkipList],[RowSkipList],[bProtect],[bFormula])
+            */
+            doAction('search', '1');
+            mySheet1.Down2Excel(1, false, false, true, "", "", false, false, "바코드입력", true, "SEQ|BAR_CD");
+            break;
+
+        case "down2Excel2" :
+            var orientation = "Landscape"; // Portrait (세로) | Landscape (가로)
+            var except_cols = ""; // 엑셀에서 제외할 컬럼 (Hidden 컬럼 이외의 컬럼만)
+            var excel_title = "상품바코드 등록"; // 엑셀타이틀
+            var excel_param = "분류 : " + fnGetObjectIdName("cls_text").value; // 검색조건
+            fnUdfDown2Excel(sheet_obj, excel_title, orientation, except_cols, excel_param); // 엑셀출력함수
+            break;
+        break;
+    }
+
+    if(sheet_obj.EtcData("retMsg") && sheet_obj.EtcData("retMsg") != '' && sheet_obj.EtcData("retMsg") != '0000')
+    {
+        ErrorShow(sheet_obj.EtcData("retMsg")+'╋'+'https://asp.netusys.com/master/barcode/barcode010.jsp', "popup", "");
+    }
+}
+
+function fnMakeBarcode()
+{
+    sheet_draw(mySheet1,'false');
+    for(var i = mySheet1.HeaderRows; i < mySheet1.HeaderRows+mySheet1.RowCount; i++)
+    {
+        if(mySheet1.CellValue(i,'BAR_CD') == '')
+        {
+            var code12 = "29" + mySheet1.CellValue(i,'PROD_CD');
+            code12 = code12.Rpad(12,'0');
+            var code13 = fnMakeEanCode(code12);
+            if(code13)  mySheet1.CellValue(i,'NEW_BARCODE') = code13;
+        }
+    }
+    sheet_draw(mySheet1,'true');
+}
+
+function fnMakeUpper()
+{
+    var sheet_obj = fnGetObjectIdName("mySheet1");
+    var tmp = document.form1.sel_UPPER.value;
+    var tmpstr = "";
+    var tmpval = "";
+
+    if (tmp == "0")
+    {
+        tmpstr = "대문자로 ";
+    }
+    else
+    {
+        tmpstr = "소문자로 ";
+    }
+
+    if(sheet_obj.CheckedRows("sDelete") < 1)
+    {
+        return alert('처리할 내역이 없습니다.'), false;
+    }
+    else if(confirm('선택하신 바코드를 '+tmpstr+ '일괄적용 하시겠습니까?'))
+    {
+        document.form1.uploadYN.value = 'Y';
+        sheet_draw(sheet_obj,'false');
+        for(var i = sheet_obj.HeaderRows; i < sheet_obj.HeaderRows+sheet_obj.RowCount; i++)
+        {
+            if (sheet_obj.CellValue(i,'sStatus') == 'D')
+            {
+                if(sheet_obj.CellValue(i,'BAR_CD') != '')
+                {
+                    tmpval =  sheet_obj.CellValue(i,'BAR_CD');
+                    if (tmp == "0")
+                    {
+                       sheet_obj.CellValue(i,'NEW_BARCODE') = tmpval.toUpperCase();
+                    }
+                    else
+                    {
+                       sheet_obj.CellValue(i,'NEW_BARCODE') = tmpval.toLowerCase();
+                    }
+                }
+                else
+                {
+                    sheet_obj.CellValue(i,'NEW_BARCODE') = "";
+                }
+            }
+        }
+        sheet_draw(sheet_obj,'true');
+    }
+}
+
+function fnMakeEanCode(source_str)
+{
+    var len = source_str.length;
+    if(len == 7 || len == 12)
+    {
+        var factor = 3;
+        var sum = 0;
+        for(var index = len; index > 0; --index)
+        {
+            var char_at = source_str.charAt(index-1);
+            if(char_at >= '0' && char_at <= '9')
+            {
+                sum = sum + char_at * factor;
+                factor = 4 - factor;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        var check_digit = ((1000 - sum) % 10);
+        return (source_str + check_digit);
+    }
+    else
+    {
+        return false;
+    }
+}
+function excelUpload(idx)
+{
+    sheet_obj = fnGetObjectIdName("mySheet"+idx);
+    sheet_obj.RemoveAll();
+    sheet_obj.LoadExcel();
+}
+function setBarcode()
+{
+    var sheet1_obj      = fnGetObjectIdName("mySheet1");
+    var sheet2_obj      = fnGetObjectIdName("mySheet2");
+    if(sheet2_obj.RowCount == 0) return false;
+
+    doAction('save_tmp', '2');
+    if(sheet_obj.EtcData("retMsg") == '0000')
+    {
+        alert("저장버튼을 클릭하시면 저장을 실행합니다.");
+    }
+}
+/////////////////////////////////////// window.onload ///////////////////////////////////////
+window.onload = function() { setTimeout("onloadFunctions()",0); }; function onloadFunctions()
+{
+    init_sheet(); set_item();
+    fnResize();
+    //doAction('search','1');
+    //doAction('search','2');
+}
+/////////////////////////////////////// window.onresize ///////////////////////////////////////
+window.onresize = function()
+{
+    fnResize();
+}
+/////////////////////////////////////// fnResize ///////////////////////////////////////
+function fnResize()
+{
+    setObjHeight('mySheet1', 40);
+    fn_ResizeColWidth(mySheet1,[0, 30, 120, 180, 60, 120, 120]);
+    fn_ResizeColWidth(mySheet2,[30, 120, 120]);
+}
+</SCRIPT>
+
+<SCRIPT for=mySheet1 event="onChange(Row, Col, Value)">
+if(Col == SaveNameCol('NEW_BARCODE') && Value != "")
+{
+    var findRow = FindText("BAR_CD", Value, 0);
+    if(findRow != -1 && findRow != Row)
+    {
+        alert("바코드가 중복되었습니다.");
+        SelectCell(Row, Col, true, "");
+    }
+    else
+    {
+        findRow = FindText("NEW_BARCODE", Value, 0);
+        if(findRow == Row) findRow = FindText("NEW_BARCODE", Value, Row+1);
+        if(findRow != -1)
+        {
+            alert("바코드가 중복되었습니다.");
+            SelectCell(Row, Col, true, "");
+        }
+    }
+}
+</SCRIPT>
+
+<SCRIPT for=mySheet1 event=OnClick(Row,Col,Value)>
+if(Col == SaveNameCol('PROD_CD'))
+{
+    openProdInfoPopup(CellValue(Row, 'PROD_CD'))
+
+}
+</SCRIPT>
+
+<SCRIPT language=javascript for=mySheet1 event="OnMouseMove(Button, Shift, X, Y)">
+if(MouseRow >= HeaderRows && MouseRow < HeaderRows+RowCount)
+{
+    if(MouseCol == SaveNameCol('PROD_CD') ) MousePointer = "Hand";
+}
+</SCRIPT>
+
+<SCRIPT language=javascript for=mySheet2 event=OnLoadExcel()>
+fn_ResizeColWidth(mySheet2,[30, 120, 120]);
+//alert("엑셀 읽기 완료\n자료입력을 위해서 바코드 검증을 실행하겠습니다.");
+setBarcode();
+</SCRIPT>
+
+<SCRIPT>if(parent && parent.HistoryFrm && parent.HistoryFrm.MainFrmPage && parent.HistoryFrm.MainFrmPage.pgm_nm && parent.HistoryFrm.MainFrmPage.pgm_nm.value != '') {document.write("<table width='100%' border='0' cellpadding='0' cellspacing='0' background='/image/title_bg.gif'><tr height='30'><td width='10'></td><td>  <table border='0' cellpadding='0' cellspacing='0'>  <tr>  <td><img src='/image/title_icon.gif'></td>  <td width='10'></td>  <td>    <table border='0' cellpadding='0' cellspacing='0'><tr><td height='3'></td></tr><tr>    <td><font color='#FFFFFF' style='font-size:14px;'><b>"+parent.HistoryFrm.MainFrmPage.pgm_nm.value+"</b></font></td>    </tr></table>  </td>  <td width='40'></td>  <td><span id='span_mymenu'></span></td>  <td width='10'></td>  <td><img src='/image/icon01/btn_column.gif'  onclick='parent.set_menu_item();' style='cursor:hand;'></td>  </tr>  </table></td><td align='right'><font color='#FFFFFF'>"+parent.HistoryFrm.MainFrmPage.pgm_lcls_nm.value+((parent.HistoryFrm.MainFrmPage.pgm_mcls_nm.value == '') ? '' : ' &gt; '+parent.HistoryFrm.MainFrmPage.pgm_mcls_nm.value)+' &gt; '+parent.HistoryFrm.MainFrmPage.pgm_nm.value+"</font></td><td width='10'></td></tr></table>");fnSetPgmId(parent.HistoryFrm.MainFrmPage.pgm_id.value);document.getElementById('span_mymenu').innerHTML = parent.HistoryFrm.getMyMenuStr(parent.HistoryFrm.MainFrmPage.pgm_id.value);}</SCRIPT>
+
+<TABLE cellSpacing=0 cellPadding=0 width="100%" background=/image/title_bg.gif border=0>
+<TBODY>
+<TR height=30>
+<TD width=10></TD>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD><IMG src="/image/title_icon.gif"></TD>
+<TD width=10></TD>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD height=3></TD></TR>
+<TR>
+<TD><FONT style="FONT-SIZE: 14px" color=#ffffff><B>상품바코드등록</B></FONT></TD></TR></TBODY></TABLE></TD>
+<TD width=40></TD>
+<TD><SPAN id=span_mymenu><IMG onclick="top.HistoryFrm.fnEditMyMenu('Y','000165')" style="CURSOR: hand" src="https://asp.netusys.com/image/icon01/mymenu_plus.gif"></SPAN></TD>
+<TD width=10></TD>
+<TD><IMG onclick=parent.set_menu_item(); style="CURSOR: hand" src="/image/icon01/btn_column.gif"></TD></TR></TBODY></TABLE></TD>
+<TD align=right><FONT color=#ffffff>기초관리 &gt; 상품관리 &gt; 상품바코드등록</FONT></TD>
+<TD width=10></TD></TR></TBODY></TABLE>
+<FORM name=form1><!-- IBFrame 을 위한 변수 선언 (필수)--><INPUT type=hidden value=master.barcode.barcode010 name=S_CONTROLLER> <INPUT type=hidden name=S_METHOD> <INPUT type=hidden name=S_SAVENAME> <!-- IBFrame 을 위한 변수 선언 (선택)--><INPUT type=hidden name=SHEETSEQ> <INPUT type=hidden value=1 name=page_no> <INPUT type=hidden value=N name=uploadYN>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" bgColor=#e9e9e9 border=0>
+<TBODY>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=27>
+<TD width=10></TD>
+<TD>
+<TABLE height=2 cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR vAlign=top>
+<TD align=left>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD><SPAN style="DISPLAY: none"><IMG src="/image/s_icon.gif"> 브랜드
+<SCRIPT>
+select_name[0] = new Array();
+select_value[0] = new Array();
+select_option[0] = new Array();
+select_query[0] = new Array();
+select_title[0] = new Array();
+select_change[0] = new Array();
+select_etc[0] = new Array();
+</SCRIPT>
+ <SPAN id=divAjax_0_BRAND_CD style="OVERFLOW-Y: scroll"><SELECT onchange="ajax_nextload(0,0); " id=SelectObj_0_0 name=BRAND_CD> <OPTION selected value="">-전체-</OPTION> <OPTION value=0>기본</OPTION></SELECT></SPAN>
+<SCRIPT>
+select_name[0][0] = "BRAND_CD";
+select_title[0][0] = "";
+select_value[0][0] = "";
+select_option[0][0] = "%";
+select_query[0][0] = "SP_SCD_BRAND_T_S01♪C1♪S92694";
+select_change[0][0] = "";
+select_etc[0][0] = "";
+</SCRIPT>
+
+<SCRIPT>
+select_step2(0,0);
+</SCRIPT>
+&nbsp; </SPAN><IMG src="/image/s_icon.gif"> 분류
+<DIV style="DISPLAY: none"><INPUT type=hidden name=LCLS_CD><INPUT type=hidden name=MCLS_CD><INPUT type=hidden name=SCLS_CD><INPUT type=hidden name=SIZE_CLS_CD></DIV><INPUT onclick="prod_cls_tree_win('0','S','S92694')" id=cls_text class=read1h style="CURSOR: hand" readOnly size=30 value=전체 name=cls_text>
+<DIV id=span_cls style="BORDER-TOP: 0px; BORDER-RIGHT: 0px; BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; Z-INDEX: 99; DISPLAY: none"></DIV>&nbsp; <IMG src="/image/s_icon.gif"> 검색줄수 <INPUT onkeypress="if(event.keyCode == 13) { document.form1.uploadYN.value = 'N';document.form1.page_no.value='1'; doAction('search','1'); }" class=input1hr size=4 value=500 name=page_size> </TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> 바 코 드 <INPUT onkeypress="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','1'); }" onblur="" class="input1hc imeEng" maxLength=26 name=s_BAR_CD></TD></TR></TBODY></TABLE></TD>
+<TD align=right>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD>
+<TABLE onclick="document.form1.uploadYN.value = 'N';document.form1.page_no.value='1'; doAction('search','1')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_black_l_bg.gif"></TD>
+<TD background=/image/btn_black_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>조회</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_black_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=5></TD>
+<TD>
+<TABLE onclick="doAction('down2Excel2','1')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_black_l_bg.gif"></TD>
+<TD background=/image/btn_black_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>엑셀</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_black_r_bg.gif"></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD><SPAN style="DISPLAY: none"><IMG src="/image/s_icon.gif"> 스타일코드 <INPUT onkeypress="if(event.keyCode == 13) {document.form1.uploadYN.value = 'N';document.form1.page_no.value='1'; doAction('search','1'); }" class=input1hc maxLength=19 name=s_STYLE_CD> &nbsp;&nbsp; </SPAN><IMG src="/image/s_icon.gif"> 상품코드 <INPUT onkeypress="if(event.keyCode == 13) { document.form1.uploadYN.value = 'N';document.form1.page_no.value='1'; doAction('search','1'); }" class=input1hc maxLength=26 name=s_PROD_CD> &nbsp;&nbsp;<IMG src="/image/s_icon.gif"> 상품명 <INPUT onkeypress="if(event.keyCode == 13) { document.form1.uploadYN.value = 'N';document.form1.page_no.value='1'; doAction('search','1'); }" class=input1h maxLength=30 name=s_PROD_NM> &nbsp;&nbsp;<IMG src="/image/s_icon.gif"> 거래처 <INPUT type=hidden name=s_VENDOR_CD><INPUT onclick="vendor_search_win('1','form1','s_VENDOR_CD','s_VENDOR_NM','','','전체','','350','310');" class=read1h style="CURSOR: hand" readOnly size=30 value=전체 name=s_VENDOR_NM> <INPUT onclick="vendor_search_win('1','form1','s_VENDOR_CD','s_VENDOR_NM','','','전체','','350','310');" id=_vendor_popup_button1 class=button1 type=button value=거래처선택>
+<DIV id=span_vendor1 style="BORDER-TOP: 0px; BORDER-RIGHT: 0px; BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; Z-INDEX: 99; DISPLAY: none"></DIV><!-- //2013.08.07 junghyoju - udf.UdfBean.mkVendorSelect 모듈 사용하는 페이지의 input box의 default 값 부여  -->&nbsp;&nbsp;<IMG src="/image/s_icon.gif"> 바코드 유무 <SELECT name=EXIST_CHECK> <OPTION selected value="">-전체-</OPTION> <OPTION value=0>입력</OPTION> <OPTION value=1>미입력</OPTION></SELECT> </TD></TR></TBODY></TABLE>
+<TABLE height=2 cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR vAlign=top>
+<TD align=right>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD>
+<TABLE onclick="doAction('down2Excel','1')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>입력양식다운</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=4></TD>
+<TD>
+<TABLE onclick="excelUpload('2')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>엑셀업로드</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=20></TD>
+<TD>
+<TABLE onclick=fnMakeBarcode() style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>바코드생성</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=20></TD>
+<TD>
+<TABLE onclick="doAction('save','1')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>저장</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=4></TD>
+<TD>
+<TABLE onclick="doAction('delete','1')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>삭제</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+<TABLE height=2 cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD></TD></TR></TBODY></TABLE></TD></TD>
+<TD width=10></TD></TR>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=1 bgColor=#d6d6d6>
+<TD colSpan=3></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" bgColor=#e9e9e9 border=0>
+<TBODY>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=27>
+<TD width=10></TD>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR vAlign=top>
+<TD align=left>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD><IMG src="/image/s_icon.gif"> 바코드생성은 기존에 바코드가 없는 경우에만 생성합니다. </TD></TR></TBODY></TABLE></TD>
+<TD align=right>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD><IMG src="/image/s_icon.gif"> 바코드를 재생성 하시려면 수기로 입력하시거나 삭제 후 재생성하십시오.</TD></TR></TBODY></TABLE></TD></TR>
+<TR height=24>
+<TD colSpan=2><IMG src="/image/s_icon.gif"> 바코드 자동생성은 상품코드 자릿수가 10자리 이내여야 하며 상품코드에 문자열이 없어야 합니다.</TD></TR></TBODY></TABLE></TD></TD>
+<TD width=10></TD></TR>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=1 bgColor=#d6d6d6>
+<TD colSpan=3></TD></TR></TBODY></TABLE>
+<TABLE height=6 cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD>
+<TABLE id=TableNm1 height=30 cellSpacing=1 cellPadding=4 width="100%" bgColor=#aaaaaa border=0 name="TableNm1">
+<TBODY>
+<TR bgColor=#ffffff vAlign=top>
+<TD height="100%" width="100%">
+<SCRIPT>makeIBSheet('mySheet1');</SCRIPT>
+
+<OBJECT id=mySheet1 style="HEIGHT: 384px" name=mySheet1 codeBase="/common/object/IBSheet3.CAB#version=3,4,0,387" classid=CLSID:341FBC5F-2AE4-41B8-BFE5-A03170569A27 width="100%" height="100%"><PARAM NAME="_ExtentX" VALUE="25982"><PARAM NAME="_ExtentY" VALUE="10160"><PARAM NAME="ConfigXml" VALUE="/common/gridstyle/GridConfig.xml"><PARAM NAME="Version" VALUE="3.4.0.387"></OBJECT>
+<SCRIPT>document.getElementById('mySheet1').SetExcelColDialog(0);</SCRIPT>
+</TD></TR></TBODY></TABLE>
+<DIV style="DISPLAY: none">
+<TABLE id=TableNm2 height=30 cellSpacing=1 cellPadding=4 width="100%" bgColor=#aaaaaa border=0 name="TableNm2">
+<TBODY>
+<TR bgColor=#ffffff vAlign=top>
+<TD height="100%" width="100%">
+<SCRIPT>makeIBSheet('mySheet2');</SCRIPT>
+
+<OBJECT id=mySheet2 name=mySheet2 codeBase="/common/object/IBSheet3.CAB#version=3,4,0,387" classid=CLSID:341FBC5F-2AE4-41B8-BFE5-A03170569A27 width="100%" height="100%"><PARAM NAME="_ExtentX" VALUE="0"><PARAM NAME="_ExtentY" VALUE="0"><PARAM NAME="ConfigXml" VALUE="/common/gridstyle/GridConfig.xml"><PARAM NAME="Version" VALUE="3.4.0.387"></OBJECT>
+<SCRIPT>document.getElementById('mySheet2').SetExcelColDialog(0);</SCRIPT>
+</TD></TR></TBODY></TABLE></DIV></TD></TR></TBODY></TABLE>
+<DIV id=PAGEBUTTON></DIV></FORM></BODY></HTML>
+
+{% endblock %}
+

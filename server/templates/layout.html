@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Standard Meta -->
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" >
+
+
+    <!-- Site Properties -->
+    <title>KBIZPOS</title>
+    {% include 'includes.html' %}
+
+
+
+
+
+    <style type="text/css">
+        .ui.container {
+            width: auto!important;
+             margin-left: 0!important;
+             margin-right: 0!important;
+        }
+        .ui.grid.container { width :100%!important; }
+        body {
+            font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;
+            font-size :13px ;
+            background-color: #FFFFFF;
+            overflow-y: hidden; overflow-x: hidden;
+        }
+
+        .ui.menu .item img.logo {
+            margin-right: 1.5em;
+        }
+
+        .main.container {
+            font-family: "돋움", dotum, "굴림", gulim, arial, helvetica, sans-serif;
+            font-size :13px ;
+            margin-top: 4em;
+
+        }
+
+        .ui.grid>.column:not(.row) {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+
+        .wireframe {
+            margin-top: 2em;
+        }
+
+        .ui.footer.segment {
+            position:fixed;
+            width:100%;
+            bottom:0;
+            padding: 0.5em 0em ;
+        }
+
+        i.링크 {
+            cursor: pointer;
+            opacity: .8;
+            -webkit-transition: opacity .1s ease;
+            transition: opacity .1s ease;
+        }
+
+        i.링크:hover {
+            opacity: 1 !important;
+        }
+
+        .red {
+          color : red!important;
+        }
+    </style>
+</head>
+<body class="jui">
+
+
+{% from 'macro/menubar.html' import dropdown with context %}
+
+
+
+<div class="ui fixed inverted menu">
+    <a href="{{ url_for('_dashboard') }}" class="header item">
+        KBIZPOS
+    </a>
+    <!--<a href="{{ url_for('_dashboard') }}" class="olive item">-->
+        <!--대시보드-->
+    <!--</a>-->
+
+    <div class="ui fixed dropdown item">
+        기초관리 <i class="dropdown"></i>
+        <div class="menu">
+          <div class="item">
+            <i class="dropdown "></i>
+            매장관리
+            <div class="menu">
+              <a class="item" href="{{ url_for('_info_store_') }}">매장정보관리</a>
+              <a class="item" href="{{ url_for('_info_staff1') }}">사원정보관리</a>
+              <a class="item" href="{{ url_for('_info_staff') }}">사원정보조회</a>
+              <a class="item" href="{{ url_for('_info_storepwd_') }}">패스워드변경</a>
+              <a class="item red" href="#" style="color:red;">VAN/코너 정보</a>
+              <a class="item" href="{{ url_for('_system_config1') }}">테이블속성</a>
+              <a class="item" href="#" onclick="테이블()">테이블관리</a>
+              <a class="item" href="{{ url_for('_system_config') }}">포스기능정의</a>
+            </div>
+          </div>
+          <div class="item">
+            <i class="dropdown "></i>
+            출력물관리
+            <div class="menu">
+              <a class="item" href="{{ url_for('_system_receiptform') }}">포스출력물관리</a>
+              <a class="item" href="{{ url_for('_info_store1') }}">바코드출력환경</a>
+              <a class="item" href="#">바코드출력</a>
+            </div>
+          </div>
+          <div class="item">
+            <i class="dropdown "></i>
+            상품관리
+            <div class="menu">
+              <a class="item" href="{{ url_for('_goods_itemgroup') }}">상품기초정보등록</a>
+              <a class="item" href="#">거래처등록</a>
+              <a class="item" href="#">거래처엑셀업로드</a>
+              <a class="item" href="#">거래처조회</a>
+              <a class="item" href="{{ url_for('_goods_item') }}">상품등록</a>
+              <a class="item" href="{{ url_for('_goods_item_list') }}">상품조회</a>
+              <a class="item" href="{{ url_for('_goods_item_upload') }}">상품엑셀업로드</a>
+              <a class="item" href="{{ url_for('_goods_item_modify') }}">상품정보일괄변경</a>
+              <a class="item" href="{{ url_for('_goods_item_barcode') }}">상품바코드등록</a>
+              <a class="item" href="#">사이드메뉴등록</a>
+              <a class="item" href="#" onclick="메뉴()">판매터치키등록</a>
+              <a class="item" href="#">상품별코너변경</a>
+              <a class="item" href="#">주방프린터-상품연결</a>
+              <a class="item" href="#">주방프린터-시간대제어</a>
+              <a class="item" href="#">KIOSK-상품판매시간대</a>
+            </div>
+          </div>
+          <div class="item">
+            <i class="dropdown "></i>
+            가격관리
+            <div class="menu">
+              <a class="item" href="#">판매가관리</a>
+              <a class="item" href="#">매장판매가 History</a>
+              <a class="item" href="#">판매가현황</a>
+              <a class="item" href="#">원가임의변경</a>
+              <a class="item" href="#">원가변경 History</a>
+            </div>
+          </div>
+          <div class="item">
+            <i class="dropdown "></i>
+            결제수단
+            <div class="menu">
+              <a class="item" href="#">제휴카드등록</a>
+              <a class="item" href="#">상품권등록</a>
+              <a class="item" href="#">식권등록</a>
+              <a class="item" href="#">쿠폰등록</a>
+              <a class="item" href="#">고정할인등록</a>
+            </div>
+          </div>
+          <div class="item">
+            <i class="dropdown "></i>
+            기타관리
+            <div class="menu">
+              <a class="item" href="#">명칭관리</a>
+              <a class="item" href="#">예약관리(웹전용)</a>
+              <a class="item" href="#">주방메모관리</a>
+              <a class="item" href="#">배달구역관리</a>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="ui fixed dropdown item">
+        매출관리 <i class="dropdown "></i>
+        <div class="menu">
+          <div class="item">
+            <i class="dropdown "></i>
+            매출현황
+            <div class="menu">
+              <a class="item" href="#">매출항목표시</a>
+              <a class="item" href="{{ url_for('_earnings_dayall') }}">당일매출종합현황</a>
+              <a class="item" href="{{ url_for('_earnings_dayalldetail') }}">당일매출상세현황</a>
+              <a class="item" href="#">영상보안</a>
+              <a class="item" href="{{ url_for('_earnings_dayreceiptdetail') }}">영수증별매출상세현황</a>
+              <a class="item" href="{{ url_for('_earnings_day') }}">일자별</a>
+              <a class="item" href="{{ url_for('_earnings_week') }}">요일별</a>
+              <a class="item" href="{{ url_for('_earnings_month') }}">월별</a>
+              <a class="item" href="{{ url_for('_earnings_daydate') }}">일기간</a>
+              <a class="item" href="{{ url_for('_earnings_table') }}">테이블별</a>
+              <a class="item" href="#">브랜드별</a>
+              <a class="item" href="#">코너별</a>
+              <a class="item" href="#">포스별</a>
+              <a class="item" href="#">상품별</a>
+              <a class="item" href="#">매장상품별</a>
+              <a class="item" href="#">판매자별</a>
+              <a class="item" href="#">주문자별</a>
+              <a class="item" href="#">할인구분별</a>
+              <a class="item" href="#">결제수단별</a>
+              <a class="item" href="#">바코드별</a>
+              <a class="item" href="#">반품현황</a>
+              <a class="item" href="#">POS정산내역</a>
+            </div>
+          </div>
+          <div class="item">
+            <i class="dropdown "></i>
+            매출분석
+            <div class="menu">
+              <a class="item" href="#">대비기간매출분석</a>
+              <a class="item" href="#">상품ABC분석</a>
+              <a class="item" href="#">월력판매분석</a>
+              <a class="item" href="#">판매추이분석</a>
+              <a class="item" href="#">날씨별매출분석</a>
+              <a class="item" href="#">영업일보</a>
+              <a class="item" href="#">매출목표관리</a>
+              <a class="item" href="#">상품별월매출조회</a>
+            </div>
+          </div>
+          <div class="item">
+            <i class="dropdown "></i>
+            주문분석
+            <div class="menu">
+              <a class="item" href="#">주문취소</a>
+            </div>
+          </div>
+          <div class="item">
+            <i class="dropdown "></i>
+            승인현황
+            <div class="menu">
+              <a class="item" href="#">승인현황</a>
+              <a class="item" href="#">모바일쿠폰승인현황</a>
+            </div>
+          </div>
+          <div class="item">
+            <i class="dropdown "></i>
+            배달현황
+            <div class="menu">
+              <a class="item" href="#">배달현황</a>
+            </div>
+          </div>
+          <div class="item">
+            <i class="dropdown "></i>
+            기타
+            <div class="menu">
+              <a class="item" href="#">객수매출현황</a>
+              <a class="item" href="#">통화별결제내역</a>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="ui fixed dropdown item">
+        회원관리 <i class="dropdown "></i>
+        <div class="menu">
+          <div class="item">
+            <i class="dropdown "></i>
+            회원정보
+            <div class="menu">
+              <a class="item" href="{{ url_for('_member_member') }}">회원등급설정</a>
+              <a class="item" href="{{ url_for('_member_member1') }}">회원정보조회</a>
+              <a class="item" href="{{ url_for('_member_member2') }}">회원정보등록</a>
+              <a class="item" href="{{ url_for('_member_member3') }}">회원정보일괄변경</a>
+              <a class="item" href="{{ url_for('_member_member4') }}">배달지조회및변경</a>
+              <a class="item" href="{{ url_for('_member_member5') }}">회원엑셀업로드</a>
+              <a class="item" href="{{ url_for('_member_member6') }}">회원포인트조정</a>
+              <a class="item" href="{{ url_for('_member_member7') }}">회원포인트변경내역</a>
+            </div>
+          </div>
+          <div class="item">
+            <i class="dropdown "></i>
+            회원분석
+            <div class="menu">
+              <a class="item" href="{{ url_for('_member_memberdata1') }}">일자별회원구매내역</a>
+              <a class="item" href="{{ url_for('_member_memberdata2') }}">기간회원구매내역</a>
+              <a class="item" href="{{ url_for('_member_memberdata3') }}">회원.상품 구매내역</a>
+              <a class="item" href="{{ url_for('_member_memberdata4') }}">회원구매성향분석</a>
+              <a class="item" href="{{ url_for('_member_memberdata5') }}">회원매출점유</a>
+              <a class="item" href="{{ url_for('_member_memberdata6') }}">회원포인트실적</a>
+              <a class="item" href="{{ url_for('_member_memberdata7') }}">외상 발생/입금 내역</a>
+              <a class="item" href="{{ url_for('_member_memberdata8') }}">회원미수금현황</a>
+              <a class="item" href="{{ url_for('_member_memberdata9') }}">회원유치사원별매출내역</a>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="ui fixed dropdown item">
+        수불관리 <i class="dropdown "></i>
+        <div class="menu">
+          <div class="item">
+            <i class="dropdown "></i>
+            거래처 입출고관리
+            <div class="menu">
+              <a class="item" href="#">발주등록</a>
+              <a class="item" href="#">사입/반출등록</a>
+              <a class="item" href="#">발주대비 입고현황</a>
+              <a class="item" href="#">전표별 입출고내역</a>
+              <a class="item" href="#">상푸별 입출고내역</a>
+              <a class="item" href="#">거래처정산관리</a>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="ui fixed dropdown item">
+        재고관리 <i class="dropdown "></i>
+        <div class="menu">
+          <div class="item">
+            <i class="dropdown "></i>
+            재고현황
+            <div class="menu">
+              <a class="item" href="#">재고항목표시</a>
+              <a class="item" href="#">현재고현황</a>
+              <a class="item" href="#">일수불현황</a>
+              <a class="item" href="#">월수불현황</a>
+              <a class="item" href="#">기간수불현황</a>
+              <a class="item" href="#">일자별수불현황</a>
+              <a class="item" href="#">재고항목별월조회</a>
+            </div>
+          </div>
+          <div class="item">
+            <i class="dropdown "></i>
+            실사/조정/폐기
+            <div class="menu">
+              <a class="item" href="#">실사관리</a>
+              <a class="item" href="#">조정관리</a>
+              <a class="item" href="#">폐기관리</a>
+              <a class="item" href="#">실사/조정/폐기 조회</a>
+            </div>
+          </div>
+          <div class="item">
+            <i class="dropdown "></i>
+            세트재고조정
+            <div class="menu">
+              <a class="item" href="#">세트재고조정</a>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="ui fixed dropdown item">
+        정산관리 <i class="dropdown"></i>
+        <div class="menu">
+          <div class="item">
+            <i class="dropdown "></i>
+            정산관리
+            <div class="menu">
+              <a class="item" href="#">매출수기등록</a>
+              <a class="item" href="#">코너별정산내역</a>
+            </div>
+          </div>
+          <div class="item">
+            <i class="dropdown "></i>
+            수익관리
+            <div class="menu">
+              <a class="item" href="#">수익분석</a>
+              <a class="item" href="#">원가대비 수익분석</a>
+              <a class="item" href="#">입고대비 수익분석</a>
+              <a class="item" href="#">매장별 입고대비 수익분석</a>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="ui fixed dropdown item">
+        기타관리 <i class="dropdown"></i>
+        <div class="menu">
+          <div class="item">
+            <i class="dropdown "></i>
+            금전처리
+            <div class="menu">
+              <a class="item" href="#">계정관리</a>
+              <a class="item" href="#">금전현황</a>
+              <a class="item" href="#">돈통오픈기록</a>
+            </div>
+          </div>
+          <div class="item">
+            <i class="dropdown "></i>
+            근태관리
+            <div class="menu">
+              <a class="item" href="#">근태관리</a>
+              <a class="item" href="#">월근태내역</a>
+              <a class="item" href="#">시급관리</a>
+            </div>
+          </div>
+          <div class="item">
+            <i class="dropdown "></i>
+            SMS관리
+            <div class="menu">
+              <a class="item" href="#">메세지관리</a>
+              <a class="item" href="#">문자전송현황</a>
+              <a class="item" href="#">SMS충전</a>
+              <a class="item" href="#">SMS충전내역</a>
+              <a class="item" href="#">SMS자동전송관리</a>
+              <a class="item" href="#">SMS기념일전송관리</a>
+            </div>
+          </div>
+          <div class="item">
+            <i class="dropdown "></i>
+            기타
+            <div class="menu">
+              <a class="item" href="{{ url_for('_weather') }}">과거날씨정보</a>
+              <a class="item" href="#">모바일쿠폰승인상품현황</a>
+            </div>
+          </div>
+          <div class="item">
+            매뉴얼다운로드
+          </div>
+          <div class="item">
+            공지사항
+          </div>
+          <div class="item">
+            게시판
+          </div>
+        </div>
+    </div>
+
+    <div class="right menu">
+        <a href="{{ url_for('_logout') }}" class="ui item">
+            로그아웃
+        </a>
+    </div>
+</div>
+<script>
+    function 테이블() {
+        window.open(
+            "{{ url_for('_system_table2') }}",
+            "",
+            "width=900,height=700"
+        );
+    }
+
+    function 메뉴() {
+        window.open(
+            "{{ url_for('_system_menu2') }}",
+            "",
+            "width=900,height=700"
+        );
+    }
+</script>
+
+<script>
+	window.onresize = function() { // no need to name the function if that is all you do in the event
+		// do not use interval if you do not need interval
+                // using quotes in a timeout/interval is an implicit EVAL and not good practice
+         if( window.outerWidth < 1024 || window.outerHeight < 768 ){
+		    window.setTimeout(resize,500);
+		    }
+
+	}
+	function resize() {
+
+		<!--window.moveTo(0, 0);-->
+		function a() {
+		window.resizeTo(1024, 768); }
+		window.onload(a());
+	}
+
+</script>
+
+<div class="jui ui main container">
+    {% block body %}{% endblock %}
+</div>
+
+
+<div class="ui inverted vertical footer segment">
+    <div class="ui center aligned container">
+        <div class="ui horizontal inverted small divided link list">
+            COPYRIGHT© 2017 BY [KBIZ], ALL RIGHTS RESERVED.
+        </div>
+    </div>
+</div>
+
+
+{% include 'semantic-ui-do.html' %}
+</body>
+</html>

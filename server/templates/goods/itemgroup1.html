@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% from 'macro/form.html'    import title_block with context %}
+    {% from 'macro/table.html'    import tabling with context %}
+
+
+    {% call title_block('상품: 분류','','object group') %}
+
+        {{ tabling('상품: 분류',url_for('_goods_itemgroup'),orderable=False) }}
+
+    {% endcall %}
+
+{% endblock %}
+
+

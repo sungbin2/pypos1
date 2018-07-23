@@ -1,0 +1,271 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<style>
+
+  table {
+    border: 0px;
+  }
+  .box{
+    border: 1px solid #a3a2a2; margin :0.5em 0em 0em 0em;
+  }
+  th {
+    text-align : left;
+    background-color: #e7dfdf;
+  }
+    .ui.grid>.column:not(.row) {
+    padding-top: 0;
+    padding-bottom: 0rem;
+}
+</style>
+
+<table width='100%' >
+    <tr>
+        <th style="color:white; background-color: #347efd;">
+         매장정보관리
+        </th>
+    </tr>
+</table>
+<div class="ui main grid container" >
+    <div class="eleven wide column" valign='top'>
+        <table width='100%' border='0' cellpadding='0' cellspacing='0' >
+            <tr valign='top'>
+                <td nowrap>
+                    <table width='100%' cellpadding='4' cellspacing='1' bgcolor='#AAAAAA'>
+                        <tr bgcolor='#ffffff'><td width='100%'>
+                            <table width='100%' border='0' cellpadding='0' cellspacing='0' bgcolor='#e9e9e9'>
+                                <tr height='1' bgcolor='#aaaaaa'><td colspan='6'></td></tr>
+                                <tr height='25'>
+                                    <td width='1' bgcolor='#aaaaaa'></td>
+                                    <td width='8'></td>
+                                    <form id="form_modify" class="ui form" action="" method="post">
+                                        <td align='left'><img src='{{ url_for('static', filename='image/list_icon.gif') }}' align='absmiddle'> 매장 상세 정보</td>
+                                        <td align='right'>
+                                            <table border='0' cellpadding='0' cellspacing='0'><tr><td><table border='0' cellpadding='0' cellspacing='0' style='cursor:pointer;' onclick="doSave();">
+                                                <button id="btn_modify"> 저장    </button>
+                                            </table></td></tr></table></td>
+                                        <td width='8'></td>
+                                        <td width='1' bgcolor='#aaaaaa'></td>
+                                </tr>
+                                <tr height='1' bgcolor='#aaaaaa'><td colspan='6'></td></tr>
+                            </table>
+
+                            <table width='100%' border='0' cellpadding='3' cellspacing='1' bgcolor='#CCD6BC'>
+                                <tr>
+                                    <td bgcolor='#EEF1E8' width='15%' align='right' nowrap><font color=red>*</font>매장코드/명</td>
+                                    <td bgcolor='#E6EBDE' width='35%' nowrap>
+                                        <input type='text' name='s' value='' size='6' maxlength='6' class='read1c' readonly>
+                                        <input type='text' name='가게명' value='' size='25' maxlength='30' class='input1 imeHan'>
+                                    </td>
+                                    <td bgcolor='#EEF1E8' width='15%' align='right' nowrap><font color=red>*</font>대표자명</td>
+                                    <td bgcolor='#E6EBDE' width='35%' nowrap><input type='text' name='대표자' value='' size='12' maxlength='12' class='input1 imeHan'></td>
+                                </tr>
+                                <tr>
+                                    <td bgcolor='#EEF1E8' width='15%' align='right' nowrap><font color=red>*</font>사업자번호</td>
+                                    <td bgcolor='#E6EBDE' width='35%' nowrap>
+                                        <input type='text' name='사업자번호' value='' size='12' class='read1c' readonly>
+                                    </td>
+                                    <td bgcolor='#EEF1E8' width='15%' align='right' nowrap><font color=red>*</font>상호명</td>
+                                    <td bgcolor='#E6EBDE' width='35%' nowrap><input type='text' name='' value='' size='30' maxlength='30' class='input1 imeHan'></td>
+                                </tr>
+                                <tr>
+                                    <td bgcolor='#EEF1E8' width='15%' align='right' nowrap><font color=red>*</font>업태</td>
+                                    <td bgcolor='#E6EBDE' width='35%' nowrap><input type='text' name='업종' value='' size='30' maxlength='30' class='input1 imeHan'></td>
+                                    <td bgcolor='#EEF1E8' width='15%' align='right' nowrap><font color=red>*</font>종목</td>
+                                    <td bgcolor='#E6EBDE' width='35%' nowrap><input type='text' name='업태' value='' size='30' maxlength='30' class='input1 imeHan'></td>
+                                </tr>
+                                <tr>
+                                    <td bgcolor='#EEF1E8' width='15%' align='right' nowrap><font color=red>*</font>전화번호</td>
+                                    <td bgcolor='#E6EBDE' width='35%' nowrap>
+                                        <input type='text' name='전화' value='031' class='input1c' size='13' >
+                                    </td>
+                                    <td bgcolor='#EEF1E8' width='15%' align='right' nowrap>핸드폰</td>
+                                    <td bgcolor='#E6EBDE' width='35%' nowrap>
+                                        <input type='text' name='휴대폰' value='' class='input1c' size='13' >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td bgcolor='#EEF1E8' width='15%' align='right' nowrap>팩스</td>
+                                    <td bgcolor='#E6EBDE' width='35%' nowrap>
+                                        <input type='text' name='팩스' value='' class='input1c' size='17' >
+                                    </td>
+                                    <td bgcolor='#EEF1E8' align='right'><font color=red>*</font>날씨지역</td>
+                                    <td bgcolor='#E6EBDE'></td>
+                                </tr>
+                                <tr>
+                                    <td bgcolor='#EEF1E8' width='15%' align='right' nowrap>E-mail</td>
+                                    <td bgcolor='#E6EBDE' width='85%' colspan='3' nowrap><input type='text' name='이메일' value='' size='30' maxlength='30' class='input1 imeEng'></td>
+                                </tr>
+                                <tr>
+                                    <td bgcolor='#EEF1E8' width='15%' align='right' nowrap>홈페이지</td>
+                                    <td bgcolor='#E6EBDE' width='85%' colspan='3' nowrap>http:// <input type='text' name='' value='' size='40' maxlength='50' class='input1 imeEng'></td>
+                                </tr>
+                                <tr>
+                                    <td bgcolor='#EEF1E8' width='15%' align='right' nowrap><font color=red>*</font>주소</td>
+                                    <td bgcolor='#E6EBDE' width='85%' colspan='3' nowrap>
+                                        <input type='text' name='우편번호' value='11662' class='read1hc' size='5' maxlength='6' readonly>
+                                        <input type='button' value='우편번호찾기' class='button1' onclick="fnAddrWin('form1','우편번호','주소','상세주소');"><br>
+                                        <input type='text' name='주소' value='' size='35' maxlength='60' class='read1h' readonly>
+                                        상세주소 <input type='text' name='상세주소' value='1' size='30' maxlength='60' class='input1h imeHan'>
+                                    </td>
+                                </tr>
+                                </td></tr>
+                            </table>
+                            </form>
+                        </td>
+                        </tr>
+                    </table>
+                    <table width='100%' height='6' border='0' cellpadding='0' cellspacing='0'><tr><td></td></tr></table>
+                    <table width='250' border='0' cellpadding='0' cellspacing='0' align='left'>
+                        <tr bgcolor='#ffffff'><td width='100%'>
+                            <table width='100%' border='0' cellpadding='0' cellspacing='0' bgcolor='#e9e9e9'>
+                                <tr height='1' bgcolor='#aaaaaa'><td colspan='6'></td></tr>
+                                <tr height='25'>
+                                    <td width='1' bgcolor='#aaaaaa'></td>
+                                    <td width='8'></td>
+                                    <td align='left'><img src='{{ url_for('static', filename='image/list_icon.gif') }}' align='absmiddle'> 로고이미지</td>
+                                    <td width='8'></td>
+                                    <td width='1' bgcolor='#aaaaaa'></td>
+                                </tr>
+                                <tr height='1' bgcolor='#aaaaaa'><td colspan='6'></td></tr>
+                            </table>
+                            <table width='100%' height='130' border='0' cellpadding='2' cellspacing='1' bgcolor='#CCD6BC'>
+                                <tr>
+                                    <td bgcolor='#EEF1E8' align='center'><img id='logo_img' src='{{ url_for('static', filename='image/no_image.jpg') }}' style='width:36px;'>
+                                        <table width='100%' height='6' border='0' cellpadding='0' cellspacing='0'><tr><td></td></tr></table>
+
+                                        <input type='button' value='이미지변경' onclick="AddFile();" class='button1'></td>
+                                </tr>
+                                <tr>
+                                    <td bgcolor='#E6EBDE' align='center'>가로 : 200px이내, 세로 : 36px<br>파일 : gif, jpg</td>
+                                </tr>
+                            </table>
+                        </td></tr>
+                    </table>
+
+                </td>
+        </table>
+    </div>
+
+    <div class="five wide column">
+
+<table class="box">
+    <tr>
+            <th >
+                기초코드관리
+            </th>
+        </tr>
+
+    <table class="box" width='100%' height='50%' border='0' cellpadding='4' cellspacing='1' bgcolor='' >
+        <tr>
+            <th >
+                시간대분류
+            </th>
+        </tr>
+         <tr>
+            <td>
+                     <div data-ax5grid="first-grid" data-ax5grid-config="{
+                            header: { align: 'center' },
+                            showRowSelector: true,
+                            page: { display: false  }
+                        }" style="height: 100%;"></div>
+            </td>
+
+         </tr>
+    </table>
+
+
+
+    <table class="box" width='100%' height='30%' border='0' cellpadding='4' cellspacing='1' bgcolor='' >
+        <tr>
+            <th >
+                고객수분류
+            </th>
+        </tr>
+        <tr>
+                <td>
+                         <div data-ax5grid="second-grid" data-ax5grid-config="{
+                                header: { align: 'center' },
+                                page: { display: false  }
+                            }" style="height: 100%;"></div>
+                </td>
+        </tr>
+     </table>
+</table>
+
+
+    </div>
+</div>
+
+
+ <script>
+var _data;
+
+
+$.getJSON("{{ url_for('_info_store_') }}", function (json) {
+    _data = json;
+}).done(function () {
+
+     document.getElementsByName('s')[0].value = _data.s
+     document.getElementsByName('가게명')[0].value = _data.가게명
+     document.getElementsByName('대표자')[0].value = _data.대표자
+     document.getElementsByName('사업자번호')[0].value = _data.사업자번호
+     <!--document.getElementsByName('상호명')[0].value = _data.상호명-->
+     document.getElementsByName('업종')[0].value = _data.업종
+     document.getElementsByName('업태')[0].value = _data.업태
+     document.getElementsByName('휴대폰')[0].value = _data.휴대폰
+     document.getElementsByName('팩스')[0].value = _data.팩스
+     document.getElementsByName('이메일')[0].value = _data.이메일
+     <!--document.getElementsByName('홈페이지')[0].value = _data.홈페이지-->
+     document.getElementsByName('주소')[0].value = _data.주소
+     document.getElementsByName('상세주소')[0].value = _data.상세주소
+     document.getElementsByName('전화')[0].value = _data.전화
+     document.getElementsByName('우편번호')[0].value = _data.우편번호
+
+})
+
+
+$(function () {
+
+   $('#btn_modify').click(function () {
+       onModify("{{ url_for('_info_store_') }}", store_id);
+   });
+});
+
+var firstGrid = new ax5.ui.grid({
+        target: $('[data-ax5grid="first-grid"]'),
+        columns: [
+                {key: "명칭", label: "명칭" ,width: 75 ,align: "center" , editor: {type: "text"}},
+                {key: "시작", label: "시작시각" ,width: 75 ,align: "center" , editor: {type: "text"}},
+                {key: "종료", label: "종료시각" ,width: 75 ,align: "center" , editor: {type: "text"}},
+        ]
+});
+
+var secondGrid = new ax5.ui.grid({
+        target: $('[data-ax5grid="second-grid"]'),
+        columns: [
+                {key: "구분1", label: "구분1" ,width: 65 ,align: "center" , editor: {type: "text"}},
+                {key: "구분2", label: "구분2" ,width: 65 ,align: "center" , editor: {type: "text"}},
+                {key: "구분3", label: "구분3" ,width: 65 ,align: "center" , editor: {type: "text"}},
+                {key: "구분4", label: "구분4" ,width: 65 ,align: "center" , editor: {type: "text"}},
+        ]
+});
+
+
+
+
+var gridList1 = [ {  "명칭" : '심야' , '시작' : '00' , '종료' : '06'  } ,
+                     { "명칭" : '아침' , '시작' : '06' , '종료' : '11'  } ,
+                     { "명칭" : '점심' , '시작' : '11' , '종료' : '16'  } ,
+                     { "명칭" : '저녁' , '시작' : '16' , '종료' : '24'  } ]
+
+var gridList2 = [ { '구분1' : '남' , '구분2' : '여' , '구분3' : '' , '구분4' : '' } ]
+
+firstGrid.setData(gridList1);
+secondGrid.setData(gridList2);
+
+</script>
+
+
+
+{% endblock %}

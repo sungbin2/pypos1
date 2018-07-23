@@ -1,0 +1,762 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<style>
+
+
+  table {
+    width: 100%;
+    border: 0px;
+    background-color :#e7dfdf;
+  }
+  .box{
+    border: 1px solid #a3a2a2; margin :0.5em 0em 0em 0em;
+  }
+  th {
+    text-align : left;
+    background-color: #e7dfdf;
+  }
+
+</style>
+
+<HTML><HEAD><META content="IE=5.0000" http-equiv="X-UA-Compatible">
+<TITLE></TITLE>
+<SCRIPT src="/common/js/udfPage.js"></SCRIPT>
+</HEAD>
+<BODY><LINK rel=stylesheet type=text/css href="/common/css/bok.css">
+<SCRIPT src="/common/js/common.js"></SCRIPT>
+
+<SCRIPT src="/common/js/udfMainFrm.js?ver=20180418"></SCRIPT>
+
+<SCRIPT src="/common/js/IBSheetInfo.js"></SCRIPT>
+
+<SCRIPT src="/common/js/IBSheetConfig.js"></SCRIPT>
+
+<SCRIPT src="/common/js/showitem.js"></SCRIPT>
+<!-- <script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script> -->
+<SCRIPT language=javascript> if(top.MainFrm) { set_url('/master/cust/cust_excel010.jsp'); }</SCRIPT>
+
+<SCRIPT language=javascript>
+function fnSessionCheck()
+{
+    if(top.SessionForm
+    && top.SessionForm.user_id)
+    {
+        if(top.SessionForm.user_id.value != "s92694")
+        {
+            alert("같은 세션으로 다른 사용자로 로그인 하였습니다.\n다시 로그인 하시기 바랍니다.");
+            top.close();
+        }
+    }
+    else
+    if(opener
+    && opener.closed == false
+    && opener.top.SessionForm
+    && opener.top.SessionForm.user_id)
+    {
+        if(opener.top.SessionForm.user_id.value != "s92694")
+        {
+            alert("같은 세션으로 다른 사용자로 로그인 하였습니다.\n다시 로그인 하시기 바랍니다.");
+            top.close();
+            opener.top.close();
+        }
+    }
+    else
+    if(opener
+    && opener.closed == false
+    && opener.opener
+    && opener.opener.closed == false
+    && opener.opener.top.SessionForm
+    && opener.opener.top.SessionForm.user_id)
+    {
+        if(opener.opener.top.SessionForm.user_id.value != "s92694")
+        {
+            alert("같은 세션으로 다른 사용자로 로그인 하였습니다.\n다시 로그인 하시기 바랍니다.");
+            top.close();
+            opener.top.close();
+            opener.opener.top.close();
+        }
+    }
+}
+setTimeout("fnSessionCheck()",0);
+
+if(window.name == 'MainFrm' && parent.SessionForm.pass_ch_option.value == '1')
+{
+    showModalDialog('/master/emp/passwd010.jsp?popup_fg=Y'
+                   ,self
+                   ,'dialogWidth:400px;dialogHeight:340px;dialogTop:100px;dialogLeft:100px;status:no;resizable:yes;scroll:no;');
+}
+</SCRIPT>
+
+<SCRIPT language=javascript>
+function set_DlvCmCd(idx,Row)
+{
+sheet_obj = eval('mySheet'+idx);
+sheet_obj.CellValue(Row,'DLV_CM_CD') = '';
+if(sheet_obj.CellValue(Row,'DLV_CL_CD') == '') { sheet_obj.CellComboItem(Row,'DLV_CM_CD','',''); }
+else if(sheet_obj.CellValue(Row,'DLV_CL_CD') == '001') { sheet_obj.CellComboItem(Row,'DLV_CM_CD',' |아트아파',' |00001'); }
+else if(sheet_obj.CellValue(Row,'DLV_CL_CD') == '002') { sheet_obj.CellComboItem(Row,'DLV_CM_CD',' |의정부빌라|재일시장',' |00004|00010'); }
+else if(sheet_obj.CellValue(Row,'DLV_CL_CD') == '003') { sheet_obj.CellComboItem(Row,'DLV_CM_CD',' |이마트',' |00002'); }
+else if(sheet_obj.CellValue(Row,'DLV_CL_CD') == '004') { sheet_obj.CellComboItem(Row,'DLV_CM_CD',' |네파',' |00003'); }
+else if(sheet_obj.CellValue(Row,'DLV_CL_CD') == '005') { sheet_obj.CellComboItem(Row,'DLV_CM_CD',' |가능현대아파트|두산동아아파트|가람아파트',' |00005|00006|00007'); }
+else if(sheet_obj.CellValue(Row,'DLV_CL_CD') == '006') { sheet_obj.CellComboItem(Row,'DLV_CM_CD',' |보람아파트|미림아파트',' |00008|00009'); }
+else if(sheet_obj.CellValue(Row,'DLV_CL_CD') == '007') { sheet_obj.CellComboItem(Row,'DLV_CM_CD','',''); }
+}
+</SCRIPT>
+
+<SCRIPT language=javascript>
+var isChk = false; //양식검증여부
+function init_sheet()
+{
+    mySheet1 = fnGetObjectIdName("mySheet1");
+    with(mySheet1)
+    {
+        //SheetWidth = document.body.clientWidth - 25;
+        InitHostInfo(location.hostname, location.port, "");
+        MergeSheet = msHeaderOnly;
+        Editable = true;
+        InitRowInfo( 1, 1, 10);
+        InitColumnInfo(10, 0, 0, true);
+        InitHeadRow(0,"회원등급분류|등록매장|성별구분|카드사용구분|결혼여부|이메일수신|SMS수신|DM수신|배달구역(대)|배달구역(중)");
+        //ObjId.InitDataProperty( DataRow, DataCol, [DataType], [Width], [DataAlign], [ColMerge], [SaveName], [KeyField]
+        //                      , [CalcuLogic], [DataFormat],[PointCount], [UpdateEdit], [InsertEdit], [EditLen], [FullInput]
+        //                      , [SortEnable],[ToolTip], [AllCheck], [SaveStatus], [FormatFix])
+        var i=0;
+        InitDataProperty(0,i++, dtCombo ,   0, daCenter, false,"CST_CLS_CD"       , false, "", dfHanKey   , 0,  true,  true);           //회원등급분류
+        InitDataProperty(0,i++, dtCombo , 150, daCenter, false,"INS_SHOP_CD"      , false, "", dfHanKey   , 0,  true,  true);           //등록매장
+        InitDataProperty(0,i++, dtCombo ,  60, daCenter, false,"SEX_FG"           , false, "", dfHanKey   , 0,  true,  true);           //성별구분
+        InitDataProperty(0,i++, dtCombo ,  80, daCenter, false,"CST_CARD_USE_FG"  , false, "", dfHanKey   , 0,  true,  true);           //카드사용구분
+        InitDataProperty(0,i++, dtCombo ,  70, daCenter, false,"WEDDING_YN"       , false, "", dfHanKey   , 0,  true,  true);           //결혼
+        InitDataProperty(0,i++, dtCombo ,  70, daCenter, false,"EMAIL_RECV_YN"    , false, "", dfHanKey   , 0,  true,  true);           //이메일수신
+        InitDataProperty(0,i++, dtCombo ,  70, daCenter, false,"SMS_RECV_YN"      , false, "", dfHanKey   , 0,  true,  true);           //SMS수신
+        InitDataProperty(0,i++, dtCombo ,  70, daCenter, false,"DM_RECV_YN"       , false, "", dfHanKey   , 0,  true,  true);           //DM수신
+
+        InitDataProperty(0,i++, dtCombo , 100, daCenter, false,"DLV_CL_CD"        , false, "", dfHanKey   , 0,  true,  true); // 배달구역(대)
+        InitDataProperty(0,i++, dtCombo , 100, daCenter, false,"DLV_CM_CD"        , false, "", dfHanKey   , 0,  true,  true); // 배달구역(중)
+
+
+        InitDataCombo(0,"CST_CLS_CD","기본등급|프리미엄","0|1","","0") //회원등급분류
+        InitDataCombo(0,"INS_SHOP_CD","현대포스","S92694","","S92694")
+
+        InitDataCombo(0,"SEX_FG","남|여","M|F","","")
+        InitDataCombo(0,"CST_CARD_USE_FG","정상|중지|재발급중|정상","0|1|2|Y","","0")   //카드사용구분
+        InitDataCombo(0,"WEDDING_YN","미혼|기혼","N|Y","","")
+        InitDataCombo(0,"EMAIL_RECV_YN","미수신|수신","N|Y","","")
+        InitDataCombo(0,"SMS_RECV_YN","미수신|수신","N|Y","","")
+        InitDataCombo(0,"DM_RECV_YN","미수신|수신","N|Y","","")
+
+
+        InitDataCombo(0,"DLV_CL_CD","신곡동|의정부동|민락동|용원동|호원동|가능동|금오동","001|002|003|004|005|006|007","","001")   //배달구역(대)
+
+        Visible = true;
+        //fnResize();
+    }
+
+    mySheet2 = fnGetObjectIdName("mySheet2");
+    with(mySheet2)
+    {
+        //SheetWidth = document.body.clientWidth - 25;
+        InitHostInfo(location.hostname, location.port, "");
+        MergeSheet = msHeaderOnly;
+        Editable = true;
+        InitRowInfo( 1, 1, 10);
+        InitColumnInfo(36, 5, 0, true);
+        InitHeadRow(0,"상태|No.||순서|검증결과|회원번호(8)|회원명(한글)|회원명(영문)|회원등급분류|등록매장|성별구분|회원카드번호|카드사용구분|생년월일|결혼여부|결혼기념일|전화번호|핸드폰번호|단축번호|E-MAIL|우편번호|주소|상세주소|이메일수신|SMS수신|DM수신|가용포인트|누적포인트|현금영수증기본인증번호|회원참조값|배달구역(대)|배달구역(대)_이름|배달구역(중)|배달구역(중)_이름|배달구역 텍스트|배달구역(상세주소)");
+        //ObjId.InitDataProperty( DataRow, DataCol, [DataType], [Width], [DataAlign], [ColMerge], [SaveName], [KeyField]
+        //                      , [CalcuLogic], [DataFormat],[PointCount], [UpdateEdit], [InsertEdit], [EditLen], [FullInput]
+        //                      , [SortEnable],[ToolTip], [AllCheck], [SaveStatus], [FormatFix])
+        var i=0;
+//        InitDataProperty(0,i++, dtHiddenStatus  ,   0, daCenter, false,"sStatus");
+//        InitDataProperty(0,i++, dtDelCheck      ,  30, daCenter, false,"sDelete");
+        InitDataProperty(0,i++, dtHiddenStatus  , 0, daLeft  , true , "sStatus"        , false, "", dfNone       , 0, false, false);         // 상태
+        InitDataProperty(0,i++, dtDataSeq       , 0, daCenter, true );
+        InitDataProperty(0,i++, dtCheckBox      , 0, daCenter, false,"checkDelSave" );
+        InitDataProperty(0,i++, dtHidden        , 0, daRight , false,"SEQ"              , false, "", dfInteger    , 0,  true,  true);           // SEQ
+        InitDataProperty(0,i++, dtCombo         , 0, daCenter, false,"RESULT"           , false, "", dfNone       , 0, false, false);           // 결과
+        InitDataProperty(0,i++, dtData          , 0, daLeft  , false,"CST_NO"           , false, "", dfHanKey     , 0,  true,  true, 8, 8); //회원번호
+        InitDataProperty(0,i++, dtData          , 0, daCenter, false,"CST_NM"           , false, "", dfHanKey     , 0,  true,  true, 12);       //회원명(한글)
+        InitDataProperty(0,i++, dtData          , 0, daCenter, false,"CST_NM_ENG"       , false, "", dfEngKey     , 0,  true,  true, 30);       //회원명(영문)
+        InitDataProperty(0,i++, dtCombo         , 0, daCenter, false,"CST_CLS_CD"       , false, "", dfHanKey     , 0,  true,  true);           //회원등급분류
+        InitDataProperty(0,i++, dtCombo         , 0, daCenter, false,"INS_SHOP_CD"      , false, "", dfHanKey     , 0,  true,  true);           //등록매장
+        InitDataProperty(0,i++, dtCombo         , 0, daCenter, false,"SEX_FG"           , false, "", dfHanKey     , 0,  true,  true);           //성별구분
+        InitDataProperty(0,i++, dtData          , 0, daCenter, false,"CST_CARD_NO"      , false, "", dfEngKey     , 0,  true,  true, 40);       //회원카드번호
+        InitDataProperty(0,i++, dtHidden        , 0, daCenter, false,"CST_CARD_USE_FG"  , false, "", dfHanKey     , 0,  true,  true);           //카드사용구분
+        InitDataProperty(0,i++, dtData          , 0, daCenter, false,"BIRTH_DATE"       , false, "", dfDateYmd    , 0,  true,  true,  8);       //생년월일
+        InitDataProperty(0,i++, dtCombo         , 0, daCenter, false,"WEDDING_YN"       , false, "", dfHanKey     , 0,  true,  true);           //결혼
+        InitDataProperty(0,i++, dtData          , 0, daCenter, false,"WEDDING_DATE"     , false, "", dfDateYmd    , 0,  true,  true,  8);       //결혼기념일
+        InitDataProperty(0,i++, dtData          , 0, daCenter, false,"TEL_NO"           , false, "", dfHanKey     , 0,  true,  true, 15);       //전화번호
+        InitDataProperty(0,i++, dtData          , 0, daCenter, false,"HP_NO"            , false, "", dfHanKey     , 0,  true,  true, 15);       //핸드폰번호
+        InitDataProperty(0,i++, dtData          , 0, daCenter, false,"S_TEL_NO"         , false, "", dfHanKey     , 0,  true,  true,  4);       //단축번호
+        InitDataProperty(0,i++, dtData          , 0, daLeft  , false,"EMAIL_ADDR"       , false, "", dfEngKey     , 0,  true,  true, 30);       //E-MAIL
+        InitDataProperty(0,i++, dtData          , 0, daCenter, false,"POST_NO"          , false, "", dfEngKey     , 0,  true,  true,  7);       //우편번호
+        InitDataProperty(0,i++, dtData          , 0, daLeft  , false,"ADDR"             , false, "", dfHanKey     , 0,  true,  true, 60);       //주소
+        InitDataProperty(0,i++, dtData          , 0, daLeft  , false,"ADDR_DTL"         , false, "", dfHanKey     , 0,  true,  true, 60);       //상세주소
+        InitDataProperty(0,i++, dtCombo         , 0, daCenter, false,"EMAIL_RECV_YN"    , false, "", dfHanKey     , 0,  true,  true);           //이메일수신
+        InitDataProperty(0,i++, dtCombo         , 0, daCenter, false,"SMS_RECV_YN"      , false, "", dfHanKey     , 0,  true,  true);           //SMS수신
+        InitDataProperty(0,i++, dtCombo         , 0, daCenter, false,"DM_RECV_YN"       , false, "", dfHanKey     , 0,  true,  true);           //DM수신
+        InitDataProperty(0,i++, dtData          , 0, daRight , false,"AVL_POINT"        , false, "", dfInteger    , 0,  true,  true, 10);       //가용포인트
+        InitDataProperty(0,i++, dtData          , 0, daRight , false,"ACC_POINT"        , false, "", dfInteger    , 0,  true,  true, 10);       //누적포인트
+        InitDataProperty(0,i++, dtData          , 0, daLeft  , false,"CSH_IDT_NO"       , false, "", dfNone       , 0,  true,  true, 40);       //현금영수증기본인증번호
+        InitDataProperty(0,i++, dtData          , 0, daLeft  , false,"CST_ID"           , false, "", dfNone       , 0,  true,  true, 30);       //회원참조값
+
+        InitDataProperty(0,i++, dtCombo ,   0, daCenter, false,"DLV_CL_CD"        , false, "", dfHanKey   , 0,  true,  true);       // 배달구역(대)
+        InitDataProperty(0,i++, dtHidden,   0, daCenter, false,"DLV_CL_NM"        , false, "", dfHanKey   , 0,  true,  true);       // 배달구역(대)
+        InitDataProperty(0,i++, dtCombo ,   0, daCenter, false,"DLV_CM_CD"        , false, "", dfHanKey   , 0,  true,  true);       // 배달구역(중)
+        InitDataProperty(0,i++, dtHidden,   0, daCenter, false,"DLV_CM_NM"        , false, "", dfHanKey   , 0,  true,  true);       // 배달구역(중)
+        InitDataProperty(0,i++, dtHidden,   0, daCenter, false,"DLV_CL_CM_TEXT"   , false, "", dfHanKey   , 0,  true,  true);       // 배달구역 텍스트
+        InitDataProperty(0,i++, dtData  ,   0, daLeft  , false,"DLV_ADDR_DTL"     , false, "", dfHanKey   , 0,  true,  true, 60);   // 배달구역(상세주소)
+
+
+        ColHidden('CST_NO') = true;
+
+        InitDataCombo(0,"RESULT","성공|입력완료|입력오류|회원번호|회원명(한글)|회원명(영문)|회원등급분류|등록매장|성별구분|회원카드번호|카드사용구분|카드발급횟수|생년월일|양/음력|결혼여부|결혼기념일|전화번호|핸드폰번호|단축번호|E-MAIL|우편번호|주소|상세주소|이메일수신|SMS수신|DM수신|배달구역(대)|배달구역(중)|배달구역(상세주소)","00|INS_OK|INS_ERR|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26","","")
+
+        InitDataCombo(0,"CST_CLS_CD","기본등급|프리미엄","0|1","","0") //회원등급분류
+        InitDataCombo(0,"INS_SHOP_CD","현대포스","S92694","","S92694")
+
+        InitDataCombo(0,"SEX_FG","남|여","M|F","","")
+//        InitDataCombo(0,"CST_CARD_USE_FG","정상|중지|재발급중|정상","0|1|2|Y","","0")    //카드사용구분
+        InitDataCombo(0,"WEDDING_YN","미혼|기혼","N|Y","","")
+        InitDataCombo(0,"EMAIL_RECV_YN","미수신|수신","N|Y","","")
+        InitDataCombo(0,"SMS_RECV_YN","미수신|수신","N|Y","","")
+        InitDataCombo(0,"DM_RECV_YN","미수신|수신","N|Y","","")
+
+
+        InitDataCombo(0,"DLV_CL_CD"," |신곡동|의정부동|민락동|용원동|호원동|가능동|금오동"," |001|002|003|004|005|006|007",""," ")   //배달구역(대)
+
+
+        Visible = true;
+        //fnResize();
+    }
+}
+
+function doAction(str, idx)
+{
+    document.form1.S_METHOD.value = str;
+    document.form1.SHEETSEQ.value = idx;
+    sheet_obj = fnGetObjectIdName("mySheet"+idx);
+    var ogn_fg = 'S';
+
+    switch(str)
+    {
+        //검색
+        case "search":
+            sheet_obj.ShowDebugMsg = false;
+            if(!jsSaveName(form1, sheet_obj)) { return false; }
+            var param = FormQueryStringEnc(document.form1, sheet_obj);
+            sheet_obj.DoSearch4Post("ddd.sheetAction",param);
+            sheet_obj.ColFontColor('RESULT') = sheet_obj.RgbColor(255,0,0);
+
+            //조회 끝나고 나서 페이지 인덱스를 생성
+            var sTD = MakePageButton("document.form1.page_no"        // 페이징 인덱스를 관리할 OBJ
+                                    ,"10"                            // 페이지 목록 나열 갯수
+                                    ,document.form1.page_size.value  // 한 페이지당 레코드 겟수
+                                    ,document.form1.page_no.value    // 현재 페이지의 인덱스
+                                    ,sheet_obj.EtcData("total_rows") // 총레코드갯수
+                                    ,document.form1.SHEETSEQ.value   // 시트인덱스
+                                    );
+            fnGetObjectIdName('PAGEBUTTON').innerHTML = sTD;
+            if(document.form1.s_success_err.value == 'success')     fnGetObjectIdName("s_err").innerHTML = "성공내역조회";
+            else if(document.form1.s_success_err.value == 'err')    fnGetObjectIdName("s_err").innerHTML = "<font color='red'>오류내역조회</font>";
+            else                                                    fnGetObjectIdName("s_err").innerHTML = "전체조회";
+            if(idx == '2') fn_ResizeColWidth(sheet_obj,[0, 0, 30, 0, 120, 100, 80, 80, 80, 120, 100, 100, 0, 80, 80, 80, 120, 120, 80, 120, 80, 100, 200, 70, 70, 70, 70, 70, 150, 100, 100, 0, 100, 0, 0, 200]);
+            mySheet2.CheckAll('checkDelSave') = false;
+            break;
+
+        //양식검증
+        case "data_chk":
+            sheet_obj.Visible = false;
+            if(!jsSaveName(form1, sheet_obj)) { return false; }
+            var param = FormQueryStringEnc(document.form1, sheet_obj);
+            sheet_obj.DoSearch4Post("ddd.sheetAction",param);
+            sheet_obj.Visible = true;
+            sheet_obj.ColFontColor('RESULT') = sheet_obj.RgbColor(255,0,0);
+
+            //조회 끝나고 나서 페이지 인덱스를 생성
+            var sTD = MakePageButton("document.form1.page_no"        // 페이징 인덱스를 관리할 OBJ
+                                    ,"10"                            // 페이지 목록 나열 갯수
+                                    ,document.form1.page_size.value  // 한 페이지당 레코드 겟수
+                                    ,document.form1.page_no.value    // 현재 페이지의 인덱스
+                                    ,sheet_obj.EtcData("total_rows") // 총레코드갯수
+                                    ,document.form1.SHEETSEQ.value   // 시트인덱스
+                                    );
+            fnGetObjectIdName('PAGEBUTTON').innerHTML = sTD;
+            if(document.form1.s_success_err.value == 'success')     fnGetObjectIdName("s_err").innerHTML = "성공내역조회";
+            else if(document.form1.s_success_err.value == 'err')    fnGetObjectIdName("s_err").innerHTML = "<font color='red'>오류내역조회</font>";
+            else                                                    fnGetObjectIdName("s_err").innerHTML = "전체조회";
+            if(idx == '2') fn_ResizeColWidth(sheet_obj,[0, 0, 30, 0, 120, 100, 80, 80, 80, 120, 100, 100, 0, 80, 80, 80, 120, 120, 80, 120, 80, 100, 200, 70, 70, 70, 70, 70, 150, 100, 100, 0, 100, 0, 0, 200]);
+            break;
+
+        //양식검증 후 업데이트
+        case "save":
+            sheet_obj.CheckAll('checkDelSave') = false;
+            var sRow = sheet_obj.FindStatusRow("U");
+            if(sRow != '')
+            {
+                var arrRow = sRow.split(';');
+                for(var i = 0; i < arrRow.length; i++)
+                {
+                    if(arrRow[i] == '') break;
+                    sheet_obj.CellValue(arrRow[i],'DLV_CL_NM')  =       sheet_obj.CellText(arrRow[i],'DLV_CL_CD');
+                    sheet_obj.CellValue(arrRow[i],'DLV_CM_NM')  =       sheet_obj.CellText(arrRow[i],'DLV_CM_CD');
+                    if(sheet_obj.CellText(arrRow[i],'DLV_CL_CD') != '') sheet_obj.CellValue(arrRow[i],'DLV_CL_CM_TEXT') = sheet_obj.CellText(arrRow[i],'DLV_CL_CD')+" "+sheet_obj.CellText(arrRow[i],'DLV_CM_CD');
+                }
+                var param = FormQueryStringEnc(document.form1, sheet_obj);
+                sheet_obj.DoSave("ddd.sheetAction",param,-1, false);
+            }
+            break;
+
+        case "delete":
+            if(confirm('자료를 삭제하시겠습니까?'))
+            {
+                var param = FormQueryStringEnc(document.form1, sheet_obj);
+                sheet_obj.DoSave("ddd.sheetAction",param, "checkDelSave", false);
+                if(sheet_obj.EtcData("retMsg") == '0000')
+                {
+                    alert('삭제가 완료되었습니다.');
+                }
+                fnRowDel();
+            }
+            break;
+
+        case "down2Excel" :
+            //Down2Excel([Mode], [UseOpenFile], [NewSheet], [Merge],
+            //           [SaveAsName],[ReportPageUrl],[HideExcelMsg],
+            //           [WriteTreeLevel], [WorkSheetName], [FocusFirstSheet]
+            //           [ColumnSkipList],[RowSkipList],[bProtect],[bFormula])
+            if(sheet_obj.RowCount > 0 && !confirm("작업중인 데이타가 존재합니다.\r\n계속 진행하실 경우 저장하지 않은 데이터는 삭제됩니다.\r\n계속 진행하시겠습니까?")) return false;
+            with(sheet_obj)
+            {
+                RemoveAll() ;
+                var Row = DataInsert();
+
+                Down2Excel(-1, false, false, true, "", "", false, false, "회원등록", true, "sStatus|1|checkDelSave|RESULT");
+                RemoveAll() ;
+            }
+            break;
+
+        case "curDown2Excel" :
+            //Down2Excel([Mode], [UseOpenFile], [NewSheet], [Merge],
+            //           [SaveAsName],[ReportPageUrl],[HideExcelMsg],
+            //           [WriteTreeLevel], [WorkSheetName], [FocusFirstSheet]
+            //           [ColumnSkipList],[RowSkipList],[bProtect],[bFormula])
+            sheet_obj.Down2Excel(-1, false, false, true, "", "", false, false, "", true, "sStatus|1|checkDelSave|RESULT");
+            break;
+
+        case "loader" :
+            ing_display(true);
+            sheet_obj.ShowDebugMsg  = false;
+            var count = 100;
+            var loop_cnt = sheet_obj.HeaderRows+sheet_obj.RowCount;
+            var page_cnt = 0;
+            for(var i = sheet_obj.HeaderRows; i < loop_cnt; i += count)
+            {
+                document.form1.CST_SEQ.value = page_cnt * count;
+
+                if(i+count > loop_cnt)
+                {
+                    count = loop_cnt - i;
+                }
+
+                for(var j = i; j < i+count; j++)
+                {
+                    sheet_obj.CellValue(j,'DLV_CL_NM')          = sheet_obj.CellText(j,'DLV_CL_CD');
+                    sheet_obj.CellValue(j,'DLV_CM_NM')          = sheet_obj.CellText(j,'DLV_CM_CD');
+                    if(sheet_obj.CellText(j,'DLV_CL_CD') != '')   sheet_obj.CellValue(j,'DLV_CL_CM_TEXT') = sheet_obj.CellText(j,'DLV_CL_CD')+" "+sheet_obj.CellText(j,'DLV_CM_CD');
+                    sheet_obj.CellValue(j,"checkDelSave") = 1;
+                    sheet_obj.CellValue(j,'POST_NO') = sheet_obj.CellValue(j,'POST_NO').replace("-","");
+                }
+
+
+                var param = FormQueryStringEnc(document.form1, sheet_obj);
+                sheet_obj.DoSave("ddd.sheetAction",param, "checkDelSave", false);
+
+                if(sheet_obj.EtcData("retMsg") != '0000')
+                {
+                    ing_display(false);
+                    alert('에러가 발생했습니다.');
+                    return false;
+                }
+
+                for(var j = i; j < i+count; j++)
+                {
+                    sheet_obj.CellValue(j,"checkDelSave") = 0;
+                }
+
+                page_cnt++;
+
+                document.form1.obj_progress.value = ((document.form1.obj_progress.value == '') ? 0 : parseInt(document.form1.obj_progress.value)) + count;
+            }
+
+            ing_display(false);
+            break;
+    }
+
+    if(sheet_obj.EtcData("retMsg") && sheet_obj.EtcData("retMsg") != '' && sheet_obj.EtcData("retMsg") != '0000')
+    {
+        ErrorShow(sheet_obj.EtcData("retMsg")+'╋'+'https://asp.netusys.com/master/cust/cust_excel010.jsp', "popup", "");
+    }
+}
+var isSave = false;
+function fnIsSave(tf)
+{
+    if(tf == true)
+    {
+        isSave = true;
+        fnGetObjectIdName('divSaving').style.display = 'inline';
+    }
+    else
+    {
+        isSave = false;
+        fnGetObjectIdName('divSaving').style.display = 'none';
+    }
+}
+function fnSave()
+{
+    if(document.form1.savingFg.value == 'true')       { alert("저장중입니다. 저장이 완료된 후 다시 시도하여 주십시오."); return false; }
+    else if(document.form1.savingFg.value == 'false') document.form1.savingFg.value = 'true';
+    mySheet2.CheckAll('checkDelSave') = false;
+    var sRow = mySheet2.FindStatusRow("U");
+    if(sRow == '')
+    {
+        document.form1.PROC_FG.value = 'I';
+        document.form1.action = 'cust_excel010_save.jsp';
+        document.form1.method = 'post';
+        document.form1.target = 'BlankFrm';
+        document.form1.submit();
+        fnIsSave(true);
+    }
+    else
+    {
+        alert('수정한 내역이 있습니다.\n양식검증을 실행 후 저장하시기 바랍니다.');
+    }
+}
+function fn_data_chk(save_yn)
+{
+    if(save_yn == 'Y') doAction('save','2');
+    doAction('data_chk','2');
+}
+function fnDel()
+{
+    fnGetObjectIdName("mySheet2").RemoveAll();
+    document.form1.PROC_FG.value = 'D';
+    document.form1.action = 'cust_excel010_save.jsp';
+    document.form1.method = 'post';
+    document.form1.target = 'BlankFrm';
+    document.form1.submit();
+}
+function excelUpload(idx)
+{
+    if(confirm('임시등록한 자료가 모두 삭제됩니다.\n계속 진행하시겠습니까?'))
+    {
+        // 임시등록자료 모두 삭제
+        fnDel();
+        // 양식업로드
+        var sheet_obj = fnGetObjectIdName("mySheet"+idx);
+        sheet_obj.LoadExcel(-1, 1, "", -1, -1, "", false);
+        sheet_obj.SelectCell(0,0);
+
+        document.form1.obj_progress.value  = '';
+        document.form1.obj_totalrows.value = sheet_obj.RowCount;
+        doAction('loader','2');
+        document.form1.s_success_err.value  = '';
+        fn_data_chk('N');
+        alert('load완료');
+    }
+}
+function fnRowDel()
+{
+    var sheet_obj = fnGetObjectIdName("mySheet2");
+    var tot_rows  = document.form1.obj_totalrows.value;
+    var pro_rows  = document.form1.obj_progress.value;
+    var del_rows  = 0;
+    for(var i = sheet_obj.HeaderRows+sheet_obj.RowCount-1; i >= sheet_obj.HeaderRows; i--)
+    {
+        if(sheet_obj.CellValue(i,'checkDelSave') == '1')
+        {
+//            sheet_obj.RowDelete(i,false);
+            del_rows++;
+        }
+    }
+    doAction('search','2');
+    document.form1.obj_totalrows.value = tot_rows - del_rows;
+    document.form1.obj_progress.value  = pro_rows - del_rows;
+}
+function ing_display(isDisplay)
+{
+    var ing_img  = fnGetObjectIdName("ing_img");
+    var ing_back = fnGetObjectIdName("ing_back");
+    var Left    = (isDisplay ? "350" : "-350");
+    var Top     = (isDisplay ? "363" : "-273");
+    var display = (isDisplay ? "" : "none");
+    ing_back.style.pixelLeft    = Left;
+    ing_back.style.pixelTop     = Top;
+    ing_back.style.display      = display;
+    ing_img.style.pixelLeft     = Left;
+    ing_img.style.pixelTop      = Top;
+    ing_img.style.display       = display;
+    return true;
+}
+/////////////////////////////////////// window.onload ///////////////////////////////////////
+window.onload = function() { setTimeout("onloadFunctions()",0); }; function onloadFunctions()
+{
+    init_sheet(); set_item();
+    fnGetObjectIdName("mySheet1").DataInsert();
+    //doDataInsert('1');
+    fnResize();
+    set_DlvCmCd(1,1);
+}
+/////////////////////////////////////// window.onresize ///////////////////////////////////////
+window.onresize = function()
+{
+    fnResize();
+}
+/////////////////////////////////////// fnResize ///////////////////////////////////////
+function fnResize()
+{
+    setObjHeight('mySheet2', 40);
+    fn_ResizeColWidth(mySheet2,[0, 0, 30, 0, 120, 100, 80, 80, 80, 120, 100, 100, 0, 80, 80, 80, 120, 120, 80, 120, 80, 100, 200, 70, 70, 70, 70, 70, 150, 100, 100, 0, 100, 0, 0, 200]);
+}
+</SCRIPT>
+
+<SCRIPT for=mySheet1 event=onChange(Row,Col,Value)>
+if(Col == SaveNameCol('DLV_CL_CD')) // 배달구역(대)
+{
+    set_DlvCmCd(1,Row);
+}
+</SCRIPT>
+
+<SCRIPT for=mySheet2 event="OnChange(Row, Col,Value)">
+if(Col == SaveNameCol('WEDDING_YN'))  //결혼여부
+{
+    if(Value == "Y")    CellEditable(Row, "WEDDING_DATE") = true;
+    else
+    {
+        CellEditable(Row, "WEDDING_DATE")   = false;
+        CellValue(Row, "WEDDING_DATE")      = "";
+    }
+}
+else if(Col == SaveNameCol('DLV_CL_CD')) // 배달구역(대)
+{
+    set_DlvCmCd(2,Row);
+if(sheet_obj.CellValue(Row,'DLV_CL_CD') == '' || sheet_obj.CellValue(Row,'DLV_CL_CD') == ' ')
+{
+sheet_obj.CellValue(Row,'DLV_CM_CD')      = '';
+sheet_obj.CellValue(Row,'DLV_CL_CM_TEXT') = '';
+sheet_obj.CellValue(Row,'DLV_ADDR_DTL')   = '';
+}
+}
+</SCRIPT>
+
+<SCRIPT for=mySheet2 event="OnClick(Row, Col, Value)">
+if(Col == SaveNameCol('DLV_CM_CD')) // 배달구역(중)
+{
+    set_DlvCmCd(2,Row);
+}
+</SCRIPT>
+
+<DIV id=divSaving style="OVERFLOW: hidden; POSITION: absolute; LEFT: 406px; ; LEFT: expression((document.body.clientWidth-200)/2); Z-INDEX: 99; DISPLAY: none; TOP: 249px; ; TOP: expression((document.body.clientHeight-100)/2)">
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD><IFRAME height=100 marginHeight=0 src="/common/jsp/saving.html" frameBorder=0 width=200 marginWidth=0 scrolling=no></IFRAME></TD></TR></TBODY></TABLE></DIV>
+<FORM name=form1><!-- IBFrame 을 위한 변수 선언 (필수)--><INPUT type=hidden value=master.cust.cust_excel010 name=S_CONTROLLER> <INPUT type=hidden name=S_METHOD> <INPUT type=hidden name=S_SAVENAME> <!-- IBFrame 을 위한 변수 선언 (선택)--><INPUT type=hidden name=SHEETSEQ> <INPUT type=hidden value=N name=DIRECT_YN> <INPUT type=hidden value=8 name=cstLen> <INPUT type=hidden value=2 name=ENV_111> <INPUT type=hidden name=PROC_FG> <INPUT type=hidden name=CST_SEQ> <INPUT type=hidden value=1 name=page_no> <INPUT type=hidden value=false name=savingFg>
+<SCRIPT>if(parent && parent.HistoryFrm && parent.HistoryFrm.MainFrmPage && parent.HistoryFrm.MainFrmPage.pgm_nm && parent.HistoryFrm.MainFrmPage.pgm_nm.value != '') {document.write("<table width='100%' border='0' cellpadding='0' cellspacing='0' background='/image/title_bg.gif'><tr height='30'><td width='10'></td><td>  <table border='0' cellpadding='0' cellspacing='0'>  <tr>  <td><img src='/image/title_icon.gif'></td>  <td width='10'></td>  <td>    <table border='0' cellpadding='0' cellspacing='0'><tr><td height='3'></td></tr><tr>    <td><font color='#FFFFFF' style='font-size:14px;'><b>"+parent.HistoryFrm.MainFrmPage.pgm_nm.value+"</b></font></td>    </tr></table>  </td>  <td width='40'></td>  <td><span id='span_mymenu'></span></td>  <td width='10'></td>  <td><img src='/image/icon01/btn_column.gif'  onclick='parent.set_menu_item();' style='cursor:hand;'></td>  </tr>  </table></td><td align='right'><font color='#FFFFFF'>"+parent.HistoryFrm.MainFrmPage.pgm_lcls_nm.value+((parent.HistoryFrm.MainFrmPage.pgm_mcls_nm.value == '') ? '' : ' &gt; '+parent.HistoryFrm.MainFrmPage.pgm_mcls_nm.value)+' &gt; '+parent.HistoryFrm.MainFrmPage.pgm_nm.value+"</font></td><td width='10'></td></tr></table>");fnSetPgmId(parent.HistoryFrm.MainFrmPage.pgm_id.value);document.getElementById('span_mymenu').innerHTML = parent.HistoryFrm.getMyMenuStr(parent.HistoryFrm.MainFrmPage.pgm_id.value);}</SCRIPT>
+
+<TABLE cellSpacing=0 cellPadding=0 width="100%" background=/image/title_bg.gif border=0>
+<TBODY>
+<TR height=30>
+<TD width=10></TD>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD><IMG src="/image/title_icon.gif"></TD>
+<TD width=10></TD>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD height=3></TD></TR>
+<TR>
+<TD><FONT style="FONT-SIZE: 14px" color=#ffffff><B>회원엑셀업로드</B></FONT></TD></TR></TBODY></TABLE></TD>
+<TD width=40></TD>
+<TD><SPAN id=span_mymenu><IMG onclick="top.HistoryFrm.fnEditMyMenu('Y','000375')" style="CURSOR: hand" src="https://asp.netusys.com/image/icon01/mymenu_plus.gif"></SPAN></TD>
+<TD width=10></TD>
+<TD><IMG onclick=parent.set_menu_item(); style="CURSOR: hand" src="/image/icon01/btn_column.gif"></TD></TR></TBODY></TABLE></TD>
+<TD align=right><FONT color=#ffffff>회원관리 &gt; 회원정보 &gt; 회원엑셀업로드</FONT></TD>
+<TD width=10></TD></TR></TBODY></TABLE><!-- 조회조건 시작 -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" bgColor=#e9e9e9 border=0>
+<TBODY>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=27>
+<TD width=10></TD>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR vAlign=top>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD>
+<TABLE onclick="doAction('down2Excel','2')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_black_l_bg.gif"></TD>
+<TD background=/image/btn_black_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>양식다운로드</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_black_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=10></TD>
+<TD>
+<TABLE onclick="excelUpload('2');" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_black_l_bg.gif"></TD>
+<TD background=/image/btn_black_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>양식업로드</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_black_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=10></TD>
+<TD>
+<TABLE onclick="doAction('curDown2Excel','2')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_black_l_bg.gif"></TD>
+<TD background=/image/btn_black_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>편집화면다운로드</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_black_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> <SELECT name=s_success_err> <OPTION selected value="">-전체-</OPTION> <OPTION value=success>성공내역</OPTION> <OPTION value=err>오류내역</OPTION></SELECT></TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> 검색줄수 <INPUT onkeypress="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','2'); }" class=input1hr size=4 value=500 name=page_size></TD>
+<TD width=10></TD>
+<TD>
+<TABLE onclick="document.form1.page_no.value='1'; doAction('search',2);" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_black_l_bg.gif"></TD>
+<TD background=/image/btn_black_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>조회</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_black_r_bg.gif"></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD>
+<TD align=right>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD>
+<TABLE onclick="fn_data_chk('Y');" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>양식검증</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=10></TD>
+<TD>
+<TABLE onclick=fnSave() style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>저장</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><!-- 조회조건 끝 --></TD></TD>
+<TD width=10></TD></TR>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=1 bgColor=#d6d6d6>
+<TD colSpan=3></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" bgColor=#e9e9e9 border=0>
+<TBODY>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=27>
+<TD width=10></TD>
+<TD>
+<TABLE cellSpacing=0 cellPadding=2 width="100%" border=0>
+<TBODY>
+<TR height=4>
+<TD colSpan=2></TD></TR>
+<TR>
+<TD width="50%"><IMG src="/image/s_icon.gif"> 1. 양식다운로드 버튼을 클릭하여 양식을 다운받아 작성하여 주십시오.</TD>
+<TD width="50%"><IMG src="/image/s_icon.gif"> 2. 모든 입력값은 코드값이 아닌 명칭으로 입력해 주십시오.</TD></TR>
+<TR>
+<TD width="50%"><IMG src="/image/s_icon.gif"> 3. 양식업로드 버튼을 클릭하여 작성하신 양식을 업로드하여 주십시오.</TD>
+<TD width="50%"><IMG src="/image/s_icon.gif"> 4. 업로드 후 양식검증 버튼을 클릭하여 자료를 검증해 주십시오.</TD></TR>
+<TR>
+<TD width="50%"><IMG src="/image/s_icon.gif"> 5. 저장 버튼을 클릭하면 양식검증이 완료된 회원만 저장됩니다.</TD>
+<TD width="50%"></TD></TR></TBODY></TABLE></TD></TD>
+<TD width=10></TD></TR>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=1 bgColor=#d6d6d6>
+<TD colSpan=3></TD></TR></TBODY></TABLE>
+<TABLE height=6 cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" bgColor=#e9e9e9 border=0>
+<TBODY>
+<TR height=1 bgColor=#aaaaaa>
+<TD colSpan=6></TD></TR>
+<TR height=25>
+<TD bgColor=#aaaaaa width=1></TD>
+<TD width=8></TD>
+<TD align=left><IMG src="/image/s_icon.gif"> 콤보 리스트</TD>
+<TD width=8></TD>
+<TD bgColor=#aaaaaa width=1></TD></TR>
+<TR height=1 bgColor=#aaaaaa>
+<TD colSpan=6></TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD>
+<TABLE id=TableNm1 height=80 cellSpacing=1 cellPadding=4 width="100%" bgColor=#aaaaaa border=0 name="TableNm1">
+<TBODY>
+<TR bgColor=#ffffff vAlign=top>
+<TD height="100%" width="100%">
+<SCRIPT>makeIBSheet('mySheet1');</SCRIPT>
+
+<OBJECT id=mySheet1 name=mySheet1 codeBase="/common/object/IBSheet3.CAB#version=3,4,0,387" classid=CLSID:341FBC5F-2AE4-41B8-BFE5-A03170569A27 width="100%" height="100%"><PARAM NAME="_ExtentX" VALUE="25982"><PARAM NAME="_ExtentY" VALUE="1852"><PARAM NAME="ConfigXml" VALUE="/common/gridstyle/GridConfig.xml"><PARAM NAME="Version" VALUE="3.4.0.387"></OBJECT>
+<SCRIPT>document.getElementById('mySheet1').SetExcelColDialog(0);</SCRIPT>
+</TD></TR></TBODY></TABLE></TD></TR>
+<TR height=6>
+<TD></TD></TR>
+<TR>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" bgColor=#e9e9e9 border=0>
+<TBODY>
+<TR height=1 bgColor=#aaaaaa>
+<TD colSpan=6></TD></TR>
+<TR height=25>
+<TD bgColor=#aaaaaa width=1></TD>
+<TD width=8></TD>
+<TD align=left>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=bottom>
+<TD><IMG src="/image/s_icon.gif"> 회원 내역 &nbsp;</TD>
+<TD>( * 체크박스를 체크하고 &nbsp;</TD>
+<TD>
+<TABLE onclick="doAction('delete','2')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>삭제</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD>&nbsp; 버튼을 누르시면 등록된 내역이 삭제됩니다. ) &nbsp;&nbsp;&nbsp; <B><SPAN id=s_err></SPAN></B></TD></TR></TBODY></TABLE></TD>
+<TD align=right>업로드진행 : <INPUT class=read1hr readOnly size=5 name=obj_progress> / <INPUT class=read1hr readOnly size=5 name=obj_totalrows></TD>
+<TD width=8></TD>
+<TD bgColor=#aaaaaa width=1></TD></TR>
+<TR height=1 bgColor=#aaaaaa>
+<TD colSpan=6></TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD>
+<TABLE id=TableNm2 height=30 cellSpacing=1 cellPadding=4 width="100%" bgColor=#aaaaaa border=0 name="TableNm2">
+<TBODY>
+<TR bgColor=#ffffff vAlign=top>
+<TD height="100%" width="100%">
+<SCRIPT>makeIBSheet('mySheet2');</SCRIPT>
+
+<OBJECT id=mySheet2 style="HEIGHT: 265px" name=mySheet2 codeBase="/common/object/IBSheet3.CAB#version=3,4,0,387" classid=CLSID:341FBC5F-2AE4-41B8-BFE5-A03170569A27 width="100%" height="100%"><PARAM NAME="_ExtentX" VALUE="25982"><PARAM NAME="_ExtentY" VALUE="7011"><PARAM NAME="ConfigXml" VALUE="/common/gridstyle/GridConfig.xml"><PARAM NAME="Version" VALUE="3.4.0.387"></OBJECT>
+<SCRIPT>document.getElementById('mySheet2').SetExcelColDialog(0);</SCRIPT>
+</TD></TR></TBODY></TABLE>
+<DIV id=PAGEBUTTON></DIV></TD></TR></TBODY></TABLE></FORM>
+<DIV id=ing_img style="HEIGHT: 110px; WIDTH: 310px; POSITION: absolute; TEXT-ALIGN: center; Z-INDEX: 90; DISPLAY: none"><IMG src="/image/Wait_Image.jpg"></DIV><IFRAME id=ing_back style="HEIGHT: 110px; WIDTH: 310px; POSITION: absolute; TEXT-ALIGN: center; Z-INDEX: 89; DISPLAY: none" frameBorder=0></IFRAME></BODY></HTML>
+
+{% endblock %}

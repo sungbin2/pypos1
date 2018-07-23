@@ -1,0 +1,409 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<style>
+
+
+  table {
+    width: 100%;
+    border: 0px;
+    background-color :#e7dfdf;
+  }
+  .box{
+    border: 1px solid #a3a2a2; margin :0.5em 0em 0em 0em;
+  }
+  th {
+    text-align : left;
+    background-color: #e7dfdf;
+  }
+
+</style>
+
+<HTML><HEAD><META content="IE=5.0000" http-equiv="X-UA-Compatible">
+<TITLE></TITLE><LINK rel=stylesheet type=text/css href="/common/css/bok.css">
+<SCRIPT src="/common/js/common.js"></SCRIPT>
+
+<SCRIPT src="/common/js/udfMainFrm.js?ver=20180418"></SCRIPT>
+
+<SCRIPT src="/common/js/IBSheetInfo.js"></SCRIPT>
+
+<SCRIPT src="/common/js/IBSheetConfig.js"></SCRIPT>
+
+<SCRIPT src="/common/js/showitem.js"></SCRIPT>
+<!-- <script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script> -->
+<SCRIPT language=javascript> if(top.MainFrm) { set_url('/sale/cust/wes020.jsp'); }</SCRIPT>
+
+<SCRIPT language=javascript>
+function fnSessionCheck()
+{
+    if(top.SessionForm
+    && top.SessionForm.user_id)
+    {
+        if(top.SessionForm.user_id.value != "s92694")
+        {
+            alert("같은 세션으로 다른 사용자로 로그인 하였습니다.\n다시 로그인 하시기 바랍니다.");
+            top.close();
+        }
+    }
+    else
+    if(opener
+    && opener.closed == false
+    && opener.top.SessionForm
+    && opener.top.SessionForm.user_id)
+    {
+        if(opener.top.SessionForm.user_id.value != "s92694")
+        {
+            alert("같은 세션으로 다른 사용자로 로그인 하였습니다.\n다시 로그인 하시기 바랍니다.");
+            top.close();
+            opener.top.close();
+        }
+    }
+    else
+    if(opener
+    && opener.closed == false
+    && opener.opener
+    && opener.opener.closed == false
+    && opener.opener.top.SessionForm
+    && opener.opener.top.SessionForm.user_id)
+    {
+        if(opener.opener.top.SessionForm.user_id.value != "s92694")
+        {
+            alert("같은 세션으로 다른 사용자로 로그인 하였습니다.\n다시 로그인 하시기 바랍니다.");
+            top.close();
+            opener.top.close();
+            opener.opener.top.close();
+        }
+    }
+}
+setTimeout("fnSessionCheck()",0);
+
+if(window.name == 'MainFrm' && parent.SessionForm.pass_ch_option.value == '1')
+{
+    showModalDialog('/master/emp/passwd010.jsp?popup_fg=Y'
+                   ,self
+                   ,'dialogWidth:400px;dialogHeight:340px;dialogTop:100px;dialogLeft:100px;status:no;resizable:yes;scroll:no;');
+}
+</SCRIPT>
+
+<SCRIPT src="/common/js/select_box.js"></SCRIPT>
+
+<FORM name=formAJAX action=/common/jsp/select_qry.jsp><INPUT id=select_source type=hidden value=/sale/cust/wes020.jsp name=select_source><INPUT id=select_idx size=100 type=hidden name=select_idx><INPUT id=select_objidx size=100 type=hidden name=select_objidx><INPUT id=select_name size=100 type=hidden name=select_name><INPUT id=select_value size=100 type=hidden name=select_value><INPUT id=select_option size=100 type=hidden name=select_option><INPUT id=select_query size=100 type=hidden name=select_query><INPUT id=select_title size=100 type=hidden name=select_title><INPUT id=select_change size=100 type=hidden name=select_change><INPUT id=select_etc size=100 type=hidden name=select_etc></FORM>
+<SCRIPT src="/common/js/calendar2.js"></SCRIPT>
+</HEAD>
+<BODY>
+<DIV id=cal_div2 style="OVERFLOW: hidden; POSITION: absolute; Z-INDEX: 99; DISPLAY: none" name="cal_div2">
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD><IFRAME id=cal_frm1 height=199 marginHeight=0 src="/common/jsp/calendar.html" frameBorder=0 width=162 name=cal_frm1 marginWidth=0 scrolling=no></IFRAME></TD>
+<TD><IFRAME height=197 marginHeight=0 src="/common/jsp/blank.htm" frameBorder=0 width=2 marginWidth=0 scrolling=no></IFRAME></TD>
+<TD><IFRAME id=cal_frm2 height=199 marginHeight=0 src="/common/jsp/calendar.html" frameBorder=0 width=162 name=cal_frm2 marginWidth=0 scrolling=no></IFRAME></TD></TR>
+<TR>
+<TD colSpan=3><IFRAME id=cal_close_frm height=28 marginHeight=0 src="/common/jsp/calendar_close.jsp?target=2" frameBorder=0 width=326 name=cal_close_frm marginWidth=0 scrolling=no></IFRAME></TD></TR></TBODY></TABLE></DIV>
+<SCRIPT language=javascript>
+function init_sheet()
+{
+    with(mySheet1)
+    {
+        //SheetWidth = document.body.clientWidth - 25;
+        InitHostInfo(location.hostname, location.port, "");
+        MergeSheet = msHeaderOnly;
+        Editable = false;
+        InitRowInfo( 2, 1, 1);
+        InitColumnInfo(9, 0, 0, true);
+        InitHeadRow(0,"No.|매장코드|회원번호|회원명|전체|전체|전체|기간내|기간내" , true);
+        InitHeadRow(1,"No.|매장코드|회원번호|회원명|외상금액|입금액|외상잔액|외상금액|입금액", false);
+        //ObjId.InitDataProperty( DataRow, DataCol, [DataType], [Width], [DataAlign], [ColMerge], [SaveName], [KeyField]
+        //                      , [CalcuLogic], [DataFormat],[PointCount], [UpdateEdit], [InsertEdit], [EditLen], [FullInput]
+        //                      , [SortEnable],[ToolTip], [AllCheck], [SaveStatus], [FormatFix])
+        var i = 0;
+        InitDataProperty(0,i++, dtDataSeq    , 0, daCenter, true );
+        InitDataProperty(0,i++, dtHidden     , 0, daCenter, true,"SHOP_CD"        , false , "", dfNone   , 0, false, false);
+        InitDataProperty(0,i++, dtData       , 0, daCenter, true,"CST_TRAVEL_NO"  , false , "", dfNone,    0, false, false);
+        InitDataProperty(0,i++, dtData       , 0, daLeft  , true,"CST_TRAVEL_NM"  , false , "", dfHanKey,  0, false, false);
+        InitDataProperty(0,i++, dtAutoSum    , 0, daRight , true,"TOT_WES_AMT"    , false , "", dfInteger, 0, false, false);
+        InitDataProperty(0,i++, dtAutoSum    , 0, daRight , true,"TOT_WES_IN_AMT" , false , "", dfInteger, 0, false, false);
+        InitDataProperty(0,i++, dtAutoSum    , 0, daRight , true,"TOT_WES_OUT_AMT", false , "", dfInteger, 0, false, false);
+        InitDataProperty(0,i++, dtAutoSum    , 0, daRight , true,"TERM_WES_AMT"   , false , "", dfInteger, 0, false, false);
+        InitDataProperty(0,i++, dtAutoSum    , 0, daRight , true,"TERM_WES_IN_AMT", false , "", dfInteger, 0, false, false);
+
+        Visible = true;
+    }
+
+    with(mySheet2)
+    {
+        //SheetWidth = document.body.clientWidth - 25;
+        InitHostInfo(location.hostname, location.port, "");
+        MergeSheet = msAll;
+        Editable = true;
+        InitRowInfo( 1, 1, 10);
+        InitColumnInfo(8, 0, 0, true);
+        InitHeadRow(0,"날짜|외상\n구분|외상액|입금액|매장코드|매출일자|포스\n번호|영수\n번호");
+        //ObjId.InitDataProperty( DataRow, DataCol, [DataType], [Width], [DataAlign], [ColMerge], [SaveName], [KeyField]
+        //                      , [CalcuLogic], [DataFormat],[PointCount], [UpdateEdit], [InsertEdit], [EditLen], [FullInput]
+        //                      , [SortEnable],[ToolTip], [AllCheck], [SaveStatus], [FormatFix])
+        var i = 0;
+        InitDataProperty(0,i++, dtData              , 0, daCenter, false , "INS_DT"      , false, "", dfUserFormat2 , 0, false, false);
+        InitDataProperty(0,i++, dtHidden    , 0, daCenter, false , "WES_FG"      , false, "", dfNone        , 0, false, false);
+        InitDataProperty(0,i++, dtAutoSum           , 0, daRight , false , "WES_AMT"     , false, "", dfInteger     , 0, false, false);
+        InitDataProperty(0,i++, dtAutoSum           , 0, daRight , false , "WES_IN_AMT"  , false, "", dfInteger     , 0, false, false);
+        InitDataProperty(0,i++, dtHidden            , 0, daCenter, false , "SHOP_CD"     , false, "", dfNone        , 0, false, false);
+        InitDataProperty(0,i++, dtHidden            , 0, daCenter, false , "SALE_DATE"   , false, "", dfNone        , 0, false, false);
+        InitDataProperty(0,i++, dtData              , 0, daCenter, false , "POS_NO"      , false, "", dfNone        , 0, false, false);
+        InitDataProperty(0,i++, dtData              , 0, daCenter, false , "BILL_NO"     , false, "", dfNone        , 0, false, false);
+
+
+        InitUserFormat2(0, "INS_DT", "####-##-## ##:##:##", "-|:" );
+        InitDataCombo(0,"WES_FG","일반|패키지","1|2","","")
+
+
+        ColHidden("POS_NO")  = true;
+        ColHidden("BILL_NO") = true;
+
+
+        Visible = true;
+    }
+}
+function doAction(str, idx)
+{
+    document.form1.S_METHOD.value = str;
+    document.form1.SHEETSEQ.value = idx;
+    sheet_obj = fnGetObjectIdName("mySheet"+idx);
+
+    switch(str)
+    {
+        case "search":
+            if(!valueCheck(document.form1.CST_TRAVEL_NO,     '회원번호'    , 'Char'  ,  0,  '10')) { return false; }
+            if(!valueCheck(document.form1.CST_TRAVEL_NM,     '회원번호'    , 'Char'  ,  0,  '12')) { return false; }
+            sheet_obj.ShowDebugMsg = false;
+            if(!jsSaveName(form1, sheet_obj)) { return false; }
+            var param = FormQueryStringEnc(document.form1, sheet_obj);
+            sheet_obj.DoSearch4Post("ddd.sheetAction",param);
+            sheet_obj.ShowDebugMsg = false;
+
+            if(idx == 1)
+            {
+                document.form1.p_CST_TRAVEL_NO.value = "";
+                fnGetObjectIdName("mySheet2").RemoveAll();
+                fn_ResizeColWidth(sheet_obj,[30, 0, 60, 50, 60, 60, 60, 60, 60]);
+                sheet_obj.ColFontColor('CST_TRAVEL_NO') = sheet_obj.RgbColor(0,0,255);
+            }
+            else if(idx == 2)
+            {
+                fn_ResizeColWidth(sheet_obj,[70, 0, 40, 40, 0, 0, 25, 25]);
+
+                    sheet_obj.ColHidden("POS_NO") = true;
+                    sheet_obj.ColHidden("BILL_NO") = true;
+
+            }
+
+            break;
+
+        case "down2Excel" :
+            var orientation = "Landscape"; // Portrait (세로) | Landscape (가로)
+            var except_cols = ""; // 엑셀에서 제외할 컬럼 (Hidden 컬럼 이외의 컬럼만)
+            var excel_title = "회원미수금현황"; // 엑셀타이틀
+            if(idx == 1)
+            {
+                excel_param = "회원번호" + " : " + document.form1.CST_TRAVEL_NO.value
+                            + "   , "+"회원명" + " : " + document.form1.CST_TRAVEL_NM.value;
+            }
+            else
+            {
+                excel_param = "회원번호" + " : " + document.form1.p_CST_TRAVEL_NO.value
+                            + "   , "+"회원명" + " : " + document.form1.p_CST_TRAVEL_NM.value;
+            } // 검색조건
+            fnUdfDown2Excel(sheet_obj, excel_title, orientation, except_cols, excel_param); // 엑셀출력함수
+
+            break;
+    }
+    if(sheet_obj.EtcData("retMsg") && sheet_obj.EtcData("retMsg") != '' && sheet_obj.EtcData("retMsg") != '0000')
+    {
+        ErrorShow(sheet_obj.EtcData("retMsg")+'╋'+'https://asp.netusys.com/sale/cust/wes020.jsp', "popup", "");
+    }
+}
+
+/////////////////////////////////////// window.onload ///////////////////////////////////////
+window.onload = function() { setTimeout("onloadFunctions()",0); }; function onloadFunctions()
+{
+    init_sheet(); set_item();
+    fnResize();
+    //doAction('search',1);
+}
+/////////////////////////////////////// window.onresize ///////////////////////////////////////
+window.onresize = function()
+{
+    fnResize();
+}
+/////////////////////////////////////// fnResize ///////////////////////////////////////
+function fnResize()
+{
+    setObjHeight('mySheet1');
+    setObjHeight('mySheet2');
+    fn_ResizeColWidth(mySheet1,[30, 0, 60, 50, 60, 60, 60, 60, 60]);
+    fn_ResizeColWidth(mySheet2,[70, 0, 40, 40, 0, 0, 25, 25]);
+}
+</SCRIPT>
+
+<SCRIPT for=mySheet1 event=OnClick(Row,Col,Value)>
+if(Col == SaveNameCol('CST_TRAVEL_NO'))
+{
+    document.form1.p_CST_TRAVEL_NO.value  = CellValue(Row,'CST_TRAVEL_NO');
+    document.form1.p_CST_TRAVEL_NM.value  = CellValue(Row,'CST_TRAVEL_NM');
+    document.form1.p_SHOP_CD.value        = CellValue(Row,'SHOP_CD');
+    doAction('search',2);
+}
+</SCRIPT>
+
+<SCRIPT for=mySheet2 event=OnClick(Row,Col,Value)>
+if(Col == SaveNameCol('BILL_NO'))
+{
+    if(sheet_obj.CellValue(Row, "BILL_NO") != "")
+    {
+        var SHOP_CD     = sheet_obj.CellValue(Row, "SHOP_CD");
+        var SALE_DATE   = sheet_obj.CellValue(Row, "SALE_DATE");
+        var POS_NO      = sheet_obj.CellValue(Row, "POS_NO");
+        var BILL_NO     = sheet_obj.CellValue(Row, "BILL_NO");
+
+        var params      = "?SHOP_CD="+SHOP_CD+"&SALE_DATE="+SALE_DATE+"&POS_NO="+POS_NO+"&BILL_NO="+BILL_NO;
+
+        showModalDialog("/common/jsp/sale/bill_info.jsp"+params,self,'dialogWidth:'+"800px"+';dialogHeight:'+"500px"+';dialogTop:200px;dialogLeft:200px;status:no;resizable:YES;scroll:no;');
+    }
+}
+</SCRIPT>
+
+<SCRIPT for=mySheet1 event="OnMouseMove(Button, Shift, X, Y)">
+if(MouseRow >= HeaderRows && MouseRow < HeaderRows+RowCount)
+{
+    if(MouseCol == SaveNameCol('CST_TRAVEL_NO') && MouseRow > 0)   MousePointer = "Hand";
+}
+</SCRIPT>
+
+<SCRIPT for=mySheet2 event="OnMouseMove(Button, Shift, X, Y)">
+if(MouseRow >= HeaderRows && MouseRow < HeaderRows+RowCount)
+{
+    if(MouseCol == SaveNameCol('BILL_NO') && MouseRow > 0 && sheet_obj.CellValue(MouseRow, "BILL_NO")!= "" )   MousePointer = "Hand";
+}
+</SCRIPT>
+
+<SCRIPT>if(parent && parent.HistoryFrm && parent.HistoryFrm.MainFrmPage && parent.HistoryFrm.MainFrmPage.pgm_nm && parent.HistoryFrm.MainFrmPage.pgm_nm.value != '') {document.write("<table width='100%' border='0' cellpadding='0' cellspacing='0' background='/image/title_bg.gif'><tr height='30'><td width='10'></td><td>  <table border='0' cellpadding='0' cellspacing='0'>  <tr>  <td><img src='/image/title_icon.gif'></td>  <td width='10'></td>  <td>    <table border='0' cellpadding='0' cellspacing='0'><tr><td height='3'></td></tr><tr>    <td><font color='#FFFFFF' style='font-size:14px;'><b>"+parent.HistoryFrm.MainFrmPage.pgm_nm.value+"</b></font></td>    </tr></table>  </td>  <td width='40'></td>  <td><span id='span_mymenu'></span></td>  <td width='10'></td>  <td><img src='/image/icon01/btn_column.gif'  onclick='parent.set_menu_item();' style='cursor:hand;'></td>  </tr>  </table></td><td align='right'><font color='#FFFFFF'>"+parent.HistoryFrm.MainFrmPage.pgm_lcls_nm.value+((parent.HistoryFrm.MainFrmPage.pgm_mcls_nm.value == '') ? '' : ' &gt; '+parent.HistoryFrm.MainFrmPage.pgm_mcls_nm.value)+' &gt; '+parent.HistoryFrm.MainFrmPage.pgm_nm.value+"</font></td><td width='10'></td></tr></table>");fnSetPgmId(parent.HistoryFrm.MainFrmPage.pgm_id.value);document.getElementById('span_mymenu').innerHTML = parent.HistoryFrm.getMyMenuStr(parent.HistoryFrm.MainFrmPage.pgm_id.value);}</SCRIPT>
+
+<TABLE cellSpacing=0 cellPadding=0 width="100%" background=/image/title_bg.gif border=0>
+<TBODY>
+<TR height=30>
+<TD width=10></TD>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD><IMG src="/image/title_icon.gif"></TD>
+<TD width=10></TD>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD height=3></TD></TR>
+<TR>
+<TD><FONT style="FONT-SIZE: 14px" color=#ffffff><B>회원미수금현황</B></FONT></TD></TR></TBODY></TABLE></TD>
+<TD width=40></TD>
+<TD><SPAN id=span_mymenu><IMG onclick="top.HistoryFrm.fnEditMyMenu('Y','000444')" style="CURSOR: hand" src="https://asp.netusys.com/image/icon01/mymenu_plus.gif"></SPAN></TD>
+<TD width=10></TD>
+<TD><IMG onclick=parent.set_menu_item(); style="CURSOR: hand" src="/image/icon01/btn_column.gif"></TD></TR></TBODY></TABLE></TD>
+<TD align=right><FONT color=#ffffff>회원관리 &gt; 회원분석 &gt; 회원미수금현황</FONT></TD>
+<TD width=10></TD></TR></TBODY></TABLE>
+<FORM name=form1><!-- IBFrame 을 위한 변수 선언 (필수)--><INPUT type=hidden value=sale.cust.wes020 name=S_CONTROLLER> <INPUT type=hidden name=S_METHOD> <INPUT type=hidden name=S_SAVENAME> <!-- IBFrame 을 위한 변수 선언 (선택)--><INPUT type=hidden name=S_FORWARD> <INPUT type=hidden name=S_TREECOL> <INPUT type=hidden name=SHEETSEQ> <INPUT type=hidden name=p_CST_TRAVEL_NO> <INPUT type=hidden name=p_CST_TRAVEL_NM> <INPUT type=hidden name=p_SHOP_CD> <INPUT type=hidden value=cst name=op>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" bgColor=#e9e9e9 border=0>
+<TBODY>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=27>
+<TD width=10></TD>
+<TD><!-- 조회조건 시작 -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD align=left>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD><IMG src="/image/s_icon.gif"> 조회일자 <INPUT onclick=fnShowCal2(1); id=date1_1 class=read1hc style="CURSOR: hand" readOnly size=10 value=2018-07-23 name=date1_1> - <INPUT onclick=fnShowCal2(1); id=date1_2 class=read1hc style="CURSOR: hand" readOnly size=10 value=2018-07-23 name=date1_2> <IMG onclick=fnShowCal2(1); style="CURSOR: hand" src="/image/calendar/calendar_btn.gif"><INPUT id=date_period1 type=hidden value=366 name=date_period1></TD>
+<TD width=10></TD>
+<TD id=cust_no><IMG src="/image/s_icon.gif"> 회원번호 <INPUT onkeypress="if(event.keyCode == 13) { doAction('search','1'); }" class=input1hc size=8 name=CST_TRAVEL_NO></TD>
+<TD width=10></TD>
+<TD id=cust_nm><IMG src="/image/s_icon.gif"> 회원명 <INPUT onkeypress="if(event.keyCode == 13) { doAction('search','1'); }" class="input1h imeHan" size=12 name=CST_TRAVEL_NM></TD>
+<TD width=10></TD>
+<TD>
+<TABLE onclick="doAction('search','1')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_black_l_bg.gif"></TD>
+<TD background=/image/btn_black_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>조회</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_black_r_bg.gif"></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD>
+<TD align=right>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD>
+<TABLE onclick="doAction('down2Excel','1')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_black_l_bg.gif"></TD>
+<TD background=/image/btn_black_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>엑셀(좌)</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_black_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=10></TD>
+<TD>
+<TABLE onclick="doAction('down2Excel','2')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_black_l_bg.gif"></TD>
+<TD background=/image/btn_black_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>엑셀(우)</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_black_r_bg.gif"></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD>
+<TABLE height=6 cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD></TD></TR></TBODY></TABLE><IMG src="/image/s_icon.gif"> 외상 발생 회원만 조회됩니다.</TD></TR></TBODY></TABLE><!-- 조회조건 끝 --></TD></TD>
+<TD width=10></TD></TR>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=1 bgColor=#d6d6d6>
+<TD colSpan=3></TD></TR></TBODY></TABLE></FORM>
+<TABLE height=6 cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD width="60%" noWrap>
+<TABLE height="100%" cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD width="100%">
+<TABLE id=TableNm1 height=30 cellSpacing=1 cellPadding=4 width="100%" bgColor=#aaaaaa border=0 name="TableNm1">
+<TBODY>
+<TR bgColor=#ffffff vAlign=top>
+<TD height="100%" width="100%">
+<SCRIPT>makeIBSheet('mySheet1');</SCRIPT>
+
+<OBJECT id=mySheet1 style="HEIGHT: 486px" name=mySheet1 codeBase="/common/object/IBSheet3.CAB#version=3,4,0,387" classid=CLSID:341FBC5F-2AE4-41B8-BFE5-A03170569A27 width="100%" height="100%"><PARAM NAME="_ExtentX" VALUE="15478"><PARAM NAME="_ExtentY" VALUE="12859"><PARAM NAME="ConfigXml" VALUE="/common/gridstyle/GridConfig.xml"><PARAM NAME="Version" VALUE="3.4.0.387"></OBJECT>
+<SCRIPT>document.getElementById('mySheet1').SetExcelColDialog(0);</SCRIPT>
+</TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD>
+<TD width=5 noWrap></TD>
+<TD vAlign=top>
+<TABLE height="100%" cellSpacing=0 cellPadding=0 width="100%">
+<TBODY>
+<TR>
+<TD width="100%">
+<TABLE id=TableNm1 height=30 cellSpacing=1 cellPadding=4 width="100%" bgColor=#aaaaaa border=0 name="TableNm1">
+<TBODY>
+<TR bgColor=#ffffff vAlign=top>
+<TD height="100%" width="100%">
+<SCRIPT>makeIBSheet('mySheet2','Merge');</SCRIPT>
+
+<OBJECT id=mySheet2 style="HEIGHT: 486px" name=mySheet2 codeBase="/common/object/IBSheet3.CAB#version=3,4,0,387" classid=CLSID:341FBC5F-2AE4-41B8-BFE5-A03170569A27 width="100%" height="100%"><PARAM NAME="_ExtentX" VALUE="10107"><PARAM NAME="_ExtentY" VALUE="12859"><PARAM NAME="ConfigXml" VALUE="/common/gridstyle/GridConfigMerge.xml"><PARAM NAME="Version" VALUE="3.4.0.387"></OBJECT>
+<SCRIPT>document.getElementById('mySheet2').SetExcelColDialog(0);</SCRIPT>
+</TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></BODY></HTML>
+
+{% endblock %}

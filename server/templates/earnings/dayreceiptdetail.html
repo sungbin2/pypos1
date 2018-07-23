@@ -1,0 +1,157 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<link rel="stylesheet" href="{{ url_for('static',filename='griddata.css') }} ">
+
+<table class="box" >
+    <tr>
+        <th style="color:white; background-color: #347efd;">
+         영수증별매출상세현황
+        </th>
+    </tr>
+    <tr>
+        <th>
+            <div class="row" >
+            <div class="col-md-6">
+                <label style=" margin-top: 10px; float:left;">조회일자</label>
+                <div class="input-group" data-ax5picker="basic" style="height:20px;width:150px; float:left;" >
+                    <input id='dates' type="text" class="form-control" placeholder="yyyy/mm/dd" >
+                    <span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
+                </div>
+                <button class="btn" id="load" style=" margin-top: 10px">조회</button>
+            </div>
+        </div>
+
+        </th>
+
+    </tr>
+</table>
+<table class="box">
+    <div data-ax5grid="1-grid" data-ax5grid-config="{
+            header: { align: 'center' },
+            frozenColumnIndex: 4,
+            showLineNumber: true,
+            page: { display: false  }
+        }" style="height: 600px;"></div>
+</table>
+
+<script type="text/javascript" src="{{ url_for('static',filename='daypicker.js') }} "></script>
+
+<script type="text/javascript">
+
+var data0 = [];
+var gridList1 = []
+
+
+var Grid1 = new ax5.ui.grid({
+        target: $('[data-ax5grid="1-grid"]'),
+        columns: [
+            {key: "포스번호", label: "포스번호" ,width: 80 ,align: "center"},
+            {key: "영수증번호", label: "영수증번호" ,width: 80 ,align: "center"},
+            {key: "구분", label: "구분" ,width: 80 ,align: "center"},
+            {key: "테이블명", label: "테이블명" ,width: 80 ,align: "center"},
+            {key: "최초주문", label: "최초주문" ,width: 80 ,align: "center"},
+            {key: "결제시각", label: "결제시각" ,width: 80 ,align: "center"},
+            {key: "상품코드", label: "상품코드" ,width: 80 ,align: "center"},
+            {key: "바코드", label: "바코드" ,width: 80 ,align: "center"},
+            {key: "상품명", label: "상품명" ,width: 80 ,align: "center"},
+            {key: "수량", label: "수량" ,width: 80 ,align: "center"},
+            {key: "총매출액", label: "총매출액" ,width: 80 , formatter: "money",align: "right"},
+            {key: "할인액", label: "할인액" ,width: 80 , formatter: "money",align: "right"},
+            {key: "할인구분", label: "할인구분" ,align: "center"},
+            {key: "실매출액", label: "실매출액" ,width: 80 , formatter: "money",align: "right"},
+            {key: "가액", label: "가액" ,width: 80 , formatter: "money",align: "right"},
+            {key: "부가세", label: "부가세" ,width: 80 , formatter: "money",align: "right"}
+            ],
+        footSum: [
+            [
+                {label: "합계", colspan: 2, align: "center"},
+                {key: "구분",  align: "center"},
+                {key: "테이블명", align: "center"},
+                {key: "최초주문",  align: "center"},
+                {key: "결제시각",  align: "center"},
+                {key: "상품코드", align: "center"},
+                {key: "바코드",  align: "center"},
+                {key: "상품명", align: "center"},
+                {key: "수량", collector: "sum", formatter: "money", align: "center"},
+                {key: "총매출액", collector: "sum", formatter: "money", align: "right"},
+                {key: "할인액", collector: "sum", formatter: "money", align: "right"},
+                {key: "할인구분", align: "center"},
+                {key: "실매출액", collector: "sum", formatter: "money", align: "right"},
+                {key: "가액", collector: "sum", formatter: "money", align: "right"},
+                {key: "부가세", collector: "sum", formatter: "money", align: "right"},
+            ]
+        ],
+        body: {  mergeCells: ["포스번호" ,"영수증번호","구분","테이블명","최초주문","결제시각" ] }
+
+    });
+
+
+
+$('#load').click(function () {
+
+            data0 = [];
+            gridList1 = [];
+
+            var dates = $('input[id=dates]').val();
+            var datee = $('input[id=dates]').val();
+
+            $.getJSON("{{ url_for('_earnings_day' ) }}/"+"{{ store_id }}&"+dates+"&"+datee, function (json) {
+            _data = json;
+
+            }).done(function () {
+
+                var n=0;
+
+                for( i in _data['일자별'] ) {
+                    data0.push(_data['일자별'][i]);
+                }
+
+                for ( i in data0) {
+
+                    for( j in data0[i]['영수증별'] ) {
+
+                        for (k in data0[i]['영수증별'][j]['상품']) {
+
+                            gridList1[n] = {};
+                            gridList1[n]['포스번호'] = '01'
+                            gridList1[n]['영수증번호'] = j
+                            gridList1[n]['구분'] = '매출'
+                            gridList1[n]['테이블명'] = data0[i]['영수증별'][j]['테이블명']
+                            gridList1[n]['최초주문'] = data0[i]['영수증별'][j]['주문일시']
+                            gridList1[n]['결제시각'] = data0[i]['영수증별'][j]['결제일시']
+                            gridList1[n]['상품코드'] = k
+                            gridList1[n]['바코드'] = ""
+                            gridList1[n]['상품명'] = _data['상품목록'][k]
+                            gridList1[n]['수량'] = data0[i]['영수증별'][j]['상품'][k]['영수건수']
+                            gridList1[n]['총매출액'] = data0[i]['영수증별'][j]['상품'][k]['총거래액']
+                            gridList1[n]['할인액'] = data0[i]['영수증별'][j]['상품'][k]['총할인액']
+                            gridList1[n]['할인구분'] = '일반'
+                            gridList1[n]['실매출액'] = data0[i]['영수증별'][j]['상품'][k]['실거래액']
+                            gridList1[n]['가액'] = data0[i]['영수증별'][j]['상품'][k]['판매이익']
+                            gridList1[n]['부가세'] = data0[i]['영수증별'][j]['상품'][k]['세금']
+
+                            gridList1[n]['영업일자'] = data0[i]['영업일자'];
+
+                             n++
+                        }
+                    }
+                }
+
+                Grid1.setData(gridList1);
+
+                if( gridList1.length == 0 ) {
+                    alert("조회된 매출 데이터가 없습니다.");
+                    return 0;
+                }
+
+            });
+
+
+
+});
+
+</script>
+
+{% endblock %}
+

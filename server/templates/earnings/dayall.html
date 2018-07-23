@@ -1,0 +1,305 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<link rel="stylesheet" href="{{ url_for('static',filename='griddata.css') }} ">
+<table class="box" >
+    <tr>
+        <th style="color:white; background-color: #347efd;">
+         당일매출종합현황
+        </th>
+    </tr>
+    <tr>
+        <th>
+            <div class="row" >
+            <div class="col-md-6">
+                <label style=" margin-top: 10px; float:left;">조회일자</label>
+                <div class="input-group" data-ax5picker="basic" style="height:20px;width:150px; float:left;" >
+                    <input id='dates' type="text" class="form-control" placeholder="yyyy/mm/dd" >
+                    <span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
+                </div>
+                <button class="btn" id="load" style=" margin-top: 10px">조회</button>
+            </div>
+        </div>
+
+        </th>
+
+    </tr>
+</table>
+<table class="dayall" style="border :0 ; float :left; width : 40%">
+    <tr>
+        <td>
+            <table class="box">
+                <tr>
+                    <th >
+                    매출종합
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                       <div data-ax5grid="1-grid" data-ax5grid-config="{
+                        header: { align: 'center' },
+                        page: { display: false  },
+                        sortable: true,
+                    }" style="height: 100px;"></div>
+                    </td>
+
+                </tr>
+            </table>
+            <table class="box">
+                <tr>
+                    <th>
+                        결제수단별매출
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <div data-ax5grid="2-grid" data-ax5grid-config="{
+                        header: { align: 'center' },
+                        showLineNumber: true,
+                         page: { display: false  },
+                         sortable: true,
+                    }" style="height: 250px;"></div>
+                    </td>
+
+                </tr>
+            </table>
+            <table class="box">
+                <tr>
+                    <th>
+                    회원포인트 적립/사용현황
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <div data-ax5grid="3-grid" data-ax5grid-config="{
+                        header: { align: 'center' },
+                        showLineNumber: true,
+                         page: { display: false  },
+                         sortable: true,
+                    }" style="height: 150px;"></div>
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+
+    </tr>
+</table>
+<table class="dayall" style="border :1px solid white; width : 60%">
+<table class="box" style="width : 60%" >
+    <tr>
+        <th>
+         상품별 매출현황
+        </th>
+    </tr>
+    <tr>
+        <td>
+            <div data-ax5grid="4-grid" data-ax5grid-config="{
+                        header: { align: 'center' },
+                        showLineNumber: true,
+                         page: { display: false  },
+                         sortable: true,
+                    }" style="height: 350px;"></div>
+        </td>
+
+    </tr>
+
+</table>
+<table class="box" style="width : 60%" >
+
+    <tr>
+        <td>
+            <div class="chart" style="height: 200px;">
+                <canvas id="myChart" height="30vh" width="100vw"></canvas>
+
+            </div>
+        </td>
+
+    </tr>
+
+</table>
+</table>
+<script type="text/javascript" src="{{ url_for('static',filename='daypicker.js') }} "></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+<script type="text/javascript">
+
+
+
+var data0 = [];
+var  gridList1 = [];var  gridList2 = [];var  gridList3 = [];var  gridList4 = [];
+load()
+
+function load() {
+    var Grid1 = new ax5.ui.grid({
+                target: $('[data-ax5grid="1-grid"]'),
+                columns: [
+                    {key: "총매출", label: "총매출", formatter: "money" ,align: "right"},
+                    {key: "할인", label: "할인", formatter: "money" ,align: "right"},
+                    {key: "실매출", label: "실매출", formatter: "money" , align: "right"},
+                    {key: "취소금액", label: "취소금액", formatter: "money" ,align: "right" ,width: 90}
+                    ]
+
+            });
+
+
+        var Grid2 = new ax5.ui.grid({
+                target: $('[data-ax5grid="2-grid"]'),
+                columns: [
+                    {key: "수단", label: "수단",align: "left"},
+                    {key: "승인금액", label: "승인금액", formatter: "money" ,align: "right"},
+                    {key: "구성비", label: "구성비(%)" , align: "right"},
+                    ],
+                footSum: [
+                    [
+                        {label: "합계", colspan: 1, align: "center"},
+                        {key: "승인금액", collector: "sum", formatter: "money", align: "right"},
+                        {key: "구성비", collector: "sum", align: "right"},
+                    ]]
+
+
+            });
+
+
+        var Grid3 = new ax5.ui.grid({
+                target: $('[data-ax5grid="3-grid"]'),
+                columns: [
+                    {key: "회원명", label: "회원명", formatter: "money" ,align: "left"},
+                    {key: "적립", label: "적립", formatter: "money" ,align: "right"},
+                    {key: "사용", label: "사용", formatter: "money" , align: "right"},
+                    ]
+
+            });
+
+
+        var Grid4 = new ax5.ui.grid({
+                target: $('[data-ax5grid="4-grid"]'),
+                columns: [
+                    {key: "상품코드", label: "상품코드", formatter: "money" ,align: "center"},
+                    {key: "상품명", label: "상품명",align: "left",width: 200},
+                    {key: "수량", label: "수량", formatter: "money" , align: "right"},
+                    {key: "실매출", label: "실매출", formatter: "money" , align: "right"},
+                    ],
+                footSum: [
+                    [
+                        {label: "합계", colspan: 1, align: "center"},
+                        {key: "상품명", },
+                        {key: "수량", collector: "sum", formatter: "money", align: "right"},
+                        {key: "실매출", collector: "sum", formatter: "money", align: "right"},
+                    ]]
+
+            });
+
+        $('#load').click(function () {
+
+        data0 = [];
+        gridList1 = [];gridList2 = [];gridList3 = []; gridList4 = [];
+
+        var dates = $('input[id=dates]').val();
+        var datee = $('input[id=dates]').val();
+
+
+        $.getJSON("{{ url_for('_earnings_day' ) }}/"+"{{ store_id }}&"+dates+"&"+datee, function (json) {
+            _data = json;
+
+
+
+        }).done(function () {
+
+            for( i in _data['일자별'] ) {
+                data0.push(_data['일자별'][i]);
+            }
+            var n=0; var n1=0;
+
+            for ( i in data0) {
+
+                gridList1[i] = {};
+                gridList1[i]['총매출'] = data0[i]['총거래액'];
+                gridList1[i]['할인'] = data0[i]['총할인액'];
+                gridList1[i]['실매출'] = data0[i]['실거래액'];
+                gridList1[i]['영업일자'] = data0[i]['영업일자'];
+
+                for (j in data0[i]['수단별']) {
+                    gridList2[n] = {};
+                    gridList2[n]['수단'] = j
+                    gridList2[n]['승인금액'] = data0[i]['수단별'][j]['실거래액'];
+                    gridList2[n]['구성비'] = (data0[i]['수단별'][j]['실거래액']/data0[i]['실거래액']*100).toFixed(2);
+                    gridList2[n]['영업일자'] = data0[i]['영업일자'];
+
+                    n++
+                }
+
+                for (k in data0[i]['상품별']) {
+                    gridList4[n1] = {};
+                    gridList4[n1]['영업일자'] = data0[i]['영업일자'];
+                    gridList4[n1]['상품코드'] = k
+                    gridList4[n1]['상품명'] = _data['상품목록'][k]
+                    gridList4[n1]['수량'] = data0[i]['상품별'][k]['영수건수']
+                    gridList4[n1]['실매출'] = data0[i]['상품별'][k]['실거래액']
+
+                    n1++;
+                }
+
+            }
+
+
+            Grid1.setData(gridList1);
+            Grid2.setData(gridList2);
+            Grid3.setData(gridList3);
+            Grid4.setData(gridList4);
+
+            if( gridList1.length == 0 ) {
+                alert("조회된 매출 데이터가 없습니다.");
+                return 0;
+            }
+
+            data = {};
+
+            data = {
+                datasets: [{
+                    data: [],
+                    backgroundColor: [
+                    'rgba(255, 99, 132)',
+                    'rgba(54, 162, 235)',
+                    'rgba(255, 206, 86)',
+                    'rgba(75, 192, 192)',
+                    'rgba(153, 102, 255)',
+                    'rgba(255, 159, 64)',
+                    'rgba(255, 206, 86)',
+                    'rgba(54, 162, 235)',
+                      ],
+                }],
+
+                // These labels appear in the legend and in the tooltips when hovering different arcs
+                labels: []
+            };
+
+            $("canvas").remove();
+            $("div.chart").append('<canvas id="myChart" height="30vh" width="100vw"></canvas>');
+
+
+            for ( i in gridList4 ) {
+                data['datasets'][0].data.push( gridList4[i]['실매출'] )
+                data['labels'].push( gridList4[i]['상품명'] )
+            }
+            var ctx = document.getElementById("myChart");
+            var myChart = new Chart(ctx, {
+                            type: 'pie',
+                            data: data,
+                            options: {
+                                responsive: true
+                            }
+                        });
+
+        });
+    });
+}
+
+
+
+
+</script>
+
+{% endblock %}
+

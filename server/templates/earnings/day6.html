@@ -1,0 +1,115 @@
+
+{% include 'ax5.html' %}
+
+
+<table class="box day" >
+    <tr>
+        <th >
+         <div class="row" >
+            <div class="col-md-6">
+                <label style=" margin-top: 8; float:left;">조회일자</label>
+                <div class="input-group" data-ax5picker="basic" style="height:20px;width:300px; float:left;" >
+                    <input id='dates' type="text" class="form-control" placeholder="yyyy/mm/dd" >
+                    <span class="input-group-addon">~</span>
+                    <input id='datee'type="text" class="form-control" placeholder="yyyy/mm/dd">
+                    <span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
+                </div>
+                <button class="btn" id="load" style=" margin-top: 8">조회</button>
+            </div>
+        </div>
+        </th>
+    </tr>
+    <tr>
+        <td>
+                 <div data-ax5grid="first-grid" data-ax5grid-config="{
+                        header: { align: 'center' },
+                        frozenColumnIndex: 2,
+                        showLineNumber: true,
+                        page: { display: false  }
+                    }" style="height: 100%;"></div>
+        </td>
+
+    </tr>
+</table>
+
+<script type="text/javascript" src="{{ url_for('static',filename='datepicker.js') }} "></script>
+<script type="text/javascript" src="{{ url_for('static',filename='gridList.js') }} "></script>
+
+<script type="text/javascript">
+
+    var _data = [];
+    var  gridList = [];
+    var  gridList1 = [];
+    var result = [];
+
+    load()
+
+
+
+    function load() {
+
+        var firstGrid = new ax5.ui.grid({
+            target: $('[data-ax5grid="first-grid"]'),
+            columns: [
+                {key: "일자", label: "일자", width: 100, align: "center"},
+                {key: "대분류", label: "대분류", width: 100, align: "center"},
+                {key: "상품코드", label: "상품코드", width: 100, align: "center"},
+                {key: "상품명", label: "상품명", width: 100, align: "center"},
+                {key: "수량", label: "수량", width: 60, align: "center"},
+                {key: "총매출액", label: "총매출액" ,width: 100 , formatter: "money",align: "right"},
+                {key: "총할인액", label: "총할인액" ,width: 100 , formatter: "money",align: "right"},
+                {key: "실매출액", label: "실매출액" ,width: 100 , formatter: "money",align: "right"},
+            ],
+            footSum: [
+                [
+                    {label: "합계", colspan: 1, align: "center"},
+                    {key: "대분류" },
+                    {key: "상품코드"},
+                    {key: "상품명"},
+                    {key: "수량", collector: "sum", formatter: "money", align: "center"},
+                    {key: "총매출액", collector: "sum", formatter: "money", align: "right"},
+                    {key: "총할인액", collector: "sum", formatter: "money", align: "right"},
+                    {key: "실매출액", collector: "sum", formatter: "money", align: "right"},
+
+
+
+                ]],
+                body: {  mergeCells: ["일자","대분류"] }
+        });
+
+        $('#load').click(function () {
+            gridList = [];
+
+
+            var dates = $('input[id=dates]').val();
+            var datee = $('input[id=datee]').val();
+
+
+            $.getJSON("{{ url_for('_earnings_day' ) }}/"+"{{ store_id }}&"+dates+"&"+datee, function (json) {
+                _data = json;
+
+            }).done(function () {
+
+            loaddata();
+
+            firstGrid.setData(gridList1);
+
+            });
+
+
+
+            <!--for ( i=1 ; i<10 ; i++){-->
+                <!--$('input[id=dates]', parent.frames["day"+i].document).val(dates)-->
+                <!--$('input[id=datee]', parent.frames["day"+i].document).val(datee)-->
+            <!--}-->
+
+
+
+        })
+
+    }
+
+
+
+</script>
+

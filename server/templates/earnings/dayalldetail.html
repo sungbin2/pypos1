@@ -1,0 +1,618 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<link rel="stylesheet" href="{{ url_for('static',filename='griddata.css') }} ">
+
+<table class="box" >
+    <tr>
+        <th style="color:white; background-color: #347efd;">
+         당일매출상세현황
+        </th>
+    </tr>
+    <tr>
+         <th>
+            <div class="row" >
+            <div class="col-md-6">
+                <label style=" margin-top: 10px; float:left;">조회일자</label>
+                <div class="input-group" data-ax5picker="basic" style="height:20px;width:150px; float:left;" >
+                    <input id='dates' type="text" class="form-control" placeholder="yyyy/mm/dd" >
+                    <span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
+                </div>
+                <button class="btn" id="load" style=" margin-top: 10px">조회</button>&nbsp&nbsp<input type="checkbox" id="hide" >이력없는 항목표시
+            </div>
+        </div>
+
+        </th>
+
+    </tr>
+</table>
+<table class="box">
+    <tr>
+        <th >
+        당일매출 집계내역  ( 결제합계 = 가액 + 부가세 + 봉사료 - 에누리 + TaxRefund환급수수료 )
+        </th>
+    </tr>
+    <tr>
+        <td>
+           <div data-ax5grid="1-grid" data-ax5grid-config="{
+            header: { align: 'center' },
+            frozenColumnIndex: 4,
+            showLineNumber: true,
+            page: { display: false  },
+        }" style="height: 150px;"></div>
+        </td>
+
+    </tr>
+</table>
+<table class="box">
+    <tr>
+        <th>
+            당일매출 상세내역 ( 결제합계 = 가액 + 부가세 + 봉사료 - 에누리 + TaxRefund환급수수료 )
+        </th>
+    </tr>
+    <tr>
+        <td>
+            <div data-ax5grid="2-grid" data-ax5grid-config="{
+            header: { align: 'center' },
+            showLineNumber: true,
+            frozenColumnIndex: 2,
+             page: { display: false  },
+             sortable: true,
+        }" style="height: 380px;"></div>
+        </td>
+
+    </tr>
+</table>
+
+
+<script type="text/javascript" src="{{ url_for('static',filename='daypicker.js') }} "></script>
+<script type="text/javascript">
+
+var data0 = []; var data1 = []; var data2 = [];
+var  gridList1 = [];var  gridList2 = [];
+
+
+ function load() {
+    data0 = [];  data1 = [];  data2 = [];
+    gridList1 = [];gridList2 = [];
+
+    var dates = $('input[id=dates]').val();
+    var datee = $('input[id=dates]').val();
+
+
+    $.getJSON("{{ url_for('_earnings_day' ) }}/"+"{{ store_id }}&"+dates+"&"+datee, function (json) {
+        _data = json;
+
+        for( i in _data['일자별'] ) {
+            data0.push(_data['일자별'][i]);
+        }
+
+        var n=0; var avr=0;
+
+        for ( i in data0) {
+            avr = parseInt(data0[i]['총거래액']) / parseInt(Object.keys(data0[i]['영수증별']).length)
+
+            gridList1[i] = {};
+            gridList1[i]['구분'] = '매출'
+            gridList1[i]['총매출액'] = data0[i]['총거래액'];
+            gridList1[i]['총할인액'] = data0[i]['총할인액'];
+            gridList1[i]['실매출액'] = data0[i]['실거래액'];
+            gridList1[i]['가액'] = data0[i]['판매이익'];
+            gridList1[i]['부가세'] = data0[i]['세금'];
+            gridList1[i]['봉사료'] = '0'
+            gridList1[i]['에누리'] = '0'
+            gridList1[i]['거스름돈'] = '0'
+            gridList1[i]['영수건수'] = Object.keys(data0[i]['영수증별']).length;
+            gridList1[i]['영수단가'] = Math.round(avr);
+            gridList1[i]['결제합계'] = data0[i]['실거래액'];
+            gridList1[i]['단순현금'] = data0[i]['수단별']['현금']['실거래액'];
+            gridList1[i]['현금영수'] = '0'
+            gridList1[i]['신용카드'] = data0[i]['수단별']['카드(임의)']['실거래액']+data0[i]['수단별']['카드']['실거래액'];
+            gridList1[i]['외상'] = '0'
+            gridList1[i]['상품권'] = '0'
+            gridList1[i]['식권'] = '0'
+            gridList1[i]['회원포인트'] = data0[i]['수단별']['포인트']['실거래액'];
+            gridList1[i]['제휴카드'] = '0'
+            gridList1[i]['사원카드'] = '0'
+            gridList1[i]['모바일쿠폰'] = '0'
+            gridList1[i]['캐시비'] = '0'
+            gridList1[i]['선불카드'] = '0'
+            gridList1[i]['일반'] = data0[i]['총할인액'];
+            gridList1[i]['서비스'] = '0'
+            gridList1[i]['제휴'] = '0'
+            gridList1[i]['쿠폰'] = '0'
+            gridList1[i]['회원'] = '0'
+            gridList1[i]['식권'] = '0'
+            gridList1[i]['포장'] = '0'
+            gridList1[i]['YAP'] = '0'
+            gridList1[i]['객수합계'] = '0'
+            gridList1[i]['남'] = '0'
+            gridList1[i]['여'] = '0'
+            gridList1[i]['e5'] = '0'
+            gridList1[i]['e6'] = '0'
+            gridList1[i]['객단가'] = '0'
+            gridList1[i]['테이블수'] = '0'
+            gridList1[i]['단가'] = '0'
+            gridList1[i]['회전율'] = '0'
+            gridList1[i]['사후환급액'] = '0'
+            gridList1[i]['즉시환급액'] = '0'
+            gridList1[i]['환급수수료'] = '0'
+
+            gridList1[i]['영업일자'] = data0[i]['영업일자'];
+
+            for( j in data0[i]['영수증별'] ) {
+
+
+                var time = "";
+                time = caltime(data0[i]['영수증별'][j]['결제일시'], data0[i]['영수증별'][j]['주문일시'])
+                gridList2[n] = {};
+                gridList2[n]['포스번호'] = '01'
+
+                gridList2[n]['영수증번호'] = j
+                gridList2[n]['결제시각'] = data0[i]['영수증별'][j]['결제일시']
+                gridList2[n]['구분'] = '매출'
+                gridList2[n]['총매출액'] = data0[i]['영수증별'][j]['총거래액']
+                gridList2[n]['총할인액'] = data0[i]['영수증별'][j]['총할인액']
+                gridList2[n]['실매출액'] = data0[i]['영수증별'][j]['실거래액']
+                gridList2[n]['가액'] = data0[i]['영수증별'][j]['판매이익']
+                gridList2[n]['부가세'] = data0[i]['영수증별'][j]['세금']
+                gridList2[n]['봉사료'] = '0'
+                gridList2[n]['에누리'] = '0'
+                gridList2[n]['거스름돈'] = '0'
+                gridList2[n]['회원명'] = '0'
+                gridList2[n]['테이블명'] = data0[i]['영수증별'][j]['테이블명']
+                gridList2[n]['결제합계'] = data0[i]['영수증별'][j]['실거래액']
+                gridList2[n]['단순현금'] = data0[i]['영수증별'][j]['현금']
+                gridList2[n]['현금영수'] = '0'
+                gridList2[n]['신용카드'] = data0[i]['영수증별'][j]['카드(임의)'] + data0[i]['영수증별'][j]['카드']
+                gridList2[n]['외상'] = '0'
+                gridList2[n]['상품권'] = '0'
+                gridList2[n]['식권'] = '0'
+                gridList2[n]['회원포인트'] = data0[i]['영수증별'][j]['포인트']
+                gridList2[n]['제휴카드'] = '0'
+                gridList2[n]['사원카드'] = '0'
+                gridList2[n]['모바일쿠폰'] = '0'
+                gridList2[n]['캐시비'] = '0'
+                gridList2[n]['선불카드'] = '0'
+                gridList2[n]['일반'] = data0[i]['영수증별'][j]['총할인액']
+                gridList2[n]['서비스'] = '0'
+                gridList2[n]['제휴'] = '0'
+                gridList2[n]['쿠폰'] = '0'
+                gridList2[n]['회원'] = '0'
+                gridList2[n]['식권'] = '0'
+                gridList2[n]['포장'] = '0'
+                gridList2[n]['YAP'] = '0'
+                gridList2[n]['최초주문시각'] = data0[i]['영수증별'][j]['주문일시']
+                gridList2[n]['객수합계'] = '0'
+                gridList2[n]['남'] = '0'
+                gridList2[n]['여'] = '0'
+                gridList2[n]['e5'] = '0'
+                gridList2[n]['e6'] = '0'
+                gridList2[n]['객단가'] = '0'
+                gridList2[n]['테이블점유시간'] = "( "+time+" )"
+                gridList2[n]['사후환급액'] = '0'
+                gridList2[n]['즉시환급액'] = '0'
+                gridList2[n]['환급수수료'] = '0'
+                gridList2[n]['환급일련번호'] = '0'
+
+                gridList2[n]['영업일자'] = data0[i]['영업일자'];
+                n++
+        }
+    }
+
+    }).done(function () {
+
+        reset()
+
+
+        if ( $("#hide").is(":checked")  == false ) {
+            remove(gridList1,data1,foot1)
+            remove(gridList2,data2,foot2)
+        }
+
+        var Grid1 = new ax5.ui.grid({
+                target: $('[data-ax5grid="1-grid"]'),
+                columns: data1,
+                footSum: [ foot1 ]
+         });
+
+        var Grid2 = new ax5.ui.grid({
+                target: $('[data-ax5grid="2-grid"]'),
+                columns:  data2,
+                footSum: [ foot2 ]
+        });
+
+
+
+        Grid1.setData(gridList1);
+        Grid2.setData(gridList2);
+
+        if( gridList1.length == 0 ) {
+            alert("조회된 매출 데이터가 없습니다.");
+            return 0;
+        }
+    });
+
+
+ }
+
+
+
+
+function caltime(a,b) {
+
+
+   var startTime = "20090101"+b   // 시작일시 ('20090101 12:30:00')
+   var endTime  = "20090101"+a;    // 종료일시 ('20091001 17:20:10')
+
+   // 시작일시
+   var startDate = new Date(parseInt(startTime.substring(0,4), 10),
+             parseInt(startTime.substring(4,6), 10)-1,
+             parseInt(startTime.substring(6,8), 10),
+             parseInt(startTime.substring(8,10), 10),
+             parseInt(startTime.substring(11,13), 10),
+             parseInt(startTime.substring(14,16), 10)
+            );
+
+   // 종료일시
+   var endDate   = new Date(parseInt(endTime.substring(0,4), 10),
+             parseInt(endTime.substring(4,6), 10)-1,
+             parseInt(endTime.substring(6,8), 10),
+             parseInt(endTime.substring(8,10), 10),
+             parseInt(endTime.substring(11,13), 10),
+             parseInt(endTime.substring(14,16), 10)
+            );
+
+   // 두 일자(startTime, endTime) 사이의 차이를 구한다.
+   var dateGap = endDate.getTime() - startDate.getTime();
+   var timeGap = new Date(0, 0, 0, 0, 0, 0, endDate - startDate);
+
+   // 두 일자(startTime, endTime) 사이의 간격을 "일-시간-분"으로 표시한다.
+   var diffDay  = Math.floor(dateGap / (1000 * 60 * 60 * 24)); // 일수
+   var diffHour = timeGap.getHours();       // 시간
+   var diffMin  = timeGap.getMinutes();      // 분
+   var diffSec  = timeGap.getSeconds();      // 초
+   var resultcal = diffHour + " : " +  ("0" + diffMin).slice(-2);
+   return resultcal;
+}
+
+function reset() {
+
+    data1 = [
+            {key: "구분", label: "구분" ,width: 80 ,align: "center"},
+            {key: "총매출액", label: "총매출액" ,width: 80 , formatter: "money",align: "right"},
+            {key: "총할인액", label: "총할인액" ,width: 80 , formatter: "money",align: "right"},
+            {key: "실매출액", label: "실매출액" ,width: 80 , formatter: "money",align: "right"},
+            {key: "가액", label: "가액" ,width: 80 , formatter: "money",align: "right"},
+            {key: "부가세", label: "부가세" ,width: 80 , formatter: "money",align: "right"},
+            {key: "봉사료", label: "봉사료", width: 80 , formatter: "money",align: "right"},
+            {key: "에누리", label: "에누리", width: 80 , formatter: "money",align: "right"},
+            {key: "거스름돈", label: "거스름돈", width: 80 , formatter: "money",align: "right"},
+            {key: "영수건수", label: "영수건수" ,width: 60 ,align: "right"},
+            {key: "영수단가", label: "영수단가" ,width: 80 , formatter: "money",align: "right"},
+            {
+                label: "결제수단", columns: [ // child columns
+                    {key: "결제합계", label: "결제합계" ,formatter: "money",align: "right"},
+                    {key: "단순현금", label: "단순현금"  ,formatter: "money",align: "right"},
+                    {key: "현금영수", label: "현금영수"  ,formatter: "money",align: "right"},
+                    {key: "신용카드", label: "신용카드"  ,formatter: "money",align: "right"},
+                    {key: "외상", label: "외상" ,formatter: "money" ,align: "right"},
+                    {key: "상품권", label: "상품권" ,formatter: "money" ,align: "right"},
+                    {key: "식권", label: "식권" ,formatter: "money" ,align: "right"},
+                    {key: "회원포인트", label: "회원포인트"  ,formatter: "money",align: "right"},
+                    {key: "제휴카드", label: "제휴카드" ,formatter: "money" ,align: "right"},
+                    {key: "사원카드", label: "사원카드" ,formatter: "money" ,align: "right"},
+                    {key: "모바일쿠폰", label: "모바일쿠폰"  ,formatter: "money",align: "right"},
+                    {key: "캐시비", label: "캐시비" ,formatter: "money" ,align: "right"},
+                    {key: "선불카드", label: "선불카드"  ,formatter: "money",align: "right"}
+                ]
+            },
+            {
+                label: "할인내역", columns: [ // child columns
+                    {key: "일반", label: "일반" ,formatter: "money" ,align: "right"},
+                    {key: "서비스", label: "서비스"  ,formatter: "money",align: "right"},
+                    {key: "제휴", label: "제휴" ,formatter: "money" ,align: "right"},
+                    {key: "쿠폰", label: "쿠폰" ,formatter: "money" ,align: "right"},
+                    {key: "회원", label: "회원" ,formatter: "money" ,align: "right"},
+                    {key: "식권", label: "식권"  ,formatter: "money",align: "right"},
+                    {key: "포장", label: "포장"  ,formatter: "money",align: "right"},
+                    {key: "YAP", label: "YAP"  ,formatter: "money",align: "right"}
+                ]
+            },
+            {key: "객수합계", label: "객수합계" ,width: 50},
+            {
+                label: "객수", columns: [ // child columns
+                    {key: "남", label: "남" ,width: 50},
+                    {key: "여", label: "여" ,width: 50},
+                    {key: "e5", label: "11" ,width: 50},
+                    {key: "e6", label: "22" ,width: 50}
+                ]
+            },
+            {key: "객단가", label: "객단가" ,width: 50},
+            {
+                label: "테이블", columns: [ // child columns
+                    {key: "테이블수", label: "테이블수" ,width: 50},
+                    {key: "단가", label: "단가" ,width: 50},
+                    {key: "회전율", label: "회전율" ,width: 50}
+                ]
+            },
+            {
+                label: "Tax Refund", columns: [ // child columns
+                    {key: "사후환급액", label: "사후환급액"  ,formatter: "money",align: "right"},
+                    {key: "즉시환급액", label: "즉시환급액" ,formatter: "money",align: "right"},
+                    {key: "환급수수료", label: "환급수수료" ,formatter: "money" ,align: "right"}
+                ]
+            }
+        ]
+
+    data2 = [
+            {key: "포스번호", label: "포스번호" ,width: 80 ,align: "center"},
+            {key: "영수증번호", label: "영수증번호" ,width: 90 ,align: "center"},
+            {key: "결제시각", label: "결제시각" ,width: 80 ,align: "center"},
+            {key: "구분", label: "구분" ,width: 80 ,align: "center"},
+            {key: "총매출액", label: "총매출액" ,width: 80 , formatter: "money",align: "right"},
+            {key: "총할인액", label: "총할인액" ,width: 80 , formatter: "money",align: "right"},
+            {key: "실매출액", label: "실매출액" ,width: 80 , formatter: "money",align: "right"},
+            {key: "가액", label: "가액" ,width: 80 , formatter: "money",align: "right"},
+            {key: "부가세", label: "부가세" ,width: 80 , formatter: "money",align: "right"},
+            {key: "봉사료", label: "봉사료", width: 80 , formatter: "money",align: "right"},
+            {key: "에누리", label: "에누리", width: 80 , formatter: "money",align: "right"},
+            {key: "거스름돈", label: "거스름돈", width: 80 , formatter: "money",align: "right"},
+            {key: "회원명", label: "회원명" ,width: 60 ,align: "center"},
+            {key: "테이블명", label: "테이블명" ,width: 80 ,align: "center"},
+            {
+                label: "결제수단", columns: [ // child columns
+                    {key: "결제합계", label: "결제합계"  ,formatter: "money",align: "right"},
+                    {key: "단순현금", label: "단순현금"  ,formatter: "money",align: "right"},
+                    {key: "현금영수", label: "현금영수"  ,formatter: "money",align: "right"},
+                    {key: "신용카드", label: "신용카드"  ,formatter: "money",align: "right"},
+                    {key: "외상", label: "외상"  ,formatter: "money",align: "right"},
+                    {key: "상품권", label: "상품권"  ,formatter: "money",align: "right"},
+                    {key: "식권", label: "식권"  ,formatter: "money",align: "right"},
+                    {key: "회원포인트", label: "회원포인트"  ,formatter: "money",align: "right"},
+                    {key: "제휴카드", label: "제휴카드" ,formatter: "money" ,align: "right"},
+                    {key: "사원카드", label: "사원카드"  ,formatter: "money",align: "right"},
+                    {key: "모바일쿠폰", label: "모바일쿠폰"  ,formatter: "money",align: "right"},
+                    {key: "캐시비", label: "캐시비"  ,formatter: "money",align: "right"},
+                    {key: "선불카드", label: "선불카드"  ,formatter: "money",align: "right"}
+                ]
+            },
+            {
+                label: "할인내역", columns: [ // child columns
+                    {key: "일반", label: "일반" ,formatter: "money" ,align: "right"},
+                    {key: "서비스", label: "서비스" ,formatter: "money" ,align: "right"},
+                    {key: "제휴", label: "제휴" ,formatter: "money" ,align: "right"},
+                    {key: "쿠폰", label: "쿠폰" ,formatter: "money" ,align: "right"},
+                    {key: "회원", label: "회원"  ,formatter: "money",align: "right"},
+                    {key: "식권", label: "식권" ,formatter: "money" ,align: "right"},
+                    {key: "포장", label: "포장"  ,formatter: "money",align: "right"},
+                    {key: "YAP", label: "YAP"  ,formatter: "money",align: "right"}
+                ]
+            },
+            {key: "최초주문시각", label: "최초주문시각" ,width: 100 ,align: "center"},
+            {key: "객수합계", label: "객수합계" ,width: 50 ,align: "center"},
+            {
+                label: "객수", columns: [ // child columns
+                    {key: "남", label: "남" ,width: 50},
+                    {key: "여", label: "여" ,width: 50},
+                    {key: "e5", label: "11" ,width: 50},
+                    {key: "e6", label: "22" ,width: 50}
+                ]
+            },
+            {key: "객단가", label: "객단가" ,width: 50},
+            {key: "테이블점유시간", label: "테이블점유시간" ,width: 120, align: "center"},
+            {
+                label: "Tax Refund", columns: [ // child columns
+                    {key: "사후환급액", label: "사후환급액"  ,formatter: "money",align: "right"},
+                    {key: "즉시환급액", label: "즉시환급액" ,formatter: "money" ,align: "right"},
+                    {key: "환급수수료", label: "환급수수료"  ,formatter: "money",align: "right"},
+                    {key: "환급일련번호", label: "환급일련번호" ,align: "right"}
+                ]
+            }
+        ]
+    foot1 = [
+                {label: "합계", colspan: 1, align: "center"},
+                {key: "총매출액", collector: "sum", formatter: "money", align: "right"},
+                {key: "총할인액", collector: "sum", formatter: "money", align: "right"},
+                {key: "실매출액", collector: "sum", formatter: "money", align: "right"},
+                {key: "가액", collector: "sum", formatter: "money", align: "right"},
+                {key: "부가세", collector: "sum", formatter: "money", align: "right"},
+                {key: "봉사료", collector: "sum", formatter: "money", align: "right"},
+                {key: "에누리", collector: "sum", formatter: "money", align: "right"},
+                {key: "거스름돈", collector: "sum", formatter: "money", align: "right"},
+                {key: "영수건수", collector: "sum", formatter: "money", align: "right"},
+                {key: "영수단가", collector: "sum", formatter: "money", align: "right"},
+                {key: "결제합계", collector: "sum", formatter: "money", align: "right"},
+                {key: "단순현금", collector: "sum", formatter: "money", align: "right"},
+                {key: "현금영수", collector: "sum", formatter: "money", align: "right"},
+                {key: "신용카드", collector: "sum", formatter: "money", align: "right"},
+                {key: "외상", collector: "sum", formatter: "money", align: "right"},
+                {key: "상품권", collector: "sum", formatter: "money", align: "right"},
+                {key: "식권", collector: "sum", formatter: "money", align: "right"},
+                {key: "회원포인트", collector: "sum", formatter: "money", align: "right"},
+                {key: "제휴카드", collector: "sum", formatter: "money", align: "right"},
+                {key: "사원카드", collector: "sum", formatter: "money", align: "right"},
+                {key: "모바일쿠폰", collector: "sum", formatter: "money", align: "right"},
+                {key: "캐시비", collector: "sum", formatter: "money", align: "right"},
+                {key: "선불카드", collector: "sum", formatter: "money", align: "right"},
+                {key: "일반", collector: "sum", formatter: "money", align: "right"},
+                {key: "서비스", collector: "sum", formatter: "money", align: "right"},
+                {key: "제휴", collector: "sum", formatter: "money", align: "right"},
+                {key: "쿠폰", collector: "sum", formatter: "money", align: "right"},
+                {key: "회원", collector: "sum", formatter: "money", align: "right"},
+                {key: "식권", collector: "sum", formatter: "money", align: "right"},
+                {key: "포장", collector: "sum", formatter: "money", align: "right"},
+                {key: "YAP", collector: "sum", formatter: "money", align: "right"},
+                {key: "객수합계", collector: "sum", formatter: "money", align: "right"},
+                {key: "남", collector: "sum", align: "right"},
+                {key: "여", collector: "sum",  align: "right"},
+                {key: "e5", collector: "sum", align: "right"},
+                {key: "e6", collector: "sum",  align: "right"},
+                {key: "객단가", collector: "sum", formatter: "money", align: "right"},
+                {key: "테이블수", collector: "sum", align: "right"},
+                {key: "단가", collector: "sum", formatter: "money", align: "right"},
+                {key: "회전율", collector: "sum",  align: "right"},
+                {key: "사후환급액", collector: "sum", formatter: "money", align: "right"},
+                {key: "즉시환급액", collector: "sum", formatter: "money", align: "right"},
+                {key: "환급수수료", collector: "sum", formatter: "money", align: "right"},
+
+            ]
+    foot2 = [
+                {label: "합계", colspan: 2, align: "center"},
+                {key: "결제시각",  align: "center"},
+                {key: "구분", align: "right"},
+                {key: "총매출액", collector: "sum", formatter: "money", align: "right"},
+                {key: "총할인액", collector: "sum", formatter: "money", align: "right"},
+                {key: "실매출액", collector: "sum", formatter: "money", align: "right"},
+                {key: "가액", collector: "sum", formatter: "money", align: "right"},
+                {key: "부가세", collector: "sum", formatter: "money", align: "right"},
+                {key: "봉사료", collector: "sum", formatter: "money", align: "right"},
+                {key: "에누리", collector: "sum", formatter: "money", align: "right"},
+                {key: "거스름돈", collector: "sum", formatter: "money", align: "right"},
+                {key: "회원명",  align: "right"},
+                {key: "테이블명", align: "right"},
+                {key: "결제합계", collector: "sum", formatter: "money", align: "right"},
+                {key: "단순현금", collector: "sum", formatter: "money", align: "right"},
+                {key: "현금영수", collector: "sum", formatter: "money", align: "right"},
+                {key: "신용카드", collector: "sum", formatter: "money", align: "right"},
+                {key: "외상", collector: "sum", formatter: "money", align: "right"},
+                {key: "상품권", collector: "sum", formatter: "money", align: "right"},
+                {key: "식권", collector: "sum", formatter: "money", align: "right"},
+                {key: "회원포인트", collector: "sum", formatter: "money", align: "right"},
+                {key: "제휴카드", collector: "sum", formatter: "money", align: "right"},
+                {key: "사원카드", collector: "sum", formatter: "money", align: "right"},
+                {key: "모바일쿠폰", collector: "sum", formatter: "money", align: "right"},
+                {key: "캐시비", collector: "sum", formatter: "money", align: "right"},
+                {key: "선불카드", collector: "sum", formatter: "money", align: "right"},
+                {key: "일반", collector: "sum", formatter: "money", align: "right"},
+                {key: "서비스", collector: "sum", formatter: "money", align: "right"},
+                {key: "제휴", collector: "sum", formatter: "money", align: "right"},
+                {key: "쿠폰", collector: "sum", formatter: "money", align: "right"},
+                {key: "회원", collector: "sum", formatter: "money", align: "right"},
+                {key: "식권", collector: "sum", formatter: "money", align: "right"},
+                {key: "포장", collector: "sum", formatter: "money", align: "right"},
+                {key: "YAP", collector: "sum", formatter: "money", align: "right"},
+                {key: "최초주문시각", align: "right"},
+                {key: "객수합계", collector: "sum", align: "right"},
+                {key: "남", collector: "sum",  align: "right"},
+                {key: "여", collector: "sum",  align: "right"},
+                {key: "e5", collector: "sum",  align: "right"},
+                {key: "e6", collector: "sum",  align: "right"},
+                {key: "객단가", collector: "sum", formatter: "money", align: "right"},
+                {key: "테이블점유시간", align: "center"},
+                {key: "사후환급액", collector: "sum", formatter: "money", align: "right"},
+                {key: "즉시환급액", collector: "sum", formatter: "money", align: "right"},
+                {key: "환급수수료", collector: "sum", formatter: "money", align: "right"},
+                {key: "환급일련번호", collector: "sum",  align: "right"},
+
+            ]
+
+
+}
+
+function remove(r,d,f) {
+
+    d0 = {};
+    d1 = {};
+    a = []; b = [];
+
+    d0 = r
+
+    for( i in d0 ) {
+        for ( j in d0[i] ) {
+            if (typeof d1[j] == "undefined") {  d1[j] = 0 }
+            d1[j] = parseInt(d1[j]) + parseInt(d0[i][j])
+        }
+
+    }
+    for ( i in d1 ) {
+        if ( d1[i] == 0 ) {
+            a.push(i)
+        }
+
+    }
+
+    for ( i in a) {
+        for ( j in d ) {
+            if ( a[i] == d[j]['key'] ) {
+                const itemToFind = d.find(function(item) {return item.key == a[i]} )
+                const idx = d.indexOf(itemToFind)
+                if (idx > -1) d.splice(idx, 1)
+
+                const itemToFind3 = f.find(function(item) {return item.key == a[i]} )
+                const idx3 = f.indexOf(itemToFind3)
+                if (idx3 > -1) f.splice(idx3, 1)
+
+            }
+            if ( d[j].columns != undefined) {
+                for ( k in d[j].columns ) {
+                    if ( a[i] ==  d[j].columns[k].key ) {
+                        const itemToFind1 = d[j].columns.find(function(item) {return item.key == a[i]} )
+                        const idx1 = d[j].columns.indexOf(itemToFind1)
+                        if (idx1 > -1) d[j].columns.splice(idx1, 1)
+
+                        const itemToFind3 = f.find(function(item) {return item.key == a[i]} )
+                        const idx3 = f.indexOf(itemToFind3)
+                        if (idx3 > -1) f.splice(idx3, 1)
+                    }
+                }
+            }
+        }
+    }
+
+    for ( i in d ) {
+        if ( d[i].columns != undefined) {
+            if ( d[i].columns.length == 0 ) {
+                b.push(d[i].label)
+            }
+        }
+    }
+
+    for ( i in b ) {
+        for ( j in d )
+            if ( b[i] == d[j]['label'] ) {
+                const itemToFind2 = d.find(function(item) {return item.label == b[i]} )
+                const idx2 = d.indexOf(itemToFind2)
+                if (idx2 > -1) d.splice(idx2, 1)
+
+                const itemToFind3 = f.find(function(item) {return item.key == a[i]} )
+                const idx3 = f.indexOf(itemToFind3)
+                if (idx3 > -1) f.splice(idx3, 1)
+            }
+    }
+
+}
+
+reset()
+
+ var Grid1 = new ax5.ui.grid({
+        target: $('[data-ax5grid="1-grid"]'),
+        columns: data1,
+        footSum: [ foot1 ]
+
+    });
+
+
+var Grid2 = new ax5.ui.grid({
+        target: $('[data-ax5grid="2-grid"]'),
+        columns:  data2,
+        footSum: [ foot2 ]
+
+});
+
+
+
+ $('#load').click(function () {
+    load()
+ })
+
+$("#hide").click(function () {
+  if ( gridList1.length != 0 ) {
+    load()
+  }
+});
+
+</script>
+
+{% endblock %}
+

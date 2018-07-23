@@ -1,0 +1,373 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<style>
+
+
+  table {
+    width: 100%;
+    border: 0px;
+    background-color :#e7dfdf;
+  }
+  .box{
+    border: 1px solid #a3a2a2; margin :0.5em 0em 0em 0em;
+  }
+  th {
+    text-align : left;
+    background-color: #e7dfdf;
+  }
+
+</style>
+
+
+
+<title></title>
+</head>
+<body>
+<table width="100%" background="/image/title_bg.gif" border="0" cellspacing="0" cellpadding="0"><tbody><tr height="30"><td width="10"></td><td>  <table border="0" cellspacing="0" cellpadding="0">  <tbody><tr>  <td><img src="/image/title_icon.gif"></td>  <td width="10"></td>  <td>    <table border="0" cellspacing="0" cellpadding="0"><tbody><tr><td height="3"></td></tr><tr>    <td><font color="#ffffff" style="font-size: 14px;"><b>회원등급설정</b></font></td>    </tr></tbody></table>  </td>  <td width="40"></td>  <td><span id="span_mymenu"><img style="cursor: hand;" onclick="top.HistoryFrm.fnEditMyMenu('Y','000052')" src="/image/icon01/mymenu_plus.gif"></span></td>  <td width="10"></td>  <td><img style="cursor: hand;" onclick="parent.set_menu_item();" src="/image/icon01/btn_column.gif"></td>  </tr>  </tbody></table></td><td align="right"><font color="#ffffff">회원관리 &gt; 회원정보 &gt; 회원등급설정</font></td><td width="10"></td></tr></tbody></table>
+
+<form name="form1">
+<!-- IBFrame 을 위한 변수 선언 (필수)-->
+<input name="S_CONTROLLER" type="hidden" value="master.cust.cls010">
+<input name="S_METHOD" type="hidden" value="search">
+<input name="S_SAVENAME" type="hidden" value="sStatus|sCheckBox|CST_OGN_CD|CST_CLS_CD|CST_SEQ|CST_CLS_NM|BASE_CLS_YN|DC_RATE|ACC_UNIT_FG|ACC_BASE_CSH|ACC_BASE_CRD|NEW_ENTRY_POINT|MIN_USE_POINT|">
+<!-- IBFrame 을 위한 변수 선언 (선택)-->
+<input name="S_FORWARD" type="hidden" value="">
+<input name="S_TREECOL" type="hidden" value="">
+
+<input name="SHEETSEQ" type="hidden" value="1">
+<input name="p_CST_CLS_CD" type="hidden" value="">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tbody><tr height="6"><td></td></tr>
+<tr>
+    <td>
+    <table width="100%" height="28" background="/image/sub_title_bg.gif" border="0" cellspacing="0" cellpadding="0">
+<tbody><tr>
+<td width="8"></td>
+<td align="left"><img align="absmiddle" src="/image/list_icon.gif"> <font color="#ffffff"><b>등급입력</b></font></td>
+<td align="right"><span id="layerTab1_button"><table border="0" cellspacing="0" cellpadding="0"><tbody><tr><td><table style="cursor: pointer;" onclick="iframe2.location.href='cls011.jsp';" border="0" cellspacing="0" cellpadding="0">
+<tbody><tr valign="middle">
+<td><img id="btn_l_bg" src="/image/btn_red_l_bg.gif"></td>
+<td background="/image/btn_red_c_bg.gif"><img width="4" height="13" src="/image/blank.gif"><font color="#ffffff">신규등록</font><img width="4" height="13" src="/image/blank.gif"></td>
+<td><img id="btn_r_bg" src="/image/btn_red_r_bg.gif"></td>
+</tr>
+</tbody></table></td><td width="10"></td><td><table style="cursor: pointer;" onclick="iframe2.doSave();" border="0" cellspacing="0" cellpadding="0">
+<tbody><tr valign="middle">
+<td><img id="btn_l_bg" src="/image/btn_red_l_bg.gif"></td>
+<td background="/image/btn_red_c_bg.gif"><img width="4" height="13" src="/image/blank.gif"><font color="#ffffff">저장</font><img width="4" height="13" src="/image/blank.gif"></td>
+<td><img id="btn_r_bg" src="/image/btn_red_r_bg.gif"></td>
+</tr>
+</tbody></table></td><td width="10"></td><td><table style="cursor: pointer;" onclick="doAction('delete','1');" border="0" cellspacing="0" cellpadding="0">
+<tbody><tr valign="middle">
+<td><img id="btn_l_bg" src="/image/btn_red_l_bg.gif"></td>
+<td background="/image/btn_red_c_bg.gif"><img width="4" height="13" src="/image/blank.gif"><font color="#ffffff">삭제</font><img width="4" height="13" src="/image/blank.gif"></td>
+<td><img id="btn_r_bg" src="/image/btn_red_r_bg.gif"></td>
+</tr>
+</tbody></table></td></tr></tbody></table></span></td>
+<td width="8"></td>
+</tr>
+</tbody></table>
+    <table width="100%" height="4" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td></td></tr></tbody></table>
+
+    </td>
+</tr>
+<tr>
+    <td height="265">
+      <table>
+          <tr>
+              <td>
+
+
+<body><form name="formAJAX" action="/common/jsp/select_qry.jsp">
+<input name="select_source" id="select_source" type="hidden" value="/master/cust/cls011.jsp">
+<input name="select_idx" id="select_idx" type="hidden" size="100">
+<input name="select_objidx" id="select_objidx" type="hidden" size="100">
+<input name="select_name" id="select_name" type="hidden" size="100">
+<input name="select_value" id="select_value" type="hidden" size="100">
+<input name="select_option" id="select_option" type="hidden" size="100">
+<input name="select_query" id="select_query" type="hidden" size="100">
+<input name="select_title" id="select_title" type="hidden" size="100">
+<input name="select_change" id="select_change" type="hidden" size="100">
+<input name="select_etc" id="select_etc" type="hidden" size="100">
+</form>
+<script src="/common/js/calendar1.js"></script>
+<div id="cal_div1" style="overflow: hidden; display: none; position: absolute; z-index: 99;">
+<table border="0" cellspacing="0" cellpadding="0">
+<tbody><tr><td><iframe name="cal_frm" width="162" height="199" id="cal_frm" src="/common/jsp/calendar.html" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></td></tr>
+<tr><td><iframe name="cal_close_frm" width="162" height="28" id="cal_close_frm" src="/common/jsp/calendar_close.jsp?target=1" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></td></tr>
+</tbody></table>
+</div>
+
+
+<form name="form1" method="post">
+<input name="PROC_FG" type="hidden" value="I">
+<input name="CST_OGN_CD" type="hidden" value="S57992">
+<input name="CST_SEQ" type="hidden" value="0">
+<input name="ACC_BASE_CSH" type="hidden">
+<input name="ACC_BASE_CSB" type="hidden">
+<input name="ACC_BASE_CRD" type="hidden">
+<input name="ACC_BASE_GFT" type="hidden">
+<input name="ACC_BASE_FOD" type="hidden">
+<input name="ACC_BASE_JCD" type="hidden">
+<input name="ACC_BASE_WES" type="hidden">
+<input name="ACC_BASE_CST" type="hidden">
+<input name="ACC_BASE_RFC" type="hidden">
+<input name="ACC_BASE_MCP" type="hidden">
+<input name="ACC_BASE_PCD" type="hidden">
+
+
+<table width="100%" bgcolor="#aaaaaa" border="0" cellspacing="1" cellpadding="4">
+<tbody><tr bgcolor="#ffffff">
+<td width="100%">
+    <table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
+    <tbody><tr>
+    <td width="38%">
+        <table width="100%" height="100%" bgcolor="#ccd6bc" border="0" cellspacing="1" cellpadding="2">
+        <tbody><tr>
+        <td width="40%" align="right" nowrap="" bgcolor="#eef1e8"><font color="red">*</font>등급코드/명</td>
+        <td width="60%" nowrap="" bgcolor="#e6ebde">
+        <input name="CST_CLS_CD" class="input1hc imeEng" type="text" size="2" maxlength="2" value="">
+        <input name="CST_CLS_NM" class="input1h imeHan" type="text" size="20" maxlength="20" value="">
+        <select name="BASE_CLS_YN" onchange="fnChSelect()">
+<option value="Y">기본</option>
+<option value="N">일반</option>
+</select>
+        </td>
+        </tr>
+        <tr>
+        <td align="right" bgcolor="#eef1e8"><font color="red">*</font>할인율</td>
+        <td bgcolor="#e6ebde"><input name="DC_RATE" class="input1c" type="text" size="3" maxlength="3" value="">% 할인</td>
+        </tr>
+        <tr>
+        <td align="right" bgcolor="#eef1e8"><font color="red">*</font>할인한도액</td>
+        <td bgcolor="#e6ebde"><input name="LIMIT_DC_AMT" class="input1c" type="text" size="8" maxlength="8" value=""></td>
+        </tr>
+        <tr>
+        <td align="right" bgcolor="#eef1e8"><font color="red">*</font>신규가입시 부여 Point</td>
+        <td bgcolor="#e6ebde"><input name="NEW_ENTRY_POINT" class="input1c" type="text" size="8" maxlength="8" value=""></td>
+        </tr>
+        <tr>
+        <td align="right" bgcolor="#eef1e8"><font color="red">*</font>최소사용 Point </td>
+        <td bgcolor="#e6ebde">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tbody><tr>
+            <td><input name="MIN_USE_POINT" class="input1c" type="text" size="8" maxlength="8" value="">점부터 사용 가능<br>(제한 없는 경우 0 입력)</td>
+            <td></td>
+            </tr>
+            </tbody></table>
+        </td>
+        </tr>
+        <tr>
+        <td align="right" bgcolor="#eef1e8"><font color="red">*</font>최대사용 Point </td>
+        <td bgcolor="#e6ebde">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tbody><tr>
+            <td><input name="MAX_USE_POINT" class="input1c" type="text" size="8" maxlength="8" value="">(제한 없는 경우 0 입력)</td>
+            <td></td>
+            </tr>
+            </tbody></table>
+        </td>
+        </tr>
+        <tr>
+        <td align="right" bgcolor="#eef1e8"><font color="red">*</font>회원 첫구매 Point </td>
+        <td bgcolor="#e6ebde"><input name="ACC_BASE_NEW" class="input1c" type="text" size="8" maxlength="3" value="">% 적립</td>
+        </tr>
+        <tr>
+        <td align="right" bgcolor="#eef1e8"><font color="red">*</font>할인시 적립여부 </td>
+        <td bgcolor="#e6ebde"><select name="DC_ACC_YN">
+<option value="Y">적립</option>
+<option value="N">미적립</option>
+</select></td>
+        </tr>
+        <tr>
+        <td align="right" bgcolor="#eef1e8"><font color="red">*</font>포인트 사용시 적립여부 </td>
+        <td bgcolor="#e6ebde"><select name="USE_ACC_YN">
+<option value="Y">적립</option>
+<option value="N">미적립</option>
+</select></td>
+        </tr>
+        </tbody></table>
+    </td>
+    <td width="4" nowrap=""></td>
+    <td>
+        <table width="100%" height="100%" bgcolor="#ccd6bc" border="0" cellspacing="1" cellpadding="2">
+        <tbody><tr valign="top">
+        <td width="25%" align="center" nowrap="" bgcolor="#eef1e8">
+            <font color="red">*</font>Point 적립<br><select name="ACC_UNIT_FG" onchange="fnChSelect()">
+<option value="0">% 기준</option>
+<option value="1">금액기준</option>
+</select><br><br>
+            <input name="pole" class="input1hc" type="text" size="5" maxlength="5" value=""> <input class="button1" onclick="fnSetVal();" type="button" value="일괄적용"><br><br>
+            기념일 적립여부<br><select name="ACC_ANN_FG" onchange="fnANNChSelect()">
+<option value="0">미사용</option>
+<option value="1">생일</option>
+<option value="2">결혼기념일</option>
+</select><br>
+            <input name="ACC_BASE_ANN" class="read1c" type="text" size="3" maxlength="3" readonly="" value="">% 적립
+            <br><br><!--<br><br><br>20180412 4074에 의해 주석 처리-->
+            <span style="display: none;">
+            <font color="red">*</font>등급적용범위<br>
+            <select name="INS_FG" onchange="fnChSelect()">
+<option value="C">본사+매장</option>
+<option value="H">본사전용</option>
+</select>
+            </span>
+        </td>
+        <td width="75%" align="center" nowrap="" bgcolor="#e6ebde">
+            <table id="lytext0" style="display: inline;" border="0" cellspacing="1" cellpadding="3">
+            <tbody><tr>
+            <td align="right">단순현금</td>
+            <td><input name="ACC_BASE_CSH_0" class="input1c" type="text" size="3" maxlength="3" value="">% 적립</td>
+            <td width="20" nowrap=""></td>
+            <td align="right">현금영수증</td>
+            <td><input name="ACC_BASE_CSB_0" class="input1c" type="text" size="3" maxlength="3" value="">% 적립</td>
+            </tr>
+            <tr>
+            <td align="right">신용카드</td>
+            <td><input name="ACC_BASE_CRD_0" class="input1c" type="text" size="3" maxlength="3" value="">% 적립</td>
+            <td width="20" nowrap=""></td>
+            <td align="right">상품권</td>
+            <td><input name="ACC_BASE_GFT_0" class="input1c" type="text" size="3" maxlength="3" value="">% 적립</td>
+            </tr>
+            <tr>
+            <td align="right">식권</td>
+            <td><input name="ACC_BASE_FOD_0" class="input1c" type="text" size="3" maxlength="3" value="">% 적립</td>
+            <td width="20" nowrap=""></td>
+            <td align="right">제휴카드</td>
+            <td><input name="ACC_BASE_JCD_0" class="input1c" type="text" size="3" maxlength="3" value="">% 적립</td>
+            </tr>
+            <tr>
+            <td align="right">외상</td>
+            <td><input name="ACC_BASE_WES_0" class="input1c" type="text" size="3" maxlength="3" value="">% 적립</td>
+            <td width="20" nowrap=""></td>
+            <td align="right">RF</td>
+            <td><input name="ACC_BASE_RFC_0" class="input1c" type="text" size="3" maxlength="3" value="">% 적립</td>
+            </tr>
+            <tr>
+            <td align="right">모바일쿠폰</td>
+            <td><input name="ACC_BASE_MCP_0" class="input1c" type="text" size="3" maxlength="3" value="">% 적립</td>
+            <td width="20" nowrap=""></td>
+            <td align="right">캐시비</td>
+            <td><input name="ACC_BASE_PCD_0" class="input1c" type="text" size="3" maxlength="3" value="">% 적립</td>
+            </tr>
+            <tr style="display: none;">
+            <td align="right">회원포인트</td>
+            <td><input name="ACC_BASE_CST_0" class="input1c" type="text" size="3" maxlength="3" value="0">% 적립</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            </tr>
+            </tbody></table>
+
+            <table id="lytext1" style="display: none;" border="0" cellspacing="1" cellpadding="3">
+            <tbody><tr>
+            <td align="right">단순현금</td>
+            <td><input name="ACC_BASE_CSH_1" class="input1r" type="text" size="5" maxlength="5" value="">원당 1Point 적립</td>
+            <td width="10" nowrap=""></td>
+            <td align="right">현금영수증</td>
+            <td><input name="ACC_BASE_CSB_1" class="input1r" type="text" size="5" maxlength="5" value="">원당 1Point 적립</td>
+            </tr>
+            <tr>
+            <td align="right">신용카드</td>
+            <td><input name="ACC_BASE_CRD_1" class="input1r" type="text" size="5" maxlength="5" value="">원당 1Point 적립</td>
+            <td width="10" nowrap=""></td>
+            <td align="right">상품권</td>
+            <td><input name="ACC_BASE_GFT_1" class="input1r" type="text" size="5" maxlength="5" value="">원당 1Point 적립</td>
+            </tr>
+            <tr>
+            <td align="right">식권</td>
+            <td><input name="ACC_BASE_FOD_1" class="input1r" type="text" size="5" maxlength="5" value="">원당 1Point 적립</td>
+            <td width="10" nowrap=""></td>
+            <td align="right">제휴카드</td>
+            <td><input name="ACC_BASE_JCD_1" class="input1r" type="text" size="5" maxlength="5" value="">원당 1Point 적립</td>
+            </tr>
+            <tr>
+            <td align="right">외상</td>
+            <td><input name="ACC_BASE_WES_1" class="input1r" type="text" size="5" maxlength="5" value="">원당 1Point 적립</td>
+            <td width="10" nowrap=""></td>
+            <td align="right">RF</td>
+            <td><input name="ACC_BASE_RFC_1" class="input1r" type="text" size="5" maxlength="5" value="">원당 1Point 적립</td>
+            </tr>
+            <tr>
+            <td align="right">모바일쿠폰</td>
+            <td><input name="ACC_BASE_MCP_1" class="input1r" type="text" size="5" maxlength="5" value="">원당 1Point 적립</td>
+            <td width="10" nowrap=""></td>
+            <td align="right">캐시비</td>
+            <td><input name="ACC_BASE_PCD_1" class="input1r" type="text" size="5" maxlength="5" value="">원당 1Point 적립</td>
+            </tr>
+            <tr style="display: none;">
+            <td align="right">회원포인트</td>
+            <td><input name="ACC_BASE_CST_1" class="input1r" type="text" size="5" maxlength="5" value="0">원당 1Point 적립</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            </tr>
+            </tbody></table>
+        </td>
+        </tr>
+        <!-- 20180412 4074에 의해 추가 start -->
+        <!--20180430 web 업무지연 방지를 위해 히든 처리 후 운영 적용 start
+		<tr>
+		<td bgcolor='</%=FreeFormTitleColor%>' align='right'><font color=red>*</font>일조정횟수</td>
+		<td bgcolor='</%=FreeFormValueColor%>'><input type='text' name='DAY_ADJ_CNT' value='</%=DAY_ADJ_CNT%>' size='8' maxlength='8' class='input1c'>회 (제한 없는 경우 0 입력)</td>
+
+		</tr>
+		<tr>
+		<td bgcolor='</%=FreeFormTitleColor%>' align='right'><font color=red>*</font>조정금액상한선</td>
+		<td bgcolor='</%=FreeFormValueColor%>'><input type='text' name='LIMIT_ADJ_AMT' value='</%=LIMIT_ADJ_AMT%>' size='8' maxlength='8' class='input1c'>원 (제한 없는 경우 0 입력)</td>
+
+		</tr>
+		20180430 web 업무지연 방지를 위해 히든 처리 후 운영 적용 end
+		-->
+		<input name="DAY_ADJ_CNT" type="hidden" value="0">
+		<input name="LIMIT_ADJ_AMT" type="hidden" value="0">
+		<!-- 20180412 4074에 의해 추가 end -->
+        </tbody></table>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+</tr>
+</tbody></table>
+</form>
+              </td>
+          </tr>
+      </table>
+    </td>
+</tr>
+<tr height="6"><td></td></tr>
+<tr valign="top">
+    <td>
+    <table width="100%" height="100%" bgcolor="#aaaaaa" border="0" cellspacing="1" cellpadding="4">
+    <tbody><tr bgcolor="#ffffff"><td width="100%">
+
+    <table width="100%" bgcolor="#e9e9e9" border="0" cellspacing="0" cellpadding="0">
+<tbody><tr height="1" bgcolor="#aaaaaa"><td colspan="6"></td></tr>
+<tr height="25">
+<td width="1" bgcolor="#aaaaaa"></td>
+<td width="8"></td>
+<td align="left"><img src="/image/s_icon.gif"> 등급목록</td>
+<td width="8"></td>
+<td width="1" bgcolor="#aaaaaa"></td>
+</tr>
+<tr height="1" bgcolor="#aaaaaa"><td colspan="6"></td></tr>
+</tbody></table>
+    <table width="100%" height="" id="TableNm1" bgcolor="#aaaaaa" border="0" cellspacing="0" cellpadding="0" name="TableNm1">
+<tbody><tr valign="top" bgcolor="#ffffff"><td width="100%" height="100%"><script>makeIBSheet('mySheet1');</script><object name="mySheet1" width="100%" height="100%" id="mySheet1" classid="CLSID:341FBC5F-2AE4-41B8-BFE5-A03170569A27" codebase="/common/object/IBSheet3.CAB#version=3,4,0,387" style="height: 199px;"><PARAM NAME="_ExtentX" VALUE="25876"><PARAM NAME="_ExtentY" VALUE="5265"><PARAM NAME="ConfigXml" VALUE="/common/gridstyle/GridConfig.xml"><PARAM NAME="Version" VALUE="3.4.0.387"><param name="Visible" value="false"><param name="FullHeight" value="false"><param name="AutoSizeMode" value="true"><param name="ConfigXml" value="/common/gridstyle/GridConfig.xml"></object><script>document.getElementById('mySheet1').SetExcelColDialog(0);</script></td></tr>
+</tbody></table>
+
+    </td></tr>
+    </tbody></table>
+    </td>
+</tr>
+</tbody></table>
+</form>
+
+
+
+</body></html>
+
+
+
+{% endblock %}

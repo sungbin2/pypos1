@@ -1,0 +1,249 @@
+{% extends "layout.html" %}
+
+
+
+{% block body %}
+
+<script src="{{ url_for('static',filename='weather.json') }}"></script>
+
+
+<table width='100%' height='1' border='0' cellpadding='0' cellspacing='0'><tr valign='top'><td width='20'  nowrap></td><td width='55%' nowrap><table width='100%' border='0' cellpadding='0' cellspacing='0' background='' >
+    <tr>
+        <td><table border='0' cellpadding='0' cellspacing='0'>
+            <tr>
+                <td><img src=''></td>
+                <td background='' valign='middle'><img src='' width='1' height='15'><b>공지사항</b><img src='' width='1' height='15'></td>
+                <td><img src=''></td>
+            </tr>
+        </table></td><td align='right'><a src='' onclick="" style='cursor:hand;'>more</a></td>
+    </tr>
+</table><table width='100%' height='1' border='0' cellpadding='0' cellspacing='0'><tr><td></td></tr></table>
+    <table width='100%' height='2' border='0' cellpadding='0' cellspacing='0'><tr><td></td></tr></table>
+    <td width='20'  nowrap></td><td width='45%' nowrap><table width='100%' border='0' cellpadding='0' cellspacing='0' background='' >
+    <tr>
+        <td><table border='0' cellpadding='0' cellspacing='0'>
+            <tr>
+                <td><img src=''></td>
+                <td background='' valign='middle'><img src='/image/blank.gif' width='1' height='15'><font color='black'><b>서울 날씨</b></font><img src='' width='1' height='15'></td>
+                <td><img src=''></td>
+            </tr>
+        </table></td><td align='right'><a href="{{ url_for('_weather') }}" style='cursor:hand;'>more</a></td>
+    </tr>
+</table>
+
+
+    <table width='100%' height='2' border='0' cellpadding='0' cellspacing='0'><tr><td></td></tr></table>
+    <table><tr><td>   <table border='0' cellpadding='4' cellspacing='1' bgcolor='#cecece'>   <tr bgcolor='#ffffff' align='center'>   <td width='34%' nowrap><b>오늘</b> (<span id="wtm"> </span>)</td>   <td width='33%' nowrap><b>내일</b> (<span id="wtm1"> </span>)</td>   </tr>   <tr bgcolor='#ffffff' align='center'>   <td width='34%' nowrap><table border='0' cellpadding='0' cellspacing='0'><tr><td><img id='wimg' src='' width='70' height='70'></td><td width='10'></td><td><span id="wdesc" ></span></td></tr></table></td>   <td width='33%' nowrap><table border='0' cellpadding='0' cellspacing='0'><tr><td><img id='wimg1' src='' width='70' height='70'></td><td width='10'></td><td><span id="wdesc1" ></span></td></tr></table></td>   </tr><tr bgcolor='#ffffff' align='center'><td width='34%' nowrap>최저 <font color='#6CA6E5'><b><span id="wmin" ></span></b></font>℃ / 최고 <font color='#F65E08'><b><span id="wmax" ></span></b></font>℃</td><td width='33%' nowrap>최저 <font color='#6CA6E5'><b><span id="wmin1" ></span></b></font>℃ / 최고 <font color='#F65E08'><b><span id="wmax1" ></span></b></font>℃</td></tr>   </table></td><td>
+
+
+
+        <table border='0' cellpadding='' cellspacing='' bgcolor='#cecece'>   <tr bgcolor='#ffffff' align='center'>   <td nowrap></td>   </tr>   </table></td></tr></table></td><td width='20'  nowrap></td></tr></table>
+<table width='100%' height='6' border='0' cellpadding='0' cellspacing='0'><tr><td></td></tr></table>
+<table width='100%' border='0' cellpadding='0' cellspacing='0'><tr valign='top'><td width='20'   nowrap></td><td width='100%' nowrap><table width='100%' height='28' border='0' cellpadding='0' cellspacing='0' background=''>
+    <tr>
+        <td width='8'></td>
+        <td align='left'><img src='' align='absmiddle'><img src='' width='1' height='13'> <font color='black'><b>매출분석</b></font></td>
+        <td align='right'><table border='0' cellpadding='0' cellspacing='0'><tr><td><input type='hidden' id='sale_op'><input type='hidden' id='auto_call'></td><td><input type='radio' name='graph_type' value='B' onclick="fnLoadChart('');" checked><font color='black'>막대</font> <input type='radio' name='graph_type' value='D' onclick="fnLoadChart('');"><font color='black'>도우넛</font> </td><td width='6'></td><td><table border='0' cellpadding='0' cellspacing='0' style='cursor:pointer;' onclick="fnLoadChart('day_week');">
+            <tr valign='middle'>
+                <td><img id='btn_l_bg' src=''></td>
+                <td background=''><img src='' width='0' height='13'><font color='#000000'>일자별(1주)</font><img src='/image/blank.gif' width='0' height='13'></td>
+                <td><img id='btn_r_bg' src=''></td>
+            </tr>
+        </table></td><td width='6'></td><td><table border='0' cellpadding='0' cellspacing='0' style='cursor:pointer;' onclick="fnLoadChart('prod_week');">
+            <tr valign='middle'>
+                <td><img id='btn_l_bg' src=''></td>
+                <td background=''><img src='' width='0' height='13'><font color='#000000'>상품별(1주)</font><img src='' width='0' height='13'></td>
+                <td><img id='btn_r_bg' src=''></td>
+            </tr>
+        </table></td><td width='6'></td><td><table border='0' cellpadding='0' cellspacing='0' style='cursor:pointer;' onclick="fnLoadChart('week_month');">
+            <tr valign='middle'>
+                <td><img id='btn_l_bg' src=''></td>
+                <td background=''><img src='' width='0' height='13'><font color='#000000'>요일별(4주)</font><img src='' width='0' height='13'></td>
+                <td><img id='btn_r_bg' src=''></td>
+            </tr>
+        </table></td><td width='6'></td><td><table border='0' cellpadding='0' cellspacing='0' style='cursor:pointer;' onclick="fnLoadChart('month_year');">
+            <tr valign='middle'>
+                <td><img id='btn_l_bg' src=''></td>
+                <td background=''><img src='' width='0' height='13'><font color='#000000'>월별(1년)</font><img src='' width='0' height='13'></td>
+                <td><img id='btn_r_bg' src=''></td>
+            </tr>
+        </table></td></tr></table></td>
+        <td width='8'></td>
+    </tr>
+</table><table width='100%' border='0' cellpadding='4' cellspacing='1' bgcolor='#cecece'><tr bgcolor='#ffffff'><td><table width='100%' height='209' border='0' cellpadding='0' cellspacing='0'><tr valign='top'>
+<td width='59%' nowrap>
+    <div class="chart">
+        <canvas id="myChart" height="30vh" width="70vw"></canvas>
+    </div>
+
+</td>
+</td><td width='20'  nowrap></td><td width='40%' nowrap>
+
+ <div data-ax5grid="first-grid" data-ax5grid-config="{
+                        header: { align: 'center' },
+                        showLineNumber: true,
+                        page: { display: false  }
+                    }" style="height: 100%;"></div>
+
+
+
+</td></tr></table></td></tr></table></td><td width='20'   nowrap>
+
+
+</td></tr></table>
+<table width='100%' height='6' border='0' cellpadding='0' cellspacing='0'><tr><td>
+
+</td></tr></table>
+
+
+<table width='100%' border='0' cellpadding='0' cellspacing='0'><tr valign='top'><td width='20' nowrap></td><td width='100%' nowrap><table width='100%' border='0' cellpadding='0' cellspacing='0' background='' >
+    <tr>
+        <td><table border='0' cellpadding='0' cellspacing='0'>
+            <tr>
+                <td><img src=''></td>
+                <td background='' valign='middle'><img src='' width='1' height='15'><font color='black'><b>기타정보</b></font><img src='' width='1' height='15'></td>
+                <td><img src=''></td>
+            </tr>
+        </table></td><td align='right'></td>
+    </tr>
+</table><table width='100%' height='1' border='0' cellpadding='0' cellspacing='0'><tr><td></td></tr></table>
+    <table width='100%' border='0' cellpadding='2' cellspacing='1' bgcolor='#c0c0c0'><tr align='center' height='22' bgcolor='#e0e0e0' align='center'><td width='15%'>입고 미확정</td><td width='15%'>반품 미확정</td><td width='15%'>전체 회원수</td><td width='15%'>정보 미입력 회원수</td><td>관리업체명</td><td width='20%'>관리업체전화번호</td></tr><tr align='center' height='22' bgcolor='#ffffff' align='center'><td>0</td><td>0</td><td>0</td><td>0</td><td>현대포스</td><td>031-877-6787</td></tr></table></td><td width='20' nowrap></td></tr></table>
+
+
+<!--날씨 API-->
+<script>
+        var _data;var a=0 ,b=0;
+         var now = new Date();
+
+         var nowMonth = now.getMonth() + 1;
+         var nowDate = now.getDate();
+         var nowDate1 = now.getDate()+1;
+
+         var week = new Array('일', '월', '화', '수', '목', '금', '토');
+         var nowDay = now.getDay();
+         var nowDay1 = now.getDay()+1;
+
+        document.getElementById('wtm').innerHTML =  nowMonth + '월' + nowDate + '일 ,' + week[nowDay];
+        document.getElementById('wtm1').innerHTML =  nowMonth + '월' + nowDate1 + '일 ,' + week[nowDay1];
+
+
+var callbackFunction = function(data) {
+    var forecast = data.query.results.channel;
+
+    document.getElementById('wmin').innerHTML =  forecast[0].item.forecast.low
+    document.getElementById('wmax').innerHTML =  forecast[0].item.forecast.high
+    document.getElementById('wmin1').innerHTML = forecast[1].item.forecast.low
+    document.getElementById('wmax1').innerHTML = forecast[1].item.forecast.high
+    document.getElementById('wdesc1').innerHTML = forecast[1].item.forecast.text
+    document.getElementById('wdesc').innerHTML = forecast[0].item.forecast.text
+    for( i in names ) {
+        if( forecast[0].item.forecast.text == i || forecast[1].item.forecast.text == i) {
+            document.getElementById('wdesc').innerHTML = names[i]
+
+        }
+        if( forecast[1].item.forecast.text == i ) {
+            document.getElementById('wdesc1').innerHTML = names[i]
+        }
+
+    }
+
+    var img = forecast[0].item.forecast.text.toLowerCase().replace(' ','')
+    var img1 = forecast[1].item.forecast.text.toLowerCase().replace(' ','')
+    var imgURL = "/static/image/weather/"+img+".png"
+    $("#wimg").attr("src", imgURL);
+    var imgURL1 = "/static/image/weather/"+img1+".png"
+    $("#wimg1").attr("src", imgURL1);
+}
+</script>
+<script src="https://query.yahooapis.com/v1/public/yql?q=select item.forecast from weather.forecast where u='c' and woeid in (select woeid from geo.places(1) where text='seoul')&format=json&callback=callbackFunction"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='gridList.js') }} "></script>
+<script>
+
+
+var firstGrid = new ax5.ui.grid({
+            target: $('[data-ax5grid="first-grid"]'),
+            columns: [
+                {key: "일자", label: "일자", width: 150, align: "center" },
+                {key: "요일", label: "요일", width: 50, align: "center" },
+                {key: "총매출", label: "매출액" ,width: 150 , formatter: "money",align: "right"},
+            ]
+});
+
+function getDateStr(myDate){
+    return (myDate.getFullYear() + '-' + ("0" + (myDate.getMonth() + 1)).slice(-2)  + '-' + ("0" + myDate.getDate()).slice(-2));
+}
+
+function lastWeek() {
+  var d = new Date()
+  var dayOfMonth = d.getDate()
+  d.setDate(dayOfMonth - 7)
+  return getDateStr(d)
+}
+
+function today() {
+  var d = new Date()
+  return getDateStr(d)
+}
+
+var dates = lastWeek()
+var datee = today()
+
+var gridList = [];
+var gridList1 = [];
+var data = {};
+var data1 = [];
+
+
+$.getJSON("{{ url_for('_earnings_day' ) }}/"+"{{ store_id }}&"+dates+"&"+datee, function (json) {
+    _data = json;
+
+}).done(function () {
+
+    loaddata();
+
+    firstGrid.setData(gridList);
+
+    data = {
+        datasets: [{
+                label: '일자별 매출내역(1주간)',
+                data: data1,
+                backgroundColor: [
+                    'rgba(255, 99, 132)',
+                    'rgba(54, 162, 235)',
+                    'rgba(255, 206, 86)',
+                    'rgba(75, 192, 192)',
+                    'rgba(153, 102, 255)',
+                    'rgba(255, 159, 64)',
+                    'rgba(255, 206, 86)',
+                     'rgba(54, 162, 235)',
+                ],
+        }],
+        labels: []
+    }
+
+    for ( i in gridList) {
+        data1.push(gridList[i]['총매출'])
+        data['labels'].push(gridList[i]['일자'])
+    }
+
+    $("canvas").remove();
+    $("div.chart").append('<canvas id="myChart" height="30vh" width="70vw"></canvas>');
+
+    console.log(data)
+    var ctx = document.getElementById("myChart");
+    var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: data,
+                    options: {
+                        responsive: true
+                    }
+                });
+
+});
+
+</script>
+
+
+{% endblock %}

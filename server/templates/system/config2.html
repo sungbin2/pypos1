@@ -1,0 +1,607 @@
+{% extends "layout.html" %}
+{% block body %}
+<style>
+    #table_3 {width : 150px; }
+    #table_4  {width : 830px;}
+    thead, td, tr, th { style="text-align:center;"}
+    input {height="border: 0px;"}
+    .ui.form select{display:inline-block;}
+
+</style>
+
+<script src="{{ url_for('static',filename='FUNC.js') }}"></script>
+<script src="{{ url_for('static',filename='funcreset.json') }}"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jui-core@2.0.4/dist/core.min.js"></script>
+<script src="{{ url_for('static',filename='jui-master/dist/ui.min.js') }}"></script>
+<script src="{{ url_for('static',filename='jui-grid-master/dist/grid.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/jui-chart@2.0.4/dist/chart.min.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+
+<script src="{{ url_for('static',filename='node_modules/underscore/underscore.js') }}"></script>
+<script src="{{ url_for('static',filename='node_modules/backbone/backbone.js') }}"></script>
+<script src="{{ url_for('static',filename='node_modules/tui-code-snippet/dist/tui-code-snippet.js') }}"></script>
+<script src="{{ url_for('static',filename='node_modules/tui-pagination/dist/tui-pagination.js') }}"></script>
+<script src="{{ url_for('static',filename='node_modules/tui-date-picker/dist/tui-date-picker.js') }}"></script>
+<script src="{{ url_for('static',filename='node_modules/tui-grid/dist/tui-grid.js') }}"></script>
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='node_modules/tui-grid/dist/tui-grid.css') }}" />
+
+<link rel="stylesheet" href="{{ url_for('static',filename='jui-master/dist/ui.min.css') }}  "/>
+<link rel="stylesheet" href="{{ url_for('static',filename='jui-master/dist/ui-jennifer.min.css') }}" />
+
+<!-- Grid style components -->
+<link rel="stylesheet" href="{{ url_for('static',filename='jui-grid-master/dist/grid.min.css') }}  " />
+<link rel="stylesheet" href="{{ url_for('static',filename='jui-grid-master/dist/grid-jennifer.min.css') }}  " />
+
+<div class="ui top attached tabular menu">
+  <a class="item active" data-tab="first">포스기능사용관리</a>
+  <a class="item " data-tab="second">포스기능인증관리</a>
+
+</div>
+
+<div class="ui bottom attached tab segment active" data-tab="first">
+
+        <!--<th bgcolor='#EEF1E8' width='15%' align='right' nowrap><font color=red>*</font>매장코드/명</th>-->
+        <!--<td>-->
+                                    <!--<tr bgcolor='#E6EBDE' width='35%' nowrap>-->
+                                        <!--<input type='text' name='s' value='' size='6' maxlength='6' class='read1c' readonly>-->
+                                    <!--<input type='text' name='가게명' value='' size='25' maxlength='30' class='input1 imeHan'>-->
+                                    <!--</tr></td>-->
+
+<div><table width="100%"><td width="50%" align="right"><button id="btn_reset" >포스기능 일괄셋팅</button>&nbsp&nbsp<button id="btn_copy" >포스기능 복사</button></td><td align="right"> <button class="btn_modify" name="func"> 저장 </button></td></table>
+</div>
+<form id="form_modify" class="ui form" action="" method="post">
+    <table>
+    <tr><td align="right"><select style="width:50px;height:30px;padding:0 0 0 0;" id="pselect" class="posno"></select>--><select style="width:50px;height:30px;padding:0 0 0 0;" class="posno"></select></td></tr>
+
+    <td valign="top">
+<table id="table_1" class="table classic" width='100%'  border='0' cellpadding='4' cellspacing='1' bgcolor='#aaaaaa' >
+    <thead  >
+    <tr >
+        <th width="70px" >포스번호</th>
+        <th>기능구분</th>
+        <th width="70px">기능건수</th>
+        <th width="70px">등록건수</th>
+
+    </tr>
+    </thead>
+    <tbody></tbody>
+
+
+<script id="tpl_row1" type="text/template">
+    <tr >
+         <! if(row.index % 11 == 0) { !>
+        <td rowspan="11"><span id="pos"></span></td> <! } !>
+        <td><a onclick="button1_click('<!= text !>');"><!= text !></a></td>
+        <td><span id="func<!= no !>"></span></td>
+        <td><span id="funcy<!= no !>"></span></td>
+    </tr>
+
+</script>
+
+    </td></table>
+
+
+
+    <td valign="top">
+
+
+<table id="table_2" class="table classic" width='100%'  border='0' cellpadding='4' cellspacing='1' bgcolor='#aaaaaa' >
+    <thead >
+    <tr >
+        <th width="50px">No.</th>
+        <th width="70px">기능번호</th>
+        <th>기능명</th>
+        <th width="70px"> <input type="checkbox" name="check_all0" onchange="checkall(this.name)">사용</th>
+
+
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script id="tpl_row2" type="text/template">
+    <tr >
+        <td><input  type="hidden" name="no" value="<!= no !>"><span id="number"><!= no !></span></td>
+        <td><input  type="hidden" name="value" value="<!= value !>"><!= value !></td>
+        <td><input  type="hidden" name="text" value="<!= text !>"><!= text !></td>
+        <td><input class="input_check0" id='u0<!= value !>' type="hidden" name="use_yn0" value="">
+            <input id='c0<!= value !>' type="checkbox" name="input_check0" value='<!= value !>' onchange="onChangeHandler(this.value)"></td>
+    </tr>
+
+</script>
+
+
+    </td>
+
+</table>
+
+</form>
+
+</div>
+
+<div class="ui bottom attached tab segment " data-tab="second">
+<table width="100%"><tr ><td align="right"></td> <td align="right"><button class="btn_modify" name="cert"> 저장    </button></td></tr></table>
+
+<form id="form_modify1" class="ui form" action="" method="post">
+<table>
+
+    <td valign="top">
+<table id="table_3" class="table classic" width='100%'  border='0' cellpadding='4' cellspacing='1' bgcolor='#aaaaaa' >
+    <thead  >
+    <tr>
+        <th height="80px" width="40px" >No.</th>
+        <th>기능구분</th>
+    </tr>
+    <tr>
+    </tr>
+    </thead>
+    <tbody></tbody>
+
+
+<script id="tpl_row3" type="text/template">
+    <tr >
+        <td><!= no !></td>
+        <td><a onclick="button1_click1('<!= text !>');"><!= text !></a></td>
+    </tr>
+
+</script>
+
+    </td></table>
+
+
+
+    <td valign="top">
+<table id="table_4" class="table classic" width='100%'  border='0' cellpadding='4' cellspacing='1' bgcolor='#aaaaaa' >
+    <thead >
+    <tr><input  type="hidden" name="name" value="cert" >
+        <th style="text-align:center;" rowspan="2" width="40px">No.</th>
+        <th style="text-align:center;" rowspan="2" width="70px">기능번호</th>
+        <th style="text-align:center;" rowspan="2" width="140px">기능명</th>
+        <th style="text-align:center;" rowspan="2" width="80px"> <input type="checkbox" name="check_all1" onchange="checkall(this.name)">사용<br/>&nbsp&nbsp&nbsp여부</th>
+        <th style="text-align:center;" rowspan="2" width="80px"> <input type="checkbox" name="check_all2" onchange="checkall(this.name)">인증<br/>&nbsp&nbsp&nbsp여부</th>
+        <!--<th style="text-align:center;" colspan="4">허용그룹</th>-->
+   <!--</tr>-->
+
+   <!--<tr>-->
+        <th style="text-align:center;" width="60px"> <input type="checkbox" name="check_all3" onchange="checkall(this.name)">점주</th>
+        <th style="text-align:center;" width="60px"> <input type="checkbox" name="check_all4" onchange="checkall(this.name)">판매원</th>
+        <th style="text-align:center;" width="60px"> <input type="checkbox" name="check_all5" onchange="checkall(this.name)">서빙</th>
+        <th style="text-align:center;" width="60px"> <input type="checkbox" name="check_all6" onchange="checkall(this.name)">배달</th>
+
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script id="tpl_row4" type="text/template">
+    <tr>
+        <td style="text-align:center;"><input  type="hidden" name="no" value="<!= no !>"><span id="number"><!= no !></span></td>
+        <td style="text-align:center;"><input  type="hidden" name="value" value="<!= value !>"><!= value !></td>
+        <td style="text-align:center;"><input  type="hidden" name="text" value="<!= text !>"><!= text !></td>
+        <td style="text-align:center;"><input class="input_check1" id='u1<!= value !>' type="hidden" name="use_yn1" value="">
+            <input id='c1<!= value !>' type="checkbox" name="input_check1" value='<!= value !>' onchange="onChangeHandler(this.value)"></td>
+        <td style="text-align:center;"><input class="input_check2" id='u2<!= value !>' type="hidden" name="use_yn2" value="">
+            <input id='c2<!= value !>' type="checkbox" name="input_check2" value='<!= value !>' onchange="onChangeHandler(this.value)"></td>
+        <td style="text-align:center;"><input class="input_check3" id='u3<!= value !>' type="hidden" name="use_yn3" value="">
+            <input id='c3<!= value !>' type="checkbox" name="input_check3" value='<!= value !>' onchange="onChangeHandler(this.value)"></td>
+        <td style="text-align:center;"><input class="input_check4" id='u4<!= value !>' type="hidden" name="use_yn4" value="">
+            <input id='c4<!= value !>' type="checkbox" name="input_check4" value='<!= value !>' onchange="onChangeHandler(this.value)"></td>
+        <td style="text-align:center;"><input class="input_check5" id='u5<!= value !>' type="hidden" name="use_yn5" value="">
+            <input id='c5<!= value !>' type="checkbox" name="input_check5" value='<!= value !>' onchange="onChangeHandler(this.value)"></td>
+        <td style="text-align:center;"><input class="input_check6" id='u6<!= value !>' type="hidden" name="use_yn6" value="">
+            <input id='c6<!= value !>' type="checkbox" name="input_check6" value='<!= value !>' onchange="onChangeHandler(this.value)"></td>
+    </tr>
+
+</script>
+
+
+    </td>
+
+</table>
+
+</form>
+</div>
+
+
+<script>
+
+$('.menu .item')
+  .tab()
+;
+
+</script>
+
+<script>
+
+
+$.fn.serializeObject = function(){
+   var o = {};
+   var a = this.serializeArray();
+   $.each(a, function() {
+       if (o[this.name]) {
+           if (!o[this.name].push) {
+               o[this.name] = [o[this.name]];
+           }
+           o[this.name].push(this.value || '');
+       } else {
+           o[this.name] = this.value || '';
+       }
+   });
+   return o;
+};
+
+
+
+
+var _data = [];
+var data1 = [];
+var data2 = [];
+var data3 = []; var data4 = []; var data5 = []; //메인포스 데이터
+var data0 = [];
+var _url = "{{url_for('_system_config')}}";
+var id = {{ store_id }};
+var sfunc = "영업관리"
+var sfunc1 = "영업관리"
+
+
+function load()
+{
+        $.getJSON("{{ url_for('_system_config' ) }}/"+"{{ store_id }}", function (json) {
+            _data = json;
+
+        }).done(function () {
+
+            posno = [];
+            for ( each in _data) {
+                posno.push(each)
+            }
+
+            reload()
+
+            var options = posno.map(function(val, ind){
+                            return $("<option></option>").val(val).html(val);
+                            });
+            if ($('.posno').val() == null) {
+                     $('.posno').append(options);
+             }
+
+             $('#pselect').on('change', function () {
+                 var selectVal = $("#pselect option:selected").val();
+                 data0 = _data[selectVal]
+                 reload()
+            });
+        });
+
+}
+
+
+load();
+
+function reload() {
+
+    data3 = _data['01']
+    for(i in data3){
+         data4[i] = data3[i].func;
+         data5[i] = data3[i].cert
+        }
+
+    if ($('#pselect').val() == null || $('#pselect').val() == "01") {
+        data0 = _data['01'];
+    }else { data0 = _data[$('#pselect').val()] }
+
+    for(i in data0){
+         data1[i] = data0[i].func;
+         data2[i] = data0[i].cert
+        }
+
+    jui.ready([ "grid.table" ], function(table) {
+        table_1 = table("#table_1", {
+            resize: true,
+            scroll: true,
+            scrollHeight: 500,
+            tpl: {
+                row: $("#tpl_row1").html()
+            }
+        });
+        table_3 = table("#table_3", {
+            resize: true,
+            scroll: true,
+            scrollHeight: 500,
+            tpl: {
+                row: $("#tpl_row3").html()
+            }
+        });
+
+        table_1.update(data0);
+        table_3.update(data0);
+
+        for ( i in data1) {
+            k=0;
+            $("#func" + data1[0][i].no).html( data1[i].length );
+            for ( l in data1[i]) {
+                    if ( data1[i][l].use_yn == 'y') {   k++ ; }
+             };
+            $("#funcy" + data1[0][i].no).html( k );
+         }
+
+        table_2 = table("#table_2", {
+            fields: [ "no", "value", "text" ],
+            sort: [ "no", 1, 2 ],
+            resize: true,
+            scroll: true,
+            scrollHeight: 500,
+            tpl: {
+                row: $("#tpl_row2").html()
+            },
+             moveRow: true,
+
+            event: {
+                moveend: function(row, e) {
+                     for( i in data1){
+
+                          for( j in data1[i]){
+                               if( data1[i][j].use_yn == 'y' ) { $("#u0"+data1[i][j].value).attr("value",'y');}
+                               else { $("#u0"+data1[i][j].value).attr("value",'n'); }
+                               if( data1[i][j].use_yn == 'y' ) { $("#c0"+data1[i][j].value).attr("checked",true); }
+                            }
+                      }
+                },
+                sort: function(column, e) {
+                    var className = {
+                        "desc": "icon-arrow1",
+                        "asc": "icon-arrow3"
+                    }[column.order];
+
+                    $(column.element).children("i").remove();
+                    $(column.element).append("<i class='" + className + "'></i>");
+
+                    for( i in data1){
+
+                          for( j in data1[i]){
+                               if( data1[i][j].use_yn == 'y' ) { $("#u0"+data1[i][j].value).attr("value",'y');}
+                               else { $("#u0"+data1[i][j].value).attr("value",'n'); }
+                               if( data1[i][j].use_yn == 'y' ) { $("#c0"+data1[i][j].value).attr("checked",true); }
+                            }
+                         }
+                    }
+                }
+        });
+
+
+        table_4 = table("#table_4", {
+            fields: [ "no", "value", "text" ,"use_yn1", "use_yn2","use_yn3","use_yn4","use_yn5","use_yn6"],
+            scroll: true,
+            resize: true,
+            scrollHeight: 500,
+            tpl: {
+                row: $("#tpl_row4").html()
+            }
+
+        });
+
+        if ($('.posno').val() == null || $('.posno').val() == "01") {
+            $('#pos').text('POS01');
+            button1_click(sfunc)
+            button1_click1(sfunc1)
+         }else {
+            $('#pos').text('POS'+ $('.posno').val());
+            button1_click(sfunc)
+            button1_click1(sfunc1)
+         }
+
+
+    });
+
+}
+function checkall(namex){
+
+    for(i=0; i<7 ; i++){
+         if ( namex == "check_all"+i ) {
+                    var x = "check_all" + i
+                    var y = "input_check" + i
+                    var chk = $('input[name=' + x + ']').is(":checked");
+                    if(chk){
+                        $("input[name=" + y + "]").prop("checked",true);
+                        $("input[class=" + y + "]").val("y");
+                     }else{
+                        $("input[name=" + y + "]").prop("checked",false);
+                        $("input[class=" + y + "]").val("n");
+                     }
+         }
+     }
+}
+
+
+function button1_click(a) {
+
+        sfunc = a
+
+        $("input[name='check_all0']").prop("checked",false);
+
+        for( i in data0){
+
+            if (a == data0[i].text) { table_2.update(data1[i]);
+
+                 for( i in data1){
+
+                          for( j in data1[i]){
+                               if( data1[i][j].use_yn == 'y' ) { $("#u0"+data1[i][j].value).attr("value",'y');}
+                               else { $("#u0"+data1[i][j].value).attr("value",'n'); }
+                               if( data1[i][j].use_yn == 'y' ) { $("#c0"+data1[i][j].value).attr("checked",true); }
+                            }
+                         }
+            };
+         }
+};
+
+function button1_click1(a) {
+
+        sfunc1 = a
+        for (i=1; i<7 ; i++){
+        $("input[name=check_all"+i+"]").prop("checked",false);
+        }
+        for( i in data3){
+
+            if (a == data3[i].text) {
+                table_4.update(data4[i]);
+                 for( l in data5){
+                          for( j in data5[l]){
+
+                                   if(data5[l][j].use_yn1 == 'y' ) { $("#u1"+data5[l][j].value).attr("value",'y');$("#c1"+data5[l][j].value).attr("checked",true);} else { $("#u1"+data5[l][j].value).attr("value",'n'); }
+                                   if(data5[l][j].use_yn2 == 'y' ) { $("#u2"+data5[l][j].value).attr("value",'y');$("#c2"+data5[l][j].value).attr("checked",true);} else { $("#u2"+data5[l][j].value).attr("value",'n'); }
+                                   if(data5[l][j].use_yn3 == 'y' ) { $("#u3"+data5[l][j].value).attr("value",'y');$("#c3"+data5[l][j].value).attr("checked",true);} else { $("#u3"+data5[l][j].value).attr("value",'n'); }
+                                   if(data5[l][j].use_yn4 == 'y' ) { $("#u4"+data5[l][j].value).attr("value",'y');$("#c4"+data5[l][j].value).attr("checked",true);} else { $("#u4"+data5[l][j].value).attr("value",'n'); }
+                                   if(data5[l][j].use_yn5 == 'y' ) { $("#u5"+data5[l][j].value).attr("value",'y');$("#c5"+data5[l][j].value).attr("checked",true);} else { $("#u5"+data5[l][j].value).attr("value",'n'); }
+                                   if(data5[l][j].use_yn6 == 'y' ) { $("#u6"+data5[l][j].value).attr("value",'y');$("#c6"+data5[l][j].value).attr("checked",true);} else { $("#u6"+data5[l][j].value).attr("value",'n'); }
+                            }
+                  }
+             };
+         }
+};
+$('#btn_reset').click(function () {
+     var bool = confirm("모든 포스의 기능이 관리자가 설정한 값으로 세팅됩니다. \n매장환경및 포스환경설정값에 따라 포스기능이 상이할 수 있습니다.\n계속하시겠습니까?")
+     if(bool){
+
+            $.ajax({
+                method: "POST",
+                url: (_url + '/' + id ),
+                data: JSON.stringify(_datareset)
+            })
+                .done(function (msg) {
+                    if (msg == 'modified') {
+                        alert("저장되었습니다");
+                        load();
+                        <!--window.location.replace(_url);-->
+                          }
+                    else
+                        alert("alert:" + msg);
+            });
+
+     }else { alert("취소하셨습니다.")  }
+
+});
+
+$('.btn_modify').click( function () {
+        save($(this)[0].name);
+});
+
+
+
+function save(a) {
+    console.log(a);
+    if (a == "func" ){
+
+        q = [];
+        q = $('#form_modify').serializeObject()
+        for(k in data0){
+            if( sfunc == data0[k].text ){
+
+                var idx = data0[k].func.length
+                data0[k].func = [];
+
+                cnt_num = 0;
+                for (var i = 0; i < idx; i++) {
+                value = q.value[i];
+                text = q.text[i];
+                use_yn = q.use_yn0[i];
+
+                data0[k].func.push(
+                    FUNC(++cnt_num , value, text, use_yn ));
+                }
+            }
+        }
+
+        $.ajax({
+            method: "POST",
+            url: (_url + '/' + id ),
+            data: JSON.stringify(_data)
+        })
+            .done(function (msg) {
+                if (msg == 'modified') {
+                    alert("저장되었습니다");
+                    load()
+                    <!--window.location.replace(_url);-->
+                      }
+                else
+                    alert("alert:" + msg);
+        });
+    }
+    else{
+        q = [];
+        q = $('#form_modify1').serializeObject()
+        for(k in data3){
+            if( sfunc1 == data3[k].text ){
+
+                var idx = data3[k].func.length
+                data3[k].cert = [];
+
+                cnt_num = 0;
+                for (var i = 0; i < idx; i++) {
+                value = q.value[i];
+                text = q.text[i];
+                use_yn1 = q.use_yn1[i];
+                use_yn2 = q.use_yn2[i];
+                use_yn3 = q.use_yn3[i];
+                use_yn4 = q.use_yn4[i];
+                use_yn5 = q.use_yn5[i];
+                use_yn6 = q.use_yn6[i];
+
+                data3[k].cert.push(
+                    CERT(++cnt_num , value, text, use_yn1, use_yn2, use_yn3, use_yn4, use_yn5, use_yn6 ));
+                }
+            }
+        }
+        $.ajax({
+            method: "POST",
+            url: (_url + '/' + id ),
+            data: JSON.stringify(_data)
+        })
+            .done(function (msg) {
+                if (msg == 'modified') {
+                    alert("저장되었습니다");
+                    load()
+                    <!--window.location.replace(_url);-->
+                      }
+                else
+                    alert("alert:" + msg);
+        });
+     }
+}
+
+
+
+
+
+function onChangeHandler(a) {
+
+
+        for( i=0; i<7 ; i++){
+
+            if ($("#c"+i+a).is(":checked") == false) {
+                $("#u"+i+a).val("n");
+                }
+            else {
+                $("#u"+i+a).val("y");
+             }
+
+        }
+
+}
+
+
+
+
+
+
+</script>
+
+
+
+{% endblock %}
+
+

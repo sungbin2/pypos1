@@ -1,0 +1,1027 @@
+{% extends "layout.html" %}
+{% block body %}
+<HTML><HEAD><META content="IE=5.0000" http-equiv="X-UA-Compatible">
+<TITLE></TITLE><LINK rel=stylesheet type=text/css href="/common/css/bok.css">
+<SCRIPT src="/common/js/common.js"></SCRIPT>
+
+<SCRIPT src="/common/js/udfMainFrm.js?ver=20180418"></SCRIPT>
+
+<SCRIPT src="/common/js/IBSheetInfo.js"></SCRIPT>
+
+<SCRIPT src="/common/js/IBSheetConfig.js"></SCRIPT>
+
+<SCRIPT src="/common/js/showitem.js"></SCRIPT>
+<!-- <script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script> -->
+<SCRIPT language=javascript> if(top.MainFrm) { set_url('/master/product/prod_loader_jump.jsp'); }</SCRIPT>
+
+<SCRIPT language=javascript>
+function fnSessionCheck()
+{
+    if(top.SessionForm
+    && top.SessionForm.user_id)
+    {
+        if(top.SessionForm.user_id.value != "s92694")
+        {
+            alert("같은 세션으로 다른 사용자로 로그인 하였습니다.\n다시 로그인 하시기 바랍니다.");
+            top.close();
+        }
+    }
+    else
+    if(opener
+    && opener.closed == false
+    && opener.top.SessionForm
+    && opener.top.SessionForm.user_id)
+    {
+        if(opener.top.SessionForm.user_id.value != "s92694")
+        {
+            alert("같은 세션으로 다른 사용자로 로그인 하였습니다.\n다시 로그인 하시기 바랍니다.");
+            top.close();
+            opener.top.close();
+        }
+    }
+    else
+    if(opener
+    && opener.closed == false
+    && opener.opener
+    && opener.opener.closed == false
+    && opener.opener.top.SessionForm
+    && opener.opener.top.SessionForm.user_id)
+    {
+        if(opener.opener.top.SessionForm.user_id.value != "s92694")
+        {
+            alert("같은 세션으로 다른 사용자로 로그인 하였습니다.\n다시 로그인 하시기 바랍니다.");
+            top.close();
+            opener.top.close();
+            opener.opener.top.close();
+        }
+    }
+}
+setTimeout("fnSessionCheck()",0);
+
+if(window.name == 'MainFrm' && parent.SessionForm.pass_ch_option.value == '1')
+{
+    showModalDialog('/master/emp/passwd010.jsp?popup_fg=Y'
+                   ,self
+                   ,'dialogWidth:400px;dialogHeight:340px;dialogTop:100px;dialogLeft:100px;status:no;resizable:yes;scroll:no;');
+}
+</SCRIPT>
+
+<SCRIPT language=javascript>
+function fnProdCopyPopup(HD_SHOP_CD, HD_SHOP_NM, SHOP_CD, PGM_TYPE_FG, BRAND_MGR_YN)
+{
+    showModalDialog('/sysadmin/shop/shop012_prod_copy.jsp'
+                   +'?HD_SHOP_CD='+HD_SHOP_CD
+                   +'&HD_SHOP_NM='+HD_SHOP_NM
+                   +'&SHOP_CD='+SHOP_CD
+                   +'&PGM_TYPE_FG='+PGM_TYPE_FG
+                   +'&BRAND_MGR_YN='+BRAND_MGR_YN
+                   ,self
+                   ,'dialogWidth:500px;dialogHeight:350px;dialogTop:400px;dialogLeft:400px;status:no;resizable:no;scroll:no;');
+}
+</SCRIPT>
+<LINK rel=stylesheet type=text/css href="/common/css/bok.css">
+<SCRIPT src="/common/js/common.js"></SCRIPT>
+
+<SCRIPT src="/common/js/udfMainFrm.js?ver=20180418"></SCRIPT>
+
+<SCRIPT src="/common/js/IBSheetInfo.js"></SCRIPT>
+
+<SCRIPT src="/common/js/IBSheetConfig.js"></SCRIPT>
+
+<SCRIPT src="/common/js/showitem.js"></SCRIPT>
+<!-- <script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script> -->
+<SCRIPT language=javascript> if(top.MainFrm) { set_url('/master/product/prod_loader_jump.jsp'); }</SCRIPT>
+
+<SCRIPT language=javascript>
+function fnSessionCheck()
+{
+    if(top.SessionForm
+    && top.SessionForm.user_id)
+    {
+        if(top.SessionForm.user_id.value != "s92694")
+        {
+            alert("같은 세션으로 다른 사용자로 로그인 하였습니다.\n다시 로그인 하시기 바랍니다.");
+            top.close();
+        }
+    }
+    else
+    if(opener
+    && opener.closed == false
+    && opener.top.SessionForm
+    && opener.top.SessionForm.user_id)
+    {
+        if(opener.top.SessionForm.user_id.value != "s92694")
+        {
+            alert("같은 세션으로 다른 사용자로 로그인 하였습니다.\n다시 로그인 하시기 바랍니다.");
+            top.close();
+            opener.top.close();
+        }
+    }
+    else
+    if(opener
+    && opener.closed == false
+    && opener.opener
+    && opener.opener.closed == false
+    && opener.opener.top.SessionForm
+    && opener.opener.top.SessionForm.user_id)
+    {
+        if(opener.opener.top.SessionForm.user_id.value != "s92694")
+        {
+            alert("같은 세션으로 다른 사용자로 로그인 하였습니다.\n다시 로그인 하시기 바랍니다.");
+            top.close();
+            opener.top.close();
+            opener.opener.top.close();
+        }
+    }
+}
+setTimeout("fnSessionCheck()",0);
+
+if(window.name == 'MainFrm' && parent.SessionForm.pass_ch_option.value == '1')
+{
+    showModalDialog('/master/emp/passwd010.jsp?popup_fg=Y'
+                   ,self
+                   ,'dialogWidth:400px;dialogHeight:340px;dialogTop:100px;dialogLeft:100px;status:no;resizable:yes;scroll:no;');
+}
+</SCRIPT>
+
+<SCRIPT language=javascript>
+var HM_mcls_cds = new HashMap();
+var HM_mcls_nms = new HashMap();
+HM_mcls_cds.put('01','01');
+HM_mcls_nms.put('01','유무선단말기');
+HM_mcls_cds.put('02','02');
+HM_mcls_nms.put('02','포스');
+HM_mcls_cds.put('03','03');
+HM_mcls_nms.put('03','부자재');
+HM_mcls_cds.put('04','04');
+HM_mcls_nms.put('04','주류');
+HM_mcls_cds.put('05','05');
+HM_mcls_nms.put('05','ㄴㅇㄴㅁㅇㄴㅁ');
+HM_mcls_cds.put('06','06');
+HM_mcls_nms.put('06','ㅇㅇ');
+HM_mcls_cds.put('07','07');
+HM_mcls_nms.put('07','잡화');
+HM_mcls_cds.put('08','08');
+HM_mcls_nms.put('08','식사류');
+HM_mcls_cds.put('09','09');
+HM_mcls_nms.put('09','사이드메뉴');
+HM_mcls_cds.put('10','10');
+HM_mcls_nms.put('10','음료');
+function set_MclsCd(idx,Row,op,val)
+{
+sheet_obj = eval('mySheet'+idx);
+sheet_obj.CellComboItem(Row,'MCLS_CD',HM_mcls_nms.get(sheet_obj.CellValue(Row,'LCLS_CD')),HM_mcls_cds.get(sheet_obj.CellValue(Row,'LCLS_CD')));
+if(op == 'Txt')       { sheet_obj.CellText(Row,'MCLS_CD') = val; }
+else if(op == 'Idx')  { var sCode = sheet_obj.GetComboInfo(Row,'MCLS_CD','Code'); var arrCode = sCode.split('|'); sheet_obj.CellValue(Row,'MCLS_CD') = arrCode[val]; }
+}
+</SCRIPT>
+
+<SCRIPT language=javascript>
+var HM_scls_cds = new HashMap();
+var HM_scls_nms = new HashMap();
+HM_scls_cds.put('01','01');
+HM_scls_nms.put('01','유무선단말기');
+HM_scls_cds.put('02','02');
+HM_scls_nms.put('02','포스');
+HM_scls_cds.put('03','03');
+HM_scls_nms.put('03','부자재');
+HM_scls_cds.put('04','04');
+HM_scls_nms.put('04','주류');
+HM_scls_cds.put('05','05');
+HM_scls_nms.put('05','ㄴㅇㄴㅁㅇㄴㅁ');
+HM_scls_cds.put('06','06');
+HM_scls_nms.put('06','ㅇㅇ');
+HM_scls_cds.put('07','07');
+HM_scls_nms.put('07','잡화');
+HM_scls_cds.put('08','08');
+HM_scls_nms.put('08','식사류');
+HM_scls_cds.put('09','09');
+HM_scls_nms.put('09','사이드메뉴');
+HM_scls_cds.put('10','10');
+HM_scls_nms.put('10','음료');
+function set_SclsCd(idx,Row,op,val)
+{
+sheet_obj = eval('mySheet'+idx);
+sheet_obj.CellComboItem(Row,'SCLS_CD',HM_scls_nms.get(sheet_obj.CellValue(Row,'MCLS_CD')),HM_scls_cds.get(sheet_obj.CellValue(Row,'MCLS_CD')));
+if(op == 'Txt')       { sheet_obj.CellText(Row,'SCLS_CD') = val; }
+else if(op == 'Idx')  { var sCode = sheet_obj.GetComboInfo(Row,'SCLS_CD','Code'); var arrCode = sCode.split('|'); sheet_obj.CellValue(Row,'SCLS_CD') = arrCode[val]; }
+}
+</SCRIPT>
+
+<SCRIPT src="/common/js/udfPage.js"></SCRIPT>
+
+<SCRIPT type=text/javascript src="/common/js/prototype.js"></SCRIPT>
+
+<SCRIPT type=text/javascript src="/common/js/jsProgressBarHandler.js"></SCRIPT>
+<LINK rel=stylesheet type=text/css href="/common/css/jsProgressBarHandler.css"></HEAD>
+<BODY>
+<SCRIPT type=text/javascript>
+var clsLv           = 1;
+function init_sheet()
+{
+    mySheet1 = fnGetObjectIdName("mySheet1");
+    with(mySheet1)
+    {
+        InitHostInfo(location.hostname, location.port, "");
+
+        MergeSheet = msHeaderOnly;
+        Editable = true
+        InitRowInfo( 1, 1, 10);
+        InitColumnInfo(17, 0, 0, true);
+        InitHeadRow(0,"브랜드|대분류|중분류|소분류|거래처|주문상품구분|출고기준|판매상품여부|가격관리구분|판매가격통제|원산지|주문단위구분|과세여부|재고관리|코너|회원상품할인여부|모바일주문구분");
+        //ObjId.InitDataProperty( DataRow, DataCol, [DataType], [Width], [DataAlign], [ColMerge], [SaveName], [KeyField]
+        //                      , [CalcuLogic], [DataFormat],[PointCount], [UpdateEdit], [InsertEdit], [EditLen], [FullInput]
+        //                      , [SortEnable],[ToolTip], [AllCheck], [SaveStatus], [FormatFix])
+        var i = 0;
+        InitDataProperty(0,i++, dtCombo             , 100, daCenter, true , "BRAND_CD"       , false, "", dfHanKey     , 0, true , true );         // 브랜드코드
+        InitDataProperty(0,i++, dtCombo             , 130, daCenter, true , "LCLS_CD"        , false, "", dfEngKey     , 0, true , true );         // 대분류
+        InitDataProperty(0,i++, dtCombo             , 130, daCenter, true , "MCLS_CD"        , false, "", dfHanKey     , 0, true , true );         // 중분류
+        InitDataProperty(0,i++, dtCombo             , 130, daCenter, true , "SCLS_CD"        , false, "", dfEngKey     , 0, true , true );         // 소분류
+        InitDataProperty(0,i++, dtCombo             ,  80, daCenter, true , "VENDOR_CD"      , false, "", dfEngKey     , 0, true , true );         // 거래처
+        InitDataProperty(0,i++, dtCombo             ,  80, daCenter, true , "ORD_PROD_YN"    , false, "", dfEngKey     , 0, true , true );         // 주문상품구분
+        InitDataProperty(0,i++, dtCombo             ,  60, daCenter, true , "SPLY_UPRC_YN"   , false, "", dfHanKey     , 0, true , true );         // 출고기준
+        InitDataProperty(0,i++, dtCombo             ,  80, daCenter, true , "SALE_PROD_YN"   , false, "", dfEngKey     , 0, true , true );         // 판매상품여부
+        InitDataProperty(0,i++, dtCombo             ,  80, daCenter, true , "PRICE_MGR_FG"   , false, "", dfEngKey     , 0, true , true );         // 가격관리구분(CCD_CODEM_T:011)
+        InitDataProperty(0,i++, dtCombo             ,  80, daCenter, true , "PRICE_CTRL_FG"  , false, "", dfHanKey     , 0, true , true );         // 판매가격통제
+        InitDataProperty(0,i++, dtCombo             ,  80, daCenter, true , "ORG_PLACE_CD"   , false, "", dfHanKey     , 0, true , true );         // 원산지      (H/SCD_CODEM_T : 003 )
+        InitDataProperty(0,i++, dtCombo             ,  80, daCenter, true , "ORD_UNIT_FG"    , false, "", dfHanKey     , 0, true , true );         // 주문단위구분(CCD_CODEM_T:013)
+        InitDataProperty(0,i++, dtCombo             ,  60, daCenter, true , "TAX_YN"         , false, "", dfHanKey     , 0, true , true );         // 과세여부
+        InitDataProperty(0,i++, dtCombo             ,  60, daCenter, true , "STOCK_MGR_YN"   , false, "", dfHanKey     , 0, true , true );         // 재고관리여부
+        InitDataProperty(0,i++, dtCombo             , 100, daCenter, true , "CORNER_CD"      , false, "", dfHanKey     , 0, true , true );         // 코너
+        InitDataProperty(0,i++, dtHidden , 100, daCenter, true , "PROD_DC_FG"     , false, "", dfHanKey     , 0, true , true );         // 회원상품할인여부
+        InitDataProperty(0,i++, dtCombo             ,  90, daCenter, true , "MOBILE_ORDER_FG", false, "", dfHanKey     , 0, true , true );         // 모바일주문구분
+
+        InitDataCombo(0,"BRAND_CD","기본","0","","0")    // 브랜드
+        InitDataCombo(0,"LCLS_CD","유무선단말기|포스|부자재|주류|ㄴㅇㄴㅁㅇㄴㅁ|ㅇㅇ|잡화|식사류|사이드메뉴|음료","01|02|03|04|05|06|07|08|09|10","","")                       // 대분류
+        InitDataCombo(0,"VENDOR_CD","테스트거래처","0001","","0001")    // 거래처
+        InitDataCombo(0,"PROD_DC_FG","DC허용|DC불허","1|0","","")    // 회원상품할인여부
+        InitDataCombo(0,"ORD_PROD_YN","사입상품|주문불가","S|N","","")
+
+        InitDataCombo(0,"SPLY_UPRC_YN","공급가출고","Y","","")
+
+        InitDataCombo(0,"SALE_PROD_YN","Yes|No","Y|N","","")               // 판매상품여부
+        InitDataCombo(0,"PRICE_MGR_FG","정가상품|싯가상품|저울상품","0|1|2","","0")    // 가격관리구분 (원래는 udf.UdfBean.InitDataComboStr(request, "PRICE_MGR_FG","SP_CCD_CODEM_T_S01♪C1♪011") 이건데 저울상품을 빼려고...)
+        InitDataCombo(0,"PRICE_CTRL_FG","매장통제","S","","")
+
+        InitDataCombo(0,"ORG_PLACE_CD","","","","")   // 원산지
+        InitDataCombo(0,"ORD_UNIT_FG","낱개|박스|kg","0|1|2","","0")                         // 주문단위구분
+        InitDataCombo(0,"TAX_YN","Yes|No","Y|N","","")                                             // 과세여부
+        InitDataCombo(0,"STOCK_MGR_YN","Yes|No","Y|N","","")                                       // 재고관리여부
+        InitDataCombo(0,"CORNER_CD","현대|포스","01|02","","01")
+
+        InitDataCombo(0,"MOBILE_ORDER_FG","일반/POS|MOBILE 전용|공통","0|1|2","","")               // 모바일주문구분
+        //AllowNoneTextOnEditCombo = false;
+        ImageList(0) = "/image/grid_popup.gif";
+        Visible = true;
+    }
+
+    mySheet2 = fnGetObjectIdName("mySheet2");
+    with(mySheet2)
+    {
+        InitHostInfo(location.hostname, location.port, "");
+
+        MergeSheet = msHeaderOnly;
+        Editable = true
+        InitRowInfo( 1, 1, 10);
+        InitColumnInfo(40, 5, 0, true);
+        InitHeadRow(0,"상태|No.||순서|검증결과|상품코드|상품명|브랜드|브랜드명|대분류|대분류명|중분류|중분류명|소분류|소분류명|거래처|거래처명|주문상품구분|출고기준|공급단가|판매상품여부|가격관리구분|판매단가|판매가격통제|원산지|주문단위구분|입수량|재고단위구분|최소주문수량|매핑상품코드|바코드|과세여부|재고관리|코너|원가|안전재고|초기재고|회원상품할인여부|모바일주문구분|비고");
+        //ObjId.InitDataProperty( DataRow, DataCol, [DataType], [Width], [DataAlign], [ColMerge], [SaveName], [KeyField]
+        //                      , [CalcuLogic], [DataFormat],[PointCount], [UpdateEdit], [InsertEdit], [EditLen], [FullInput]
+        //                      , [SortEnable],[ToolTip], [AllCheck], [SaveStatus], [FormatFix])
+        var i = 0;
+        InitDataProperty(0,i++, dtHiddenStatus      ,   0, daLeft  , true , "sStatus"        , false, "", dfNone       , 0, false, false);         // 상태
+        InitDataProperty(0,i++, dtDataSeq           ,   0, daCenter, true );
+        InitDataProperty(0,i++, dtCheckBox          ,   0, daCenter, false, "checkDelSave" );
+        InitDataProperty(0,i++, dtHidden            ,   0, daCenter, true , "SEQ"            , false, "", dfHanKey     , 0, false, false);         // SEQ
+        InitDataProperty(0,i++, dtCombo             ,   0, daCenter, true , "RESULT"         , false, "", dfHanKey     , 0, false, false);         // 결과
+        InitDataProperty(0,i++, dtData              , 100, daLeft  , true , "PROD_CD"        , false, "", dfHanKey     , 0, true , true );         // 상품코드
+        InitDataProperty(0,i++, dtData              , 100, daLeft  , true , "PROD_NM"        , false, "", dfHanKey     , 0, true , true ,  50);    // 상품명
+        InitDataProperty(0,i++, dtCombo             ,   0, daCenter, true , "BRAND_CD"       , false, "", dfHanKey     , 0, true , true );         // 브랜드코드
+        InitDataProperty(0,i++, dtHidden            ,   0, daCenter, true , "BRAND_NM"       , false, "", dfHanKey     , 0, true , true );         // 브랜드코드
+        InitDataProperty(0,i++, dtCombo             ,   0, daCenter, true , "LCLS_CD"        , false, "", dfEngKey     , 0, true , true );         // 대분류
+        InitDataProperty(0,i++, dtHidden            ,   0, daCenter, true , "LCLS_NM"        , false, "", dfEngKey     , 0, true , true );         // 대분류
+        InitDataProperty(0,i++, dtCombo             ,   0, daCenter, true , "MCLS_CD"        , false, "", dfHanKey     , 0, true , true );         // 중분류
+        InitDataProperty(0,i++, dtHidden            ,   0, daCenter, true , "MCLS_NM"        , false, "", dfHanKey     , 0, true , true );         // 중분류
+        InitDataProperty(0,i++, dtCombo             ,   0, daCenter, true , "SCLS_CD"        , false, "", dfEngKey     , 0, true , true );         // 소분류
+        InitDataProperty(0,i++, dtHidden            ,   0, daCenter, true , "SCLS_NM"        , false, "", dfEngKey     , 0, true , true );         // 소분류
+        InitDataProperty(0,i++, dtCombo             ,   0, daCenter, true , "VENDOR_CD"      , false, "", dfEngKey     , 0, true , true );         // 거래처
+        InitDataProperty(0,i++, dtHidden            ,   0, daCenter, true , "VENDOR_NM"      , false, "", dfEngKey     , 0, true , true );         // 거래처
+        InitDataProperty(0,i++, dtCombo             ,   0, daCenter, true , "ORD_PROD_YN"    , false, "", dfEngKey     , 0, true , true );         // 주문상품구분
+        InitDataProperty(0,i++, dtCombo             ,   0, daCenter, true , "SPLY_UPRC_YN"   , false, "", dfEngKey     , 0, true , true );         // 출고기준
+        InitDataProperty(0,i++, dtData              ,   0, daRight , true , "SPLY_UPRC"      , false, "", dfInteger    , 0, true , true ,   8);    // 공급단가
+        InitDataProperty(0,i++, dtCombo             ,   0, daCenter, true , "SALE_PROD_YN"   , false, "", dfEngKey     , 0, true , true );         // 판매상품여부
+        InitDataProperty(0,i++, dtCombo             ,   0, daCenter, true , "PRICE_MGR_FG"   , false, "", dfEngKey     , 0, true , true );         // 가격관리구분(CCD_CODEM_T:011)
+        InitDataProperty(0,i++, dtData              ,   0, daRight , true , "SALE_UPRC"      , false, "", dfInteger    , 0, true , true ,   8);    // 판매단가
+        InitDataProperty(0,i++, dtCombo             ,   0, daCenter, true , "PRICE_CTRL_FG"  , false, "", dfHanKey     , 0, true , true );         // 판매가격통제
+        InitDataProperty(0,i++, dtCombo             ,   0, daCenter, true , "ORG_PLACE_CD"   , false, "", dfHanKey     , 0, true , true );         // 원산지      (H/SCD_CODEM_T : 003 )
+        InitDataProperty(0,i++, dtCombo             ,   0, daCenter, true , "ORD_UNIT_FG"    , false, "", dfHanKey     , 0, true , true );         // 주문단위구분(CCD_CODEM_T:013)
+        InitDataProperty(0,i++, dtData              ,   0, daRight , true , "ORD_UNIT_QTY"   , false, "", dfInteger    , 0, true , true ,   8);    // 입수량
+        InitDataProperty(0,i++, dtCombo             ,   0, daCenter, true , "STOCK_UNIT_FG"  , false, "", dfHanKey     , 0, true , true );         // 재고단위구분(CCD_CODEM_T:013)
+        InitDataProperty(0,i++, dtData              ,   0, daRight , true , "ORD_MIN_QTY"    , false, "", dfInteger    , 0, true , true ,   8);    // 최소주문수량
+        InitDataProperty(0,i++, dtData              ,   0, daCenter, true , "MAP_PROD_CD"    , false, "", dfEngKey     , 0, true , true ,  26);    // 매핑상품코드
+        InitDataProperty(0,i++, dtData              ,   0, daCenter, true , "BAR_CD"         , false, "", dfEngKey     , 0, true , true ,  26);    // 바코드
+        InitDataProperty(0,i++, dtCombo             ,   0, daCenter, true , "TAX_YN"         , false, "", dfHanKey     , 0, true , true );         // 과세여부
+        InitDataProperty(0,i++, dtCombo             ,   0, daCenter, true , "STOCK_MGR_YN"   , false, "", dfHanKey     , 0, true , true );         // 재고관리여부
+        InitDataProperty(0,i++, dtCombo             ,   0, daCenter, true , "CORNER_CD"      , false, "", dfHanKey     , 0, true , true );         // 코너
+        InitDataProperty(0,i++, dtData              ,   0, daRight , true , "COST_UPRC"      , false, "", dfInteger    , 0, true , true ,   8);    // 원가
+        InitDataProperty(0,i++, dtData              ,   0, daRight , true , "SAFE_STOCK_QTY" , false, "", dfInteger    , 0, true , true ,  10);    // 안전재고
+        InitDataProperty(0,i++, dtData              ,   0, daRight , true , "START_STOCK_QTY", false, "", dfInteger    , 0, true , true ,   8);    // 초기재고 상품등록 후 재고조정 형식으로 초기재고가 생성됩니다.
+        InitDataProperty(0,i++, dtHidden ,   0, daLeft  , true , "PROD_DC_FG"     , false, "", dfNone       , 0, true , true );         // 회원상품할인여부
+        InitDataProperty(0,i++, dtCombo             ,   0, daCenter, true , "MOBILE_ORDER_FG", false, "", dfHanKey     , 0, true , true );         // 모바일주문구분
+        InitDataProperty(0,i++, dtData              ,   0, daLeft  , true , "PROD_REMARK"    , false, "", dfNone       , 0, true , true , 300);    // 비고
+
+        InitDataCombo(0,"RESULT","검증성공","00","","")
+        InitDataCombo(0,"BRAND_CD","기본","0","","0")     // 브랜드
+        InitDataCombo(0,"LCLS_CD","유무선단말기|포스|부자재|주류|ㄴㅇㄴㅁㅇㄴㅁ|ㅇㅇ|잡화|식사류|사이드메뉴|음료","01|02|03|04|05|06|07|08|09|10","","")                        // 대분류
+        InitDataCombo(0,"VENDOR_CD","테스트거래처","0001","","0001")    // 거래처
+        InitDataCombo(0,"PROD_DC_FG","DC허용|DC불허","1|0","","")    // 회원상품할인여부
+        InitDataCombo(0,"ORD_PROD_YN","사입상품|주문불가","S|N","","")
+
+        InitDataCombo(0,"SPLY_UPRC_YN","공급가출고","Y","","")
+
+        InitDataCombo(0,"SALE_PROD_YN","Yes|No","Y|N","","")               // 판매상품여부
+        InitDataCombo(0,"PRICE_MGR_FG","정가상품|싯가상품|저울상품","0|1|2","","0")    // 가격관리구분 (원래는 udf.UdfBean.InitDataComboStr(request, "PRICE_MGR_FG","SP_CCD_CODEM_T_S01♪C1♪011") 이건데 저울상품을 빼려고...)
+        InitDataCombo(0,"PRICE_CTRL_FG","매장통제","S","","")
+
+        InitDataCombo(0,"ORG_PLACE_CD","","","","")   // 원산지
+        InitDataCombo(0,"ORD_UNIT_FG","낱개|박스|kg","0|1|2","","0") // 주문단위구분
+        InitDataCombo(0,"STOCK_UNIT_FG","낱개|박스|kg","0|1|2","","0") // 주문단위구분
+        InitDataCombo(0,"TAX_YN","Yes|No","Y|N","","")                                             // 과세여부
+        InitDataCombo(0,"STOCK_MGR_YN","Yes|No","Y|N","","")                                       // 재고관리여부
+        InitDataCombo(0,"CORNER_CD","현대|포스","01|02","","01")
+
+        InitDataCombo(0,"MOBILE_ORDER_FG","일반/POS|MOBILE 전용|공통","0|1|2","","")               // 모바일주문구분
+
+
+        //AllowNoneTextOnEditCombo = false;
+        ImageList(0) = "/image/grid_popup.gif";
+        Visible = true;
+    }
+}
+var isSave = false;
+function fnIsSave(tf)
+{
+    if(tf == true)
+    {
+        isSave = true;
+        fnGetObjectIdName('divSaving').style.display = 'inline';
+    }
+    else
+    {
+        isSave = false;
+        fnGetObjectIdName('divSaving').style.display = 'none';
+    }
+}
+function fnSave()
+{
+    if(document.form1.SAVEING.value == 'Y')
+    {
+        alert('저장중입니다. 잠시만 기다려주십시오.');
+        return false;
+    }
+    document.form1.SAVEING.value = 'Y';
+    mySheet2.CheckAll('checkDelSave') = false;
+    var sRow = mySheet2.FindStatusRow("U");
+    if(sRow == '')
+    {
+        if(confirm('검증을 통과한 상품을 저장하시겠습니까?\n상품 갯수가 많을 경우 시간이 오래 걸릴 수 있습니다.'))
+        {
+            document.form1.PROC_FG.value = 'I';
+            document.form1.action = 'prod_loader010_save.jsp';
+            document.form1.method = 'post';
+            document.form1.target = 'BlankFrm';
+            document.form1.submit();
+            fnIsSave(true);
+        }
+        else
+        {
+            document.form1.SAVEING.value = 'N';
+        }
+    }
+    else
+    {
+        document.form1.SAVEING.value = 'N';
+        alert('수정한 내역이 있습니다.\n양식검증을 실행 후 저장하시기 바랍니다.');
+    }
+}
+function fn_data_chk()
+{
+    doAction('save','2');
+    doAction('data_chk','2');
+}
+function doAction(str, idx)
+{
+    document.form1.S_METHOD.value = str;
+    document.form1.SHEETSEQ.value = idx;
+    sheet_obj = fnGetObjectIdName("mySheet"+idx);
+    switch(str)
+    {
+        //검색
+        case "search":
+            sheet_obj.ShowDebugMsg = false;
+            if(!jsSaveName(form1, sheet_obj)) { return false; }
+            var param = FormQueryStringEnc(document.form1, sheet_obj);
+            sheet_obj.DoSearch4Post("ddd.sheetAction",param);
+            sheet_obj.ColFontColor('RESULT') = sheet_obj.RgbColor(255,0,0);
+
+            //조회 끝나고 나서 페이지 인덱스를 생성
+            var sTD = MakePageButton("document.form1.page_no"        // 페이징 인덱스를 관리할 OBJ
+                                    ,"10"                            // 페이지 목록 나열 갯수
+                                    ,document.form1.page_size.value  // 한 페이지당 레코드 겟수
+                                    ,document.form1.page_no.value    // 현재 페이지의 인덱스
+                                    ,sheet_obj.EtcData("total_rows") // 총레코드갯수
+                                    ,document.form1.SHEETSEQ.value   // 시트인덱스
+                                    );
+            fnGetObjectIdName('PAGEBUTTON').innerHTML = sTD;
+            break;
+
+        //양식검증
+        case "data_chk":
+            sheet_obj.Visible = false;
+            if(!jsSaveName(form1, sheet_obj)) { return false; }
+            var param = FormQueryStringEnc(document.form1, sheet_obj);
+            sheet_obj.DoSearch4Post("ddd.sheetAction",param);
+            sheet_obj.Visible = true;
+            sheet_obj.ColFontColor('RESULT') = sheet_obj.RgbColor(255,0,0);
+
+            //조회 끝나고 나서 페이지 인덱스를 생성
+            var sTD = MakePageButton("document.form1.page_no"        // 페이징 인덱스를 관리할 OBJ
+                                    ,"10"                            // 페이지 목록 나열 갯수
+                                    ,document.form1.page_size.value  // 한 페이지당 레코드 겟수
+                                    ,document.form1.page_no.value    // 현재 페이지의 인덱스
+                                    ,sheet_obj.EtcData("total_rows") // 총레코드갯수
+                                    ,document.form1.SHEETSEQ.value   // 시트인덱스
+                                    );
+            fnGetObjectIdName('PAGEBUTTON').innerHTML = sTD;
+            break;
+
+        //양식검증 후 업데이트
+        case "save":
+            sheet_obj.CheckAll('checkDelSave') = false;
+            var savingFg = false;
+            var sRow = sheet_obj.FindStatusRow("U");
+            if(sRow != '')
+            {
+                var arrRow = sRow.split(';');
+                for(var i = 0; i < arrRow.length; i++)
+                {
+                    if(arrRow[i] == '') break;
+                    sheet_obj.CellValue(arrRow[i],'BRAND_NM')  = sheet_obj.CellText(arrRow[i],'BRAND_CD');
+                    sheet_obj.CellValue(arrRow[i],'LCLS_NM')   = sheet_obj.CellText(arrRow[i],'LCLS_CD');
+                    sheet_obj.CellValue(arrRow[i],'MCLS_NM')   = sheet_obj.CellText(arrRow[i],'MCLS_CD');
+                    sheet_obj.CellValue(arrRow[i],'SCLS_NM')   = sheet_obj.CellText(arrRow[i],'SCLS_CD');
+                    sheet_obj.CellValue(arrRow[i],'VENDOR_NM') = sheet_obj.CellText(arrRow[i],'VENDOR_CD');
+                }
+                var param = FormQueryStringEnc(document.form1, sheet_obj);
+                sheet_obj.DoSave("ddd.sheetAction",param,-1, false);
+            }
+            break;
+
+        case "delete":
+            if(confirm('자료를 삭제하시겠습니까?'))
+            {
+                var param = FormQueryStringEnc(document.form1, sheet_obj);
+                sheet_obj.DoSave("ddd.sheetAction",param, "checkDelSave", false);
+                if(sheet_obj.EtcData("retMsg") == '0000')
+                {
+                    alert('삭제가 완료되었습니다.');
+                }
+                fnRowDel();
+            }
+            break;
+
+        case "down2Excel" :
+            //Down2Excel([Mode], [UseOpenFile], [NewSheet], [Merge],
+            //           [SaveAsName],[ReportPageUrl],[HideExcelMsg],
+            //           [WriteTreeLevel], [WorkSheetName], [FocusFirstSheet]
+            //           [ColumnSkipList],[RowSkipList],[bProtect],[bFormula])
+            if(sheet_obj.RowCount > 0 && !confirm("작업중인 데이타가 존재합니다.\r\n계속 진행하실 경우 저장하지 않은 데이터는 삭제됩니다.\r\n계속 진행하시겠습니까?")) return false;
+            with(sheet_obj)
+            {
+                RemoveAll() ;
+                var Row = DataInsert();
+                CellValue(Row, "PROD_CD")       = "상품코드입력";
+                CellValue(Row, "PROD_NM")       = "상품명입력";
+                CellValue(Row, "BRAND_CD")      = "브랜드명";
+                CellValue(Row, "LCLS_CD")       = "대분류명";
+                CellValue(Row, "MCLS_CD")       = "중분류명";
+                CellValue(Row, "SCLS_CD")       = "소분류명";
+                CellValue(Row, "VENDOR_CD")     = "거래처명";
+                CellValue(Row, "ORG_PLACE_CD")  = "원산지명";
+                CellValue(Row, "ORD_UNIT_QTY")  = 1;
+                CellValue(Row, "ORD_MIN_QTY")   = 1;
+
+                Down2Excel(1, false, false, true, "", "", false, false, "", true, "1|checkDelSave|SEQ|RESULT|BRAND_NM|LCLS_NM|MCLS_NM|SCLS_NM|VENDOR_NM|MCLS_CD|SCLS_CD|SPLY_UPRC_YN|SPLY_UPRC|BRAND_CD|PRICE_CTRL_FG|PROD_DC_FG");
+                RemoveAll() ;
+            }
+            break;
+
+        case "curDown2Excel" :
+            //Down2Excel([Mode], [UseOpenFile], [NewSheet], [Merge],
+            //           [SaveAsName],[ReportPageUrl],[HideExcelMsg],
+            //           [WriteTreeLevel], [WorkSheetName], [FocusFirstSheet]
+            //           [ColumnSkipList],[RowSkipList],[bProtect],[bFormula])
+            sheet_obj.Down2Excel(1, false, false, true, "", "", false, false, "", true, "1|checkDelSave|SEQ|RESULT|BRAND_NM|LCLS_NM|MCLS_NM|SCLS_NM|VENDOR_NM|MCLS_CD|SCLS_CD|SPLY_UPRC_YN|SPLY_UPRC|BRAND_CD|PRICE_CTRL_FG|PROD_DC_FG");
+            break;
+
+        case "loader" :
+            ing_display(true);
+            sheet_obj.ShowDebugMsg  = false;
+            var count = 100;
+            var loop_cnt = sheet_obj.HeaderRows+sheet_obj.RowCount;
+            var page_cnt = 0;
+            for(var i = sheet_obj.HeaderRows; i < loop_cnt; i += count)
+            {
+                document.form1.PROD_SEQ.value = page_cnt * count;
+
+                if(i+count > loop_cnt)
+                {
+                    count = loop_cnt - i;
+                }
+
+                for(var j = i; j < i+count; j++)
+                {
+                    sheet_obj.CellValue(j,'BRAND_NM')           = sheet_obj.CellText(j,'BRAND_CD');
+                    sheet_obj.CellValue(j,'LCLS_NM')            = sheet_obj.CellText(j,'LCLS_CD');
+                    sheet_obj.CellValue(j,'MCLS_NM')            = sheet_obj.CellText(j,'MCLS_CD');
+                    sheet_obj.CellValue(j,'SCLS_NM')            = sheet_obj.CellText(j,'SCLS_CD');
+                    sheet_obj.CellValue(j,'VENDOR_NM')          = sheet_obj.CellText(j,'VENDOR_CD');
+                    sheet_obj.CellValue(j,"checkDelSave") = 1;
+                }
+
+                var param = FormQueryStringEnc(document.form1, sheet_obj);
+                sheet_obj.DoSave("ddd.sheetAction",param, "checkDelSave", false);
+
+                if(sheet_obj.EtcData("retMsg") != '0000')
+                {
+                    ing_display(false);
+                    alert('에러가 발생했습니다.');
+                    return false;
+                }
+
+                for(var j = i; j < i+count; j++)
+                {
+                    sheet_obj.CellValue(j,"checkDelSave") = 0;
+                }
+
+                page_cnt++;
+
+                document.form1.obj_progress.value = ((document.form1.obj_progress.value == '') ? 0 : parseInt(document.form1.obj_progress.value)) + count;
+            }
+
+            ing_display(false);
+            break;
+    }
+
+    if(sheet_obj.EtcData("retMsg") && sheet_obj.EtcData("retMsg") != '' && sheet_obj.EtcData("retMsg") != '0000')
+    {
+        ErrorShow(sheet_obj.EtcData("retMsg")+'╋'+'https://asp.netusys.com/master/product/prod_loader_jump.jsp', "popup", "");
+    }
+}
+function fnDel()
+{
+    fnGetObjectIdName("mySheet2").RemoveAll();
+    document.form1.PROC_FG.value = 'D';
+    document.form1.action = 'prod_loader010_save.jsp';
+    document.form1.method = 'post';
+    document.form1.target = 'BlankFrm';
+    document.form1.submit();
+}
+function excelUpload(idx)
+{
+    if(confirm('임시등록한 자료가 모두 삭제됩니다.\n계속 진행하시겠습니까?'))
+    {
+        // 임시등록자료 모두 삭제
+        fnDel();
+
+        // 양식업로드
+        var sheet_obj = fnGetObjectIdName("mySheet"+idx);
+        sheet_obj.LoadExcel(-1, 1, "", -1, -1, "", false);
+        sheet_obj.SelectCell(0,0);
+
+        document.form1.obj_progress.value  = '';
+        document.form1.obj_totalrows.value = sheet_obj.RowCount;
+        doAction('loader','2');
+        document.form1.s_success_err.value  = '';
+        fn_data_chk();
+        alert('load완료');
+    }
+}
+function fnRowDel()
+{
+    var sheet_obj = fnGetObjectIdName("mySheet2");
+    tot_rows = sheet_obj.RowCount;
+    for(var i = sheet_obj.HeaderRows + tot_rows - 1; i >= sheet_obj.HeaderRows; i--)
+    {
+        if(sheet_obj.CellValue(i,'checkDelSave') == '1')
+        {
+            sheet_obj.RowDelete(i,false);
+        }
+    }
+    //document.form1.s_success_err.value = 'err';
+    doAction('search','2');
+    document.form1.obj_totalrows.value = sheet_obj.RowCount;
+}
+function columnHidden()
+{
+    var sheet_obj1   = fnGetObjectIdName("mySheet1");
+    var sheet_obj2   = fnGetObjectIdName("mySheet2");
+    if(clsLv == 1)
+    {
+        sheet_obj1.ColHidden("MCLS_CD") = true;
+        sheet_obj2.ColHidden("MCLS_CD") = true;
+        sheet_obj1.ColHidden("SCLS_CD") = true;
+        sheet_obj2.ColHidden("SCLS_CD") = true;
+    }
+    else if(clsLv == 2)
+    {
+        sheet_obj1.ColHidden("SCLS_CD") = true;
+        sheet_obj2.ColHidden("SCLS_CD") = true;
+    }
+    sheet_obj1.ColHidden('SPLY_UPRC_YN') = true;
+sheet_obj2.ColHidden('SPLY_UPRC_YN') = true;
+sheet_obj1.ColHidden('SPLY_UPRC') = true;
+sheet_obj2.ColHidden('SPLY_UPRC') = true;
+sheet_obj1.ColHidden('BRAND_CD') = true;
+sheet_obj2.ColHidden('BRAND_CD') = true;
+sheet_obj1.ColHidden('PRICE_CTRL_FG') = true;
+sheet_obj2.ColHidden('PRICE_CTRL_FG') = true;
+
+}
+function ing_display(isDisplay)
+{
+    var ing_img  = fnGetObjectIdName("ing_img");
+    var ing_back = fnGetObjectIdName("ing_back");
+    var Left    = (isDisplay ? "350" : "-350");
+    var Top     = (isDisplay ? "363" : "-273");
+    var display = (isDisplay ? "" : "none");
+    ing_back.style.pixelLeft    = Left;
+    ing_back.style.pixelTop     = Top;
+    ing_back.style.display      = display;
+    ing_img.style.pixelLeft     = Left;
+    ing_img.style.pixelTop      = Top;
+    ing_img.style.display       = display;
+    return true;
+}
+/////////////////////////////////////// window.onload ///////////////////////////////////////
+window.onload = function() { setTimeout("onloadFunctions()",0); }; function onloadFunctions()
+{
+    init_sheet();
+    columnHidden();
+    fnGetObjectIdName("mySheet1").DataInsert();
+    fnResize();
+    set_MclsCd(1,1,'Idx','0');
+    set_SclsCd(1,1,'Idx','0');
+    set_item();
+}
+/////////////////////////////////////// window.onresize ///////////////////////////////////////
+window.onresize = function()
+{
+    fnResize();
+}
+/////////////////////////////////////// fnResize ///////////////////////////////////////
+function fnResize()
+{
+    setObjHeight("mySheet2", 40);
+}
+function fnEtcMasterInsert()
+{
+    showModalDialog('prod_loader010_popup.jsp',self,'dialogWidth:1000px;dialogHeight:700px;dialogTop:100px;dialogLeft:100px;status:no;resizable:yes;scroll:no;edge:sunken;');
+}
+</SCRIPT>
+
+<SCRIPT for=mySheet1 event="OnClick(Row, Col, Value)">
+if(Col == 1)        {  }
+else if(Col == SaveNameCol('MCLS_CD'))   { set_MclsCd(1,Row); }
+else if(Col == SaveNameCol('SCLS_CD'))   { set_SclsCd(1,Row); }
+</SCRIPT>
+
+<SCRIPT for=mySheet1 event="OnChange(Row, Col,Value)">
+if(Col == SaveNameCol('LCLS_CD'))        { set_MclsCd(1,Row,'Idx','0'); }
+else if(Col == SaveNameCol('MCLS_CD'))   { set_SclsCd(1,Row,'Idx','0'); }
+</SCRIPT>
+
+<SCRIPT for=mySheet2 event="OnClick(Row, Col, Value)">
+if(Col == SaveNameCol('PROD_CD'))
+{
+
+    if(CellValue(Row,"PRICE_MGR_FG") != 2)
+    {
+        CellValue(Row, "PROD_CD")   = "";
+        CellEditable(Row,"PROD_CD") = false;
+    }
+    else
+    {
+        CellEditable(Row,"PROD_CD") = true;
+    }
+
+}
+if(Col == 7)
+{
+}
+else if(Col == SaveNameCol('MCLS_CD'))
+{
+    set_MclsCd('2',Row);
+}
+else if(Col == SaveNameCol('SCLS_CD'))
+{
+    set_SclsCd('2',Row);
+}
+else if(Col == SaveNameCol('ORD_PROD_YN') || Col == SaveNameCol('SPLY_UPRC_YN') || Col == SaveNameCol('SPLY_UPRC'))
+{
+    if(CellValue(Row,"ORD_PROD_YN") == "C" && CellValue(Row,"SPLY_UPRC_YN") == "Y" || CellValue(Row,"ORD_PROD_YN") == "Y" && CellValue(Row,"SPLY_UPRC_YN") == "Y")
+    {
+        CellEditable(Row,"SPLY_UPRC") = true;
+    }
+    else
+    {
+        CellValue(Row,"SPLY_UPRC") = 0;
+        CellEditable(Row,"SPLY_UPRC") = false;
+    }
+}
+else if(Col == SaveNameCol('SALE_PROD_YN') || Col == SaveNameCol('PRICE_MGR_FG') || Col == SaveNameCol('SALE_UPRC'))
+{
+    if(CellValue(Row,"SALE_PROD_YN") == "Y" && CellValue(Row,"PRICE_MGR_FG") == "0") CellEditable(Row,"SALE_UPRC") = true;
+    else
+    {
+        CellValue(Row,"SALE_UPRC") = 0;
+        CellEditable(Row,"SALE_UPRC") = false;
+    }
+}
+</SCRIPT>
+
+<SCRIPT for=mySheet2 event=OnChange(Row,Col,Value)>
+if(Col == SaveNameCol('PRICE_MGR_FG'))
+{
+
+    if(CellValue(Row,"PRICE_MGR_FG") != 2)
+    {
+        CellValue(Row, "PROD_CD")   = "";
+        CellEditable(Row,"PROD_CD") = false;
+    }
+    else
+    {
+        CellEditable(Row,"PROD_CD") = true;
+    }
+
+}
+else if(Col == SaveNameCol('LCLS_CD'))
+{
+    set_MclsCd('2',Row,'Idx','0');
+}
+else if(Col == SaveNameCol('MCLS_CD'))
+{
+    set_SclsCd('2',Row,'Idx','0');
+}
+else if(Col == 9)
+{
+}
+else if(Col == SaveNameCol('ORD_PROD_YN'))
+{
+    if(Value == "Y") CellEditable(Row,"SPLY_UPRC") = true;
+    else
+    {
+        CellValue(Row,"SPLY_UPRC") = 0;
+        CellEditable(Row,"SPLY_UPRC") = false;
+    }
+}
+else if(Col == SaveNameCol('SALE_PROD_YN') || Col == SaveNameCol('PRICE_MGR_FG'))
+{
+    if(CellValue(Row,"SALE_PROD_YN") == "Y" && CellValue(Row,"PRICE_MGR_FG") == "0") CellEditable(Row,"SALE_UPRC") = true;
+    else
+    {
+        CellValue(Row,"SALE_UPRC") = 0;
+        CellEditable(Row,"SALE_UPRC") = false;
+    }
+}
+</SCRIPT>
+
+<SCRIPT for=mySheet2 event="OnComboChange(Row, Col, Code, Text)">
+if(Col == SaveNameCol('PRICE_CTRL_FG'))
+{
+    if(Code == "N")
+    {
+        CellValue(Row,"SPLY_UPRC")     = 0;
+        CellEditable(Row,"SPLY_UPRC")  = false;
+    }
+    else
+    {
+        CellEditable(Row,"SPLY_UPRC") = true;
+    }
+}
+</SCRIPT>
+
+<DIV id=divSaving style="OVERFLOW: hidden; POSITION: absolute; LEFT: 406px; ; LEFT: expression((document.body.clientWidth-200)/2); Z-INDEX: 99; DISPLAY: none; TOP: 249px; ; TOP: expression((document.body.clientHeight-100)/2)">
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD><IFRAME height=100 marginHeight=0 src="/common/jsp/saving.html" frameBorder=0 width=200 marginWidth=0 scrolling=no></IFRAME></TD></TR></TBODY></TABLE></DIV>
+<SCRIPT>if(parent && parent.HistoryFrm && parent.HistoryFrm.MainFrmPage && parent.HistoryFrm.MainFrmPage.pgm_nm && parent.HistoryFrm.MainFrmPage.pgm_nm.value != '') {document.write("<table width='100%' border='0' cellpadding='0' cellspacing='0' background='/image/title_bg.gif'><tr height='30'><td width='10'></td><td>  <table border='0' cellpadding='0' cellspacing='0'>  <tr>  <td><img src='/image/title_icon.gif'></td>  <td width='10'></td>  <td>    <table border='0' cellpadding='0' cellspacing='0'><tr><td height='3'></td></tr><tr>    <td><font color='#FFFFFF' style='font-size:14px;'><b>"+parent.HistoryFrm.MainFrmPage.pgm_nm.value+"</b></font></td>    </tr></table>  </td>  <td width='40'></td>  <td><span id='span_mymenu'></span></td>  <td width='10'></td>  <td><img src='/image/icon01/btn_column.gif'  onclick='parent.set_menu_item();' style='cursor:hand;'></td>  </tr>  </table></td><td align='right'><font color='#FFFFFF'>"+parent.HistoryFrm.MainFrmPage.pgm_lcls_nm.value+((parent.HistoryFrm.MainFrmPage.pgm_mcls_nm.value == '') ? '' : ' &gt; '+parent.HistoryFrm.MainFrmPage.pgm_mcls_nm.value)+' &gt; '+parent.HistoryFrm.MainFrmPage.pgm_nm.value+"</font></td><td width='10'></td></tr></table>");fnSetPgmId(parent.HistoryFrm.MainFrmPage.pgm_id.value);document.getElementById('span_mymenu').innerHTML = parent.HistoryFrm.getMyMenuStr(parent.HistoryFrm.MainFrmPage.pgm_id.value);}</SCRIPT>
+
+<TABLE cellSpacing=0 cellPadding=0 width="100%" background=/image/title_bg.gif border=0>
+<TBODY>
+<TR height=30>
+<TD width=10></TD>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD><IMG src="/image/title_icon.gif"></TD>
+<TD width=10></TD>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD height=3></TD></TR>
+<TR>
+<TD><FONT style="FONT-SIZE: 14px" color=#ffffff><B>상품엑셀업로드</B></FONT></TD></TR></TBODY></TABLE></TD>
+<TD width=40></TD>
+<TD><SPAN id=span_mymenu _extended="true"><IMG onclick="top.HistoryFrm.fnEditMyMenu('Y','000520')" style="CURSOR: hand" src="https://asp.netusys.com/image/icon01/mymenu_plus.gif"></SPAN></TD>
+<TD width=10></TD>
+<TD><IMG onclick=parent.set_menu_item(); style="CURSOR: hand" src="/image/icon01/btn_column.gif"></TD></TR></TBODY></TABLE></TD>
+<TD align=right><FONT color=#ffffff>기초관리 &gt; 상품관리 &gt; 상품엑셀업로드</FONT></TD>
+<TD width=10></TD></TR></TBODY></TABLE>
+<FORM name=form1><!-- IBFrame 을 위한 변수 선언 (필수)--><INPUT type=hidden value=master.product.prod_loader010 name=S_CONTROLLER> <INPUT type=hidden name=S_METHOD> <INPUT type=hidden name=S_SAVENAME> <!-- IBFrame 을 위한 변수 선언 (선택)--><INPUT type=hidden name=S_FORWARD> <INPUT type=hidden name=S_TREECOL> <INPUT type=hidden name=SHEETSEQ> <INPUT type=hidden value=N name=DIRECT_PROD_CD> <INPUT type=hidden value=6 name=PROD_LEN> <INPUT type=hidden value=4 name=SCALE_PROD_LEN> <INPUT type=hidden value=1 name=CLS_MGR_LEVEL_FG> <INPUT type=hidden name=PROC_FG> <INPUT type=hidden name=PROD_SEQ> <INPUT type=hidden value=N name=SAVEING> <INPUT type=hidden value=1 name=page_no> <INPUT type=hidden value=Y name=ENV595> <INPUT type=hidden value=0 name=ENV716>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" bgColor=#e9e9e9 border=0>
+<TBODY>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=27>
+<TD width=10></TD>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR vAlign=top>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD>
+<TABLE onclick="doAction('down2Excel','2')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_black_l_bg.gif"></TD>
+<TD background=/image/btn_black_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>양식다운로드</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_black_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=10></TD>
+<TD>
+<TABLE onclick="excelUpload('2');" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_black_l_bg.gif"></TD>
+<TD background=/image/btn_black_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>양식업로드</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_black_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=10></TD>
+<TD>
+<TABLE onclick="doAction('curDown2Excel','2')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_black_l_bg.gif"></TD>
+<TD background=/image/btn_black_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>편집화면다운로드</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_black_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> <SELECT name=s_success_err> <OPTION selected value="">-전체-</OPTION> <OPTION value=success>성공내역</OPTION> <OPTION value=err>오류내역</OPTION></SELECT></TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> 검색줄수 <INPUT onkeypress="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','2'); }" class=input1hr size=4 value=500 name=page_size></TD>
+<TD width=10></TD>
+<TD>
+<TABLE onclick="document.form1.page_no.value='1'; doAction('search',2);" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_black_l_bg.gif"></TD>
+<TD background=/image/btn_black_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>조회</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_black_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=20></TD>
+<TD>
+<TABLE onclick=fnEtcMasterInsert(); style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_black_l_bg.gif"></TD>
+<TD background=/image/btn_black_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>기초마스터등록</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_black_r_bg.gif"></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD>
+<TD align=right>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD>
+<TABLE onclick=fn_data_chk() style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>양식검증</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=10></TD>
+<TD>
+<TABLE onclick=fnSave() style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>저장</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TD>
+<TD width=10></TD></TR>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=1 bgColor=#d6d6d6>
+<TD colSpan=3></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" bgColor=#e9e9e9 border=0>
+<TBODY>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=27>
+<TD width=10></TD>
+<TD>
+<TABLE cellSpacing=0 cellPadding=2 width="100%" border=0>
+<TBODY>
+<TR height=4>
+<TD colSpan=2></TD></TR>
+<TR>
+<TD width="50%"><IMG src="/image/s_icon.gif"> 1. 양식다운로드 버튼을 클릭하여 양식을 다운받아 작성하여 주십시오.</TD>
+<TD width="50%"><IMG src="/image/s_icon.gif"> 2. 모든 입력값은 코드값이 아닌 명칭으로 입력해 주십시오.</TD></TR>
+<TR>
+<TD width="50%"><IMG src="/image/s_icon.gif"> 3. 양식업로드 버튼을 클릭하여 작성하신 양식을 업로드하여 주십시오.</TD>
+<TD width="50%"><IMG src="/image/s_icon.gif"> 4. 업로드 후 양식검증 버튼을 클릭하여 자료를 검증해 주십시오.</TD></TR>
+<TR>
+<TD width="50%"><IMG src="/image/s_icon.gif"> 5. 저장 버튼을 클릭하면 양식검증이 완료된 상품만 저장됩니다.</TD>
+<TD width="50%"><IMG src="/image/s_icon.gif"> 6. <FONT style="COLOR: red">초기재고</FONT>(0이상)를 생성하실 경우 원가를 꼭 확인하시기 바랍니다.</TD></TR></TBODY></TABLE></TD></TD>
+<TD width=10></TD></TR>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=1 bgColor=#d6d6d6>
+<TD colSpan=3></TD></TR></TBODY></TABLE>
+<TABLE height=6 cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" bgColor=#e9e9e9 border=0>
+<TBODY>
+<TR height=1 bgColor=#aaaaaa>
+<TD colSpan=6></TD></TR>
+<TR height=25>
+<TD bgColor=#aaaaaa width=1></TD>
+<TD width=8></TD>
+<TD align=left><IMG src="/image/s_icon.gif"> 콤보 리스트</TD>
+<TD width=8></TD>
+<TD bgColor=#aaaaaa width=1></TD></TR>
+<TR height=1 bgColor=#aaaaaa>
+<TD colSpan=6></TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD>
+<TABLE id=TableNm1 height=80 cellSpacing=1 cellPadding=4 width="100%" bgColor=#aaaaaa border=0 name="TableNm1">
+<TBODY>
+<TR bgColor=#ffffff vAlign=top>
+<TD height="100%" width="100%">
+<SCRIPT>makeIBSheet('mySheet1');</SCRIPT>
+
+<OBJECT id=mySheet1 name=mySheet1 codeBase="/common/object/IBSheet3.CAB#version=3,4,0,387" classid=CLSID:341FBC5F-2AE4-41B8-BFE5-A03170569A27 width="100%" height="100%"><PARAM NAME="_ExtentX" VALUE="25982"><PARAM NAME="_ExtentY" VALUE="1852"><PARAM NAME="ConfigXml" VALUE="/common/gridstyle/GridConfig.xml"><PARAM NAME="Version" VALUE="3.4.0.387"></OBJECT>
+<SCRIPT>document.getElementById('mySheet1').SetExcelColDialog(0);</SCRIPT>
+</TD></TR></TBODY></TABLE></TD></TR>
+<TR height=6>
+<TD></TD></TR>
+<TR>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" bgColor=#e9e9e9 border=0>
+<TBODY>
+<TR height=1 bgColor=#aaaaaa>
+<TD colSpan=6></TD></TR>
+<TR height=25>
+<TD bgColor=#aaaaaa width=1></TD>
+<TD width=8></TD>
+<TD align=left>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=bottom>
+<TD><IMG src="/image/s_icon.gif"> 상품 내역 &nbsp;</TD>
+<TD>( * 체크박스를 체크하고 &nbsp;</TD>
+<TD>
+<TABLE onclick="doAction('delete','2')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>삭제</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD>&nbsp; 버튼을 누르시면 등록된 내역이 삭제됩니다. )</TD></TR></TBODY></TABLE></TD>
+<TD align=right>업로드진행 : <INPUT class=read1hr readOnly size=5 name=obj_progress> / <INPUT class=read1hr readOnly size=5 name=obj_totalrows></TD>
+<TD width=8></TD>
+<TD bgColor=#aaaaaa width=1></TD></TR>
+<TR height=1 bgColor=#aaaaaa>
+<TD colSpan=6></TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD>
+<TABLE id=TableNm2 height=30 cellSpacing=1 cellPadding=4 width="100%" bgColor=#aaaaaa border=0 name="TableNm2">
+<TBODY>
+<TR bgColor=#ffffff vAlign=top>
+<TD height="100%" width="100%">
+<SCRIPT>makeIBSheet('mySheet2');</SCRIPT>
+
+<OBJECT id=mySheet2 style="HEIGHT: 265px" name=mySheet2 codeBase="/common/object/IBSheet3.CAB#version=3,4,0,387" classid=CLSID:341FBC5F-2AE4-41B8-BFE5-A03170569A27 width="100%" height="100%"><PARAM NAME="_ExtentX" VALUE="25982"><PARAM NAME="_ExtentY" VALUE="7011"><PARAM NAME="ConfigXml" VALUE="/common/gridstyle/GridConfig.xml"><PARAM NAME="Version" VALUE="3.4.0.387"></OBJECT>
+<SCRIPT>document.getElementById('mySheet2').SetExcelColDialog(0);</SCRIPT>
+</TD></TR></TBODY></TABLE>
+<DIV id=PAGEBUTTON></DIV></TD></TR></TBODY></TABLE></FORM>
+<DIV id=ing_img style="HEIGHT: 110px; WIDTH: 310px; POSITION: absolute; TEXT-ALIGN: center; Z-INDEX: 90; DISPLAY: none"><IMG src="/image/Wait_Image.jpg"></DIV><IFRAME id=ing_back style="HEIGHT: 110px; WIDTH: 310px; POSITION: absolute; TEXT-ALIGN: center; Z-INDEX: 89; DISPLAY: none" frameBorder=0></IFRAME></BODY></HTML>
+
+{% endblock %}
+

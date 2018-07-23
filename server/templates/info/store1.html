@@ -1,0 +1,109 @@
+{% extends "layout.html" %}
+{% block body %}
+
+
+<link rel="stylesheet" href="{{ url_for('static',filename='jui-master/dist/ui.min.css') }}  "/>
+<link rel="stylesheet" href="{{ url_for('static',filename='jui-master/dist/ui-jennifer.min.css') }}" />
+
+<!-- Grid style components -->
+<link rel="stylesheet" href="{{ url_for('static',filename='jui-grid-master/dist/grid.min.css') }}  " />
+<link rel="stylesheet" href="{{ url_for('static',filename='jui-grid-master/dist/grid-jennifer.min.css') }}  " />
+
+
+<style type="text/css">
+	.select-container {
+		width:500px;
+		height:500px;
+		overflow:auto;
+		border:1px solid #ececec;
+	}
+
+	.select-container h1 {
+		color:#333;
+		margin-top:10px;
+		margin-bottom:10px;
+		border-bottom:0px;
+	}
+</style>
+<div class="ui two grid"
+<div class="select-container">
+	<h1>포스출력물 관리</h1>
+	<div>
+		<div  class="theme-list"></div>
+	</div>
+</div>
+
+<div>
+
+
+<form action="store1" method="post"> <textarea id="textarea" name="content" cols="42" rows="20" ></textarea>  <br><button type="submit" value="Submit" onclick="formSubmit();">제출하기</button> </form>
+
+
+</div>
+
+</div>
+
+</body>
+
+
+
+<script>
+
+function formSubmit() {
+
+               var data2 = $("form").serializeArray();
+				console.log(data2[0]);
+				<!--alert(JSON.stringify(data2))-->
+
+
+        }
+
+
+
+</script>
+
+
+
+
+<script>
+      var _data;
+	  var _data=[];
+
+
+        $.getJSON("{{ url_for('_info_store1_list' ) }}", function (json) {
+            _data = json;
+        }).done(function () {
+
+            console.log(_data);
+
+			jui.ready([ "ui.select" ], function(SelectBox) {
+
+
+				window.themeList  = new SelectBox('.theme-list', {
+						items : _data,
+						placeholder: '선택하세요.',
+						event : {
+						change : function (value) {
+
+							for(i in _data)
+							{
+								if(value == _data[i].value) {
+									$("textarea#textarea").val(_data[i].text)
+									<!--$("textarea#textarea").val(_data[i].textarea)-->
+								}
+							}
+
+						}
+					}
+				});
+
+			});
+        })
+
+
+
+
+</script>
+
+
+{% endblock %}

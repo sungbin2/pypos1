@@ -1,0 +1,705 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% from 'macro/form2.html' import TITLE_BLOCK,FORM,FORM_MODAL %}
+    {% from 'macro/table.html' import THEAD,TBODY,GETLIST %}
+
+    {% set URL_=url_for('_system_receiptform') %}
+
+    {% call TITLE_BLOCK(HEADER_,'','file') %}
+
+<link rel="stylesheet" href="{{ url_for('static',filename='jui-master/dist/ui.min.css') }}  "/>
+<link rel="stylesheet" href="{{ url_for('static',filename='jui-master/dist/ui-jennifer.min.css') }}" />
+
+<!-- Grid style components -->
+<link rel="stylesheet" href="{{ url_for('static',filename='jui-grid-master/dist/grid.min.css') }}  " />
+<link rel="stylesheet" href="{{ url_for('static',filename='jui-grid-master/dist/grid-jennifer.min.css') }}  " />
+<style>
+     #table_4  {width : 300px; height : 400px}
+     #table_3  {width : 250px; height : 400px}
+     #table_2  {width : 300px ;}
+
+    <!--#td1 { margin :0 }-->
+    pre { margin: 0 0 0.5em;
+    line-height: 1em; }
+    p {
+    margin: 0 0 1em;
+    line-height: 1em; }
+    th { line-height: 2em; }
+    li    {   margin:0px; padding:2px; list-style-position: inside; list-style-type: circle; cursor:hand; height: 20px; color: blue;}
+
+</style>
+
+        <br/>
+
+        <div class="ui top attached tabular menu">
+            <a class="active item" data-tab="영수증">영수증</a>
+            <a class="item" data-tab="간이영수증">간이영수증</a>
+            <a class="item" data-tab="고객주문서">고객주문서</a>
+            <a class="item" data-tab="주방주문서">주방주문서</a>
+        </div>
+        <div class="ui bottom attached active tab segment" data-tab="영수증">
+            <div class="ui form">
+                <div class="field">
+                    <label>"영수증"</label>
+                    <table>
+                        <td valign="top">
+                        <table id="table_3" class="table classic" width='100%'  border='0' cellpadding='4' cellspacing='1' bgcolor='#aaaaaa' >
+                        <thead>
+                        <tr>
+                            <th>CODE LIST</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td width="400"><span id="rlist"></span></td>
+                        </tr>
+                        </tbody>
+                        </table>
+                        </td>
+                        <td valign="top">
+                        <table id="table_4" class="table classic" width='100%'  border='0' cellpadding='4' cellspacing='1' bgcolor='#aaaaaa' >
+                        <thead>
+                        <tr>
+                            <th>EDIT</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td width="400"><textarea id="edit" rows="30" data-tab="영수증"></textarea></td>
+                        </tr>
+                        </tbody>
+                        </table>
+                        </td>
+
+                        <td valign="top">
+                        <table id="table_2" class="table classic borderless stripeless" width='100%'  border='0' cellpadding='4' cellspacing='1' bgcolor='#aaaaaa' >
+                        <thead>
+                        <tr>
+                            <th>text</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr bgcolor='#aaaaaa'>
+                            <td><div id="viewer"></div></td>
+                        </tr>
+                        </tbody>
+                        </table>
+
+                        </td>
+                    </table>
+                </div>
+                <button class="ui olive button 초기화" data-tab="영수증">초기화</button>
+            </div>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="간이영수증">
+            <div class="ui form">
+                <div class="field">
+                    <label>"간이영수증"</label>
+                     <table>
+                        <td valign="top">
+                        <table id="table_3" class="table classic" width='100%'  border='0' cellpadding='4' cellspacing='1' bgcolor='#aaaaaa' >
+                        <thead>
+                        <tr>
+                            <th>CODE LIST</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td width="400"><span id="rlist1"></span></td>
+                        </tr>
+                        </tbody>
+                        </table>
+                        </td>
+                        <td valign="top">
+                        <table id="table_4" class="table classic" width='100%'  border='0' cellpadding='4' cellspacing='1' bgcolor='#aaaaaa' >
+                        <thead>
+                        <tr height="35px">
+                            <th>EDIT</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr height="35px">
+                            <td width="400"><textarea id="edit1" rows="30" data-tab="간이영수증"></textarea></td>
+                        </tr>
+                        </tbody>
+                        </table>
+                        </td>
+
+                        <td valign="top">
+                        <table id="table_2" class="table classic borderless stripeless" width='100%'  border='0' cellpadding='0' cellspacing='1' bgcolor='#aaaaaa' >
+                        <thead>
+                        <tr height="35px">
+                            <th>text</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr height="35px">
+                            <td width="400"><div id="viewer1"></div></td>
+                        </tr>
+                        </tbody>
+                        </table>
+
+                        </td>
+                    </table>
+
+                </div>
+                <button class="ui olive button 초기화" data-tab="간이영수증">초기화</button>
+            </div>
+
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="고객주문서">
+            <div class="ui form">
+                <div class="field">
+                    <label>"고객주문서"</label>
+                     <table>
+                        <td valign="top">
+                        <table id="table_3" class="table classic" width='100%'  border='0' cellpadding='4' cellspacing='1' bgcolor='#aaaaaa' >
+                        <thead>
+                        <tr>
+                            <th>CODE LIST</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td width="400"><span id="rlist2"></span></td>
+                        </tr>
+                        </tbody>
+                        </table>
+                        </td>
+                        <td valign="top">
+                        <table id="table_4" class="table classic" width='100%'  border='0' cellpadding='4' cellspacing='1' bgcolor='#aaaaaa' >
+                        <thead>
+                        <tr height="35px">
+                            <th>EDIT</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr height="35px">
+                            <td width="400"><textarea id="edit2" rows="30" data-tab="고객주문서"></textarea></td>
+                        </tr>
+                        </tbody>
+                        </table>
+                        </td>
+
+                        <td valign="top">
+                        <table id="table_2" class="table classic borderless stripeless" width='100%'  border='0' cellpadding='4' cellspacing='1' bgcolor='#aaaaaa' >
+                        <thead>
+                        <tr height="35px">
+                            <th>text</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr height="35px">
+                            <td width="400"><div id="viewer2"></div></td>
+                        </tr>
+                        </tbody>
+                        </table>
+
+                        </td>
+                    </table>
+
+                </div>
+                <button class="ui olive button 초기화" data-tab="고객주문서">초기화</button>
+            </div>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="주방주문서">
+            <div class="ui form">
+                <div class="field">
+                    <label>"주방주문서"</label>
+                     <table>
+                        <td valign="top">
+                        <table id="table_3" class="table classic" width='100%'  border='0' cellpadding='4' cellspacing='1' bgcolor='#aaaaaa' >
+                        <thead>
+                        <tr>
+                            <th>CODE LIST</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td width="400"><span id="rlist3"></span></td>
+                        </tr>
+                        </tbody>
+                        </table>
+                        </td>
+                        <td valign="top">
+                        <table id="table_4" class="table classic" width='100%'  border='0' cellpadding='4' cellspacing='1' bgcolor='#aaaaaa' >
+                        <thead>
+                        <tr height="35px">
+                            <th>EDIT</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr height="35px">
+                            <td width="400"><textarea id="edit3" rows="30" data-tab="주방주문서"></textarea></td>
+                        </tr>
+                        </tbody>
+                        </table>
+                        </td>
+
+                        <td valign="top">
+                        <table id="table_2" class="table classic borderless stripeless" width='100%'  border='0' cellpadding='4' cellspacing='1' bgcolor='#aaaaaa' >
+                        <thead>
+                        <tr height="35px">
+                            <th>text</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><div id="viewer3"></div></td>
+                        </tr>
+                        </tbody>
+                        </table>
+
+                        </td>
+                    </table>
+
+                </div>
+                <button class="ui olive button 초기화" data-tab="주방주문서">초기화</button>
+            </div>
+        </div>
+
+        <br/>
+        <button id="btn_save" class="ui right floated green button">
+            <i class="save icon"></i> 저장
+        </button>
+        <br/>
+        <br/>
+
+    {% endcall %}
+
+    <script>
+
+jQuery.fn.extend({
+insertAtCaret: function(myValue){
+  return this.each(function(i) {
+    if (document.selection) {
+      //For browsers like Internet Explorer
+      this.focus();
+      var sel = document.selection.createRange();
+      sel.text = myValue;
+      this.focus();
+    }
+    else if (this.selectionStart || this.selectionStart == '0') {
+      //For browsers like Firefox and Webkit based
+      var startPos = this.selectionStart;
+      var endPos = this.selectionEnd;
+      var scrollTop = this.scrollTop;
+      this.value = this.value.substring(0, startPos)+myValue+this.value.substring(endPos,this.value.length);
+      this.focus();
+      this.selectionStart = startPos + myValue.length;
+      this.selectionEnd = startPos + myValue.length;
+      this.scrollTop = scrollTop;
+    } else {
+      this.value += myValue;
+      this.focus();
+    }
+  });
+}
+});
+
+
+
+
+        var lists = {
+            "영수증": [
+                "[_C]가운데정렬",
+                "[_L]왼쪽정렬",
+                "[_R]오른쪽정렬",
+                "[_LIST]{/상품명수량금액/}",
+                "{가게명}",
+                "{대표자}",
+                "{사업자번호}",
+                "{우편번호}",
+                "{주소}",
+                "{상세주소}",
+                "{이메일}",
+                "{휴대폰}",
+                "{전화}",
+                "{팩스}",
+                "{금액}",
+                "{dA/}가로세로2배{/dA}",
+                "{dW/}가로2배{/dW}",
+                "{dH/}세로2배{/dH}",
+                "[_CNF]절취선",
+                "[_HLINE]=",
+                "[_HLINE]-"
+
+                ],
+            "간이영수증": [
+                "[_C]가운데정렬",
+                "[_L]왼쪽정렬",
+                "[_R]오른쪽정렬",
+                "[_LIST]{/항목명금액_간이영수증/}",
+                "{가게명}",
+                "{대표자}",
+                "{사업자번호}",
+                "{우편번호}",
+                "{주소}",
+                "{상세주소}",
+                "{이메일}",
+                "{휴대폰}",
+                "{전화}",
+                "{팩스}",
+                "{금액}",
+                "{dA/}가로세로2배{/dA}",
+                "{dW/}가로2배{/dW}",
+                "{dH/}세로2배{/dH}",
+                "[_CNF]절취선",
+                "[_HLINE]=",
+                "[_HLINE]-"
+                ],
+            "고객주문서": [
+                "[_C]가운데정렬",
+                "[_L]왼쪽정렬",
+                "[_R]오른쪽정렬",
+                "[_LIST]{/상품명수량구분/}",
+                "{주문번호}",
+                "{좌석}",
+                "{담당자}",
+                "{객수}",
+                "{기기명}",
+                "{주문일시}",
+                "{dA/}가로세로2배{/dA}",
+                "{dW/}가로2배{/dW}",
+                "{dH/}세로2배{/dH}",
+                "[_CNF]절취선",
+                "[_HLINE]=",
+                "[_HLINE]-"
+                ],
+            "주방주문서": [
+                "[_C]가운데정렬",
+                "[_L]왼쪽정렬",
+                "[_R]오른쪽정렬",
+                "[_LIST]{/상품명수량구분/}",
+                "{주문번호}",
+                "{좌석}",
+                "{담당자}",
+                "{객수}",
+                "'{기기명}",
+                "{주문일시}",
+                "{dA/}가로세로2배{/dA}",
+                "{dW/}가로2배{/dW}",
+                "{dH/}세로2배{/dH}",
+                "[_CNF]절취선",
+                "[_HLINE]=",
+                "[_HLINE]-"
+                ]
+             };
+
+        var EOL = '\n';
+        var defaults = {
+            "영수증": [
+                "[_C]{dA/}영수증{/dA}{재출력}",
+                "[_C]",
+                "[_L][가게명] {가게명}",
+                "[_L][대표자] {대표자}",
+                "[_L][사업자번호] {사업자번호}",
+                "[_L][우편번호] {우편번호}",
+                "[_L][주소] {주소}",
+                "[_L][상세주소] {상세주소}",
+                "[_L][이메일] {이메일}",
+                "[_L][휴대폰] {휴대폰}",
+                "[_L][전화] {전화}",
+                "[_L][팩스] {팩스}",
+                "[_HLINE]=",
+                "[_J]상품명{sp}수량        금액",
+                "[_HLINE]-",
+                "[_LIST]{/상품명수량금액/}",
+                "[_HLINE]=",
+                "[_C]",
+                "[_C]{dW/}감사합니다{/dW}",
+                "[_CNF]"
+            ],
+            "간이영수증": [
+                "[_C]{dA/}영수증{/dA}{재출력}",
+                "[_C]",
+                "[_L][가게명] {가게명}",
+                "[_L][대표자] {대표자}",
+                "[_L][사업자번호] {사업자번호}",
+                "[_L][우편번호] {우편번호}",
+                "[_L][주소] {주소}",
+                "[_L][상세주소] {상세주소}",
+                "[_L][이메일] {이메일}",
+                "[_L][휴대폰] {휴대폰}",
+                "[_L][전화] {전화}",
+                "[_L][팩스] {팩스}",
+                "[_HLINE]=",
+                "[_LIST]{/항목명금액_간이영수증/}",
+                "[_HLINE]-",
+                "[_J]{dH/}받을금액{sp}{금액}{/dH}",
+                "[_J]{dH/}받은금액{sp}{금액}{/dH}",
+                "[_HLINE]=",
+                "[_C]",
+                "[_C]{dW/}감사합니다{/dW}",
+                "[_CNF]"
+            ],
+            "고객주문서": [
+                "[_C]{dA/}고객주문서{/dA}{재출력}",
+                "[_C]",
+                "[_J][주문번호] {dH/}{주문번호}{/dH}{sp}[테이블] {좌석}",
+                "[_J][주문자] {담당자}{sp}[손님수] {객수}",
+                "[_HLINE]=",
+                "[_J]상품명{sp}수량      구분",
+                "[_HLINE]-",
+                "[_LIST]{/상품명수량구분/}",
+                "[_HLINE]=",
+                "[_J][POS] {기기명}{sp}[주문일시] {주문일시}",
+                "[_C]",
+                "[_C]{dW/}감사합니다{/dW}",
+                "[_CNF]"
+            ],
+            "주방주문서": [
+                "[_C]{dA/}주방주문서{/dA}{재출력}",
+                "[_C]",
+                "[_J][주문번호] {dH/}{주문번호}{/dH}{sp}[테이블] {좌석}",
+                "[_J][주문자] {담당자}{sp}[손님수] {객수}",
+                "[_HLINE]=",
+                "[_J]상품명{sp}수량      구분",
+                "[_HLINE]-",
+                "[_LIST]{/상품명수량구분/}",
+                "[_HLINE]=",
+                "[_J][POS] {기기명}{sp}[주문일시] {주문일시}",
+                "[_C]",
+                "[_CNF]"
+            ]
+        };
+        var currents = {};
+
+        $(function () {
+            $('.menu .item').tab();
+
+
+            $.getJSON("{{ URL_ }}", function (json) {
+                 currents = json;
+            }).done(function () {
+
+                    edittext('영수증')
+                    edittext('간이영수증')
+                    edittext('고객주문서')
+                    edittext('주방주문서')
+
+            });
+
+            $('#btn_save').click(function () {
+                var parcel = {};
+                parcel["영수증"] = $('textarea[data-tab="영수증"]').val();
+                parcel["간이영수증"] = $('textarea[data-tab="간이영수증"]').val();
+                parcel["고객주문서"] = $('textarea[data-tab="고객주문서"]').val();
+                parcel["주방주문서"] = $('textarea[data-tab="주방주문서"]').val();
+                $.ajax({
+                    method: "POST",
+                    url: '{{URL_}}',
+                    contentType: "application/json",
+                    data: JSON.stringify(parcel)
+                })
+                    .done(function (msg) {
+                        if (msg == 'modified'){
+                            window.location.replace('{{ URL_ }}');}
+                        else{
+                            alert("alert1:" + msg);}
+                    });
+            });
+
+            $(document).on('click', 'button.초기화', function () {
+                var _tab = $(this).data('tab');
+                var temp = "";
+                for (var each in defaults[_tab]) {
+                    temp += defaults[_tab][each] + EOL
+                }
+                $('textarea[data-tab="{0}"]'.format(_tab)).val(temp)
+            });
+
+        });
+
+
+function edittext1(text)
+{
+                temp1 = [];
+                _temp = ""
+
+
+                switch (text) {
+                    case "영수증" :
+                    var content  = document.getElementById("edit").value;
+                    break;
+                    case "간이영수증" :
+                    var content  = document.getElementById("edit1").value;
+                    break;
+                     case "고객주문서" :
+                    var content  = document.getElementById("edit2").value;
+                    break;
+                     case "주방주문서" :
+                    var content  = document.getElementById("edit3").value;
+                    break;
+                }
+                _temp = content
+                for ( var each in content ) {
+
+                        _temp = _temp.replace('[_R]','</pre><pre align = right>') ;
+                        _temp = _temp.replace('[_J]','</pre><pre align = right>') ;
+                        _temp = _temp.replace('[_C]','<br/></pre><p align = center>') ;
+                        _temp = _temp.replace('[_L]','</pre><pre align = left>') ;
+
+                        _temp = _temp.replace('{sp}',' &nbsp &nbsp &nbsp &nbsp') ;
+                        _temp = _temp.replace('  ',' &nbsp') ;
+                        _temp = _temp.replace('{dA/}','</font><font size="4rem">')
+                        _temp = _temp.replace('{/dA}','</font><font size=2rem>')
+                        _temp = _temp.replace('{dW/}','</font><font size="4rem">')
+                        _temp = _temp.replace('{/dW}','</font><font size=2rem>')
+                        _temp = _temp.replace('{dH/}','</font><font size="4rem">')
+                        _temp = _temp.replace('{/dH}','</font><font size=2rem>')
+                        _temp = _temp.replace('{재출력}',' - 재출력 ')
+                        _temp = _temp.replace('{금액}','30,000')
+                        _temp = _temp.replace('{받은금액}','')
+
+
+                        _temp = _temp.replace('{가게명}','<span id="가게명"></span>')
+                        _temp = _temp.replace('{대표자}','<span id="대표자"></span>')
+                        _temp = _temp.replace('{사업자번호}','<span id="사업자번호"></span>')
+                        _temp = _temp.replace('{우편번호}','<span id="우편번호"></span>')
+                        _temp = _temp.replace('{주소}','<span id="주소"></span>')
+                        _temp = _temp.replace('{상세주소}','<span id="상세주소"></span>')
+                        _temp = _temp.replace('{이메일}','<span id="이메일"></span>')
+                        _temp = _temp.replace('{휴대폰}','<span id="휴대폰"></span>')
+                        _temp = _temp.replace('{전화}','<span id="전화"></span>')
+                        _temp = _temp.replace('{팩스}','<span id="팩스"></span>')
+
+                        _temp = _temp.replace('[_HLINE]-','</pre><pre align = left>------------------------------------------</pre>')
+                        _temp = _temp.replace('[_HLINE]=','</pre><pre align = left>==========================================</pre>')
+                        _temp = _temp.replace('[_LIST]{/상품명수량구분/}','</pre><pre align = left> 스테이크                  1        주문</pre>')
+                        _temp = _temp.replace('[_LIST]{/상품명수량금액/}','</pre><pre align = left> 스테이크                 1        30,000</pre>')
+                        _temp = _temp.replace('[_LIST]{/항목명금액_간이영수증/}','</pre><pre align = left> 단체식대                          30,000</pre>')
+                        _temp = _temp.replace('[_CNF]','</pre><pre align = left>-----------------절취선-------------------</pre>')
+
+                }
+
+                c = _temp;
+
+                switch (text) {
+                    case "영수증" :
+                    $('#viewer').html(c);
+                    break;
+                    case "간이영수증" :
+                    $('#viewer1').html(c);
+                    break;
+                     case "고객주문서" :
+                    $('#viewer2').html(c);
+                    break;
+                     case "주방주문서" :
+                    $('#viewer3').html(c);
+                    break;
+                }
+                reload();
+
+};
+
+
+function isEmpty(obj)
+{
+    try
+    {
+        return (typeof(obj) == "undefined" || obj == null || obj == "");
+    }
+    catch(e)
+    {
+        //alert('udfMainFrm.js : '+e);
+    }
+}
+
+function edittext(text){
+
+                var temp;
+                temp = "";
+                _temp2 = "";
+                temp2 = [];
+
+                for (var each in currents[text]) {
+                        temp += currents[text][each] + EOL
+                        }
+
+                 $('textarea[data-tab=' + text + ']').val(temp);
+
+
+                for (var each in lists[text]) {
+
+                temp2[each] = "<li ondblclick ='addEvent(this);'>" + lists[text][each] + "</li>";
+                _temp2 += temp2[each];
+
+                }
+
+                d = _temp2;
+
+                switch (text) {
+                    case "영수증" :
+                    $('#rlist').html(d);
+                    edittext1("영수증");
+                    break;
+                     case "간이영수증" :
+                    $('#rlist1').html(d);
+                    edittext1("간이영수증");
+                    break;
+                     case "고객주문서" :
+                    $('#rlist2').html(d);
+                    edittext1("고객주문서");
+                    break;
+                     case "주방주문서" :
+                    $('#rlist3').html(d);
+                    edittext1("주방주문서");
+                    break;
+                }
+                reload();
+
+}
+
+
+var _data;
+
+function reload()
+{
+        $.getJSON("{{ url_for('_info_store_') }}", function (json) {
+            _data = json;
+        }).done(function () {
+
+             $('#가게명').text(_data.가게명)
+             $('#대표자').text(_data.대표자)
+             $('#사업자번호').text(_data.사업자등록번호+'-'+_data.사업자번호중+'-'+_data.사업자번호끝)
+             $('#우편번호').text(_data.우편번호)
+             $('#주소').text(_data.주소)
+             $('#상세주소').text(_data.상세주소)
+             $('#이메일').text(_data.이메일)
+             $('#휴대폰').text(_data.휴대폰+'-'+_data.휴대폰2+'-'+_data.휴대폰3)
+             $('#팩스').text(_data.팩스+'-'+_data.팩스2+'-'+_data.팩스3)
+             <!--$('#가게명').text(_data.가게명)-->
+             <!--$('#가게명').text(_data.가게명)-->
+
+            console.log('success');
+
+        })
+}
+
+function addEvent(obj) // Code List의 코드를 Click시 발생하는 이벤트 - Edit Area에 해당 코드를 넣어준다.
+{
+    try
+    {
+        var edit = document.getElementById("edit");
+        if(edit.readOnly) return false;
+        edit.focus();
+        $('#edit').insertAtCaret(obj.innerHTML.trim());
+
+    }
+    catch(E)
+    {
+        alert("[addEvent]" + E.name + " : " + E.message);
+    }
+    var _tab = $('#edit').data('tab');
+    edittext1(_tab);
+}
+
+$("#edit").keydown(function() {
+        $("#edit").keyup(function() {
+        var _tab = $(this).data('tab');
+		edittext1(_tab); });
+	});
+
+    </script>
+{% endblock %}

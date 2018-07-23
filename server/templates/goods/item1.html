@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% from 'macro/form2.html' import TITLE_BLOCK,FORM,FORM_MODAL %}
+    {% from 'macro/table.html' import THEAD,TBODY,GETLIST %}
+
+    {% set HEADER_ = '네트워크' %}
+    {% set URL_ = url_for('_system_network') %}
+
+
+
+    {% from 'macro/form.html'    import title_block %}
+    {% from 'macro/table.html'    import tabling with context %}
+    {% from 'macro/table_list.html' import table_list with context %}
+    {% from 'macro/table_modal.html' import table_modal with context %}
+    {% from 'macro/form.html' import listing_edit with context %}
+
+
+    {% call title_block('상품: 품목','','shopping basket') %}
+
+        {{ table_list('상품: 품목',url_for('_goods_item'),False) }}
+        {{ table_modal('상품: 품목',url_for('_goods_item'),False) }}
+
+
+
+
+    {% endcall %}
+{% endblock %}
+
+
+{#{% if each['name']=='분류' %}#}
+{% if 'name'=='분류' %}
+    <div class="ui fluid selection dropdown" id="dropdown_gl">
+        <i class="dropdown icon"></i>
+        <div class="default text">전체</div>
+        <div class="menu">
+            <div class="item" data-value="전체">전체</div>
+            {% for each_l in gl %}
+                <div class="item" data-value="{{ each_l }}">{{ each_l }}</div>
+            {% endfor %}
+        </div>
+    </div>
+{% else %}
+    {{ each['tag'] if each['tag'] else each['name'] }}
+{% endif %}
+
+
+<script>
+    function juitbl_update2(value) {
+        var for_show = [];
+        for (var i = 0; i < ichae_net.juitbl_data.length; i++) {
+            if (ichae_net.juitbl_data[i].enabled) {
+                if (value == '전체' || ichae_net.juitbl_data[i].분류 == value) {
+                    ichae_net.juitbl_data[i].idx = i;
+                    for_show.push(ichae_net.juitbl_data[i]);
+                }
+            }
+        }
+        ichae_net.juitbl.update(for_show);
+        var juitbl_td = $("#juitbl td");
+        for (var i = 0; i < juitbl_td.length; i++) {
+            if (juitbl_td[i].innerHTML == "O")
+                juitbl_td[i].innerHTML = '<i class="green check circle icon"></i>';
+            else if (juitbl_td[i].innerHTML == "X")
+                juitbl_td[i].innerHTML = '<i class="red ban icon"></i>';
+        }
+    }
+
+
+    function change_dropdown_gl(value) {
+        juitbl_update2(value);
+    }
+</script>

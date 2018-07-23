@@ -1,0 +1,173 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<TABLE cellSpacing=0 cellPadding=0 width="100%" bgColor=#e9e9e9 border=0>
+<TBODY>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=27>
+<TD width=10></TD>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR vAlign=top>
+<TD align=left>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR height=25>
+<TD><IMG src="/image/s_icon.gif"> 코드 <INPUT onkeypress="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','1'); }" class="input1hc imeEng" size=10 name=ProdCD></TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> 상품명 <INPUT onkeypress="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','1'); }" class="input1h imeHan" size=14 name=ProdNM></TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> 바코드 <INPUT onkeypress="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','1'); }" onblur="" class="input1hc imeEng" maxLength=26 name=BarCD></TD>
+<TD width=5></TD>
+<TD><IMG src="/image/s_icon.gif"> 사용여부 <SELECT name=s_USE_YN> <OPTION selected value="">-전체-</OPTION> <OPTION value=Y>Yes</OPTION> <OPTION value=N>No</OPTION></SELECT></TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> 검색줄수 <INPUT onkeypress="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','1'); }" class=input1hr size=5 value=500 name=page_size></TD></TR></TBODY></TABLE></TD>
+<TD align=right>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR height=25>
+<TD>
+<TABLE onclick="document.form1.page_no.value='1'; doAction('search','1')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_black_l_bg.gif"></TD>
+<TD background=/image/btn_black_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>조회</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_black_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=4></TD>
+<TD>
+<TABLE onclick="doAction('down2Excel','1');" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_black_l_bg.gif"></TD>
+<TD background=/image/btn_black_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>엑셀</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_black_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=4></TD>
+<TD>
+<TABLE onclick=fnGetAllByExcel(); style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_black_l_bg.gif"></TD>
+<TD background=/image/btn_black_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>전체상품엑셀</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_black_r_bg.gif"></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR height=25>
+<TD><IMG src="/image/s_icon.gif"> 분류조회
+<DIV style="DISPLAY: none"><INPUT type=hidden name=LCLS_CD><INPUT type=hidden name=MCLS_CD><INPUT type=hidden name=SCLS_CD><INPUT type=hidden name=SIZE_CLS_CD></DIV><INPUT onclick="prod_cls_tree_win('0','S','S92694')" id=cls_text class=read1h style="CURSOR: hand" readOnly size=30 value=전체 name=cls_text>
+<DIV id=span_cls style="BORDER-TOP: 0px; BORDER-RIGHT: 0px; BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; Z-INDEX: 99; DISPLAY: none"></DIV></TD>
+<TD style="DISPLAY: none"><INPUT type=hidden name=BrandCD></TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> 거래처
+ <SPAN id=divAjax_0_s_VENDOR_CD style="OVERFLOW-Y: scroll"><SELECT onchange="ajax_nextload(0,0); " id=SelectObj_0_0 name=s_VENDOR_CD> <OPTION selected value="">-전체-</OPTION> <OPTION value=0001>[매입]테스트거래처</OPTION></SELECT></SPAN>
+
+</TD></TR></TBODY></TABLE></TD></TD>
+<TD width=10></TD></TR>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=1 bgColor=#d6d6d6>
+<TD colSpan=3></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" bgColor=#e9e9e9 border=0>
+<TBODY>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=27>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> 검색줄수를 조정하여 한 페이지에 표시할 품목수를 정하실 수 있습니다. <FONT color=red>(주의)</FONT> 너무 큰 값을 지정하시면 조회시간이 길어지거나 시간초과로 조회되지 않을 수 있습니다. </TD></TD>
+<TD width=10></TD></TR>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=1 bgColor=#d6d6d6>
+<TD colSpan=3></TD></TR></TBODY></TABLE>
+<TABLE height=6 cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD></TD></TR></TBODY></TABLE>
+<TABLE height=30 cellSpacing=1 cellPadding=4 width="100%" bgColor=#aaaaaa border=0 name="">
+<TBODY>
+<TR bgColor=#ffffff vAlign=top>
+<TD height="100%" width="100%">
+ <div data-ax5grid="first-grid" data-ax5grid-config="{
+                        header: { align: 'center' },
+                        page: { display: false  }
+                    }" style="height:500px;"></div>
+
+
+
+</TD></TR></TBODY></TABLE>
+</FORM></BODY></HTML>
+
+
+<script>
+
+var gridList = [];
+var t_gridList = [];
+var pi = [];
+
+var firstGrid = new ax5.ui.grid({
+    target: $('[data-ax5grid="first-grid"]'),
+    columns: [
+        {key: "대분류", label: "대분류", width: 70, align: "center" },
+        {key: "no", label: "No.", width: 70, align: "center" },
+        {key: "코드", label: "상품코드", width: 70, align: "center" },
+        {key: "명", label: "상품명", width: 150, align: "center"},
+        {key: "바코드", label: "바코드", width: 70, align: "center" },
+        {key: "원가단가", label: "원가단가", width: 70, align: "center" },
+        {key: "공급단가", label: "공급단가", width: 70, align: "center" },
+        {key: "판매단가", label: "판매단가", width: 70, align: "center" },
+        {key: "원산지", label: "원산지", width: 70, align: "center" },
+        {key: "주문단위", label: "주문단위", width: 70, align: "center" },
+        {key: "코너", label: "코너", width: 70, align: "center" },
+    ],
+     body: {  mergeCells: ["대분류"] }
+
+});
+
+
+
+$.getJSON("{{ url_for('_goods_itemgroup') }}/"+"{{ store_id }}", function (json) {
+    _data = json;
+}).done(function () {
+
+    for ( i in _data ) {
+        pi[_data[i].i] = _data[i]['분류명']
+    }
+
+
+});
+
+
+$.getJSON("{{ url_for('_goods_item') }}/"+"{{ store_id }}", function (json) {
+    _data = json;
+}).done(function () {
+
+
+
+    for ( i in _data ) {
+      if ( t_gridList[i] == undefined ) { t_gridList[i] = {} }
+
+      t_gridList[i]['대분류'] = pi[_data[i].pi]
+      t_gridList[i]['코드'] = _data[i].i
+      t_gridList[i]['명'] = _data[i]['품목명']
+      t_gridList[i]['판매단가'] = _data[i]['단가']
+
+    }
+
+    t_gridList.sort(function(a,b) {
+                return a['대분류'] < b['대분류'] ? -1 : a['대분류'] > b['대분류'] ? 1 : 0; });
+
+    for ( i in t_gridList) {
+        gridList.push(t_gridList[i])
+        gridList[i].no = parseInt(i) + 1
+    }
+
+
+      firstGrid.setData(gridList);
+
+});
+
+
+</script>
+{% endblock %}
+

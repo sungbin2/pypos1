@@ -1,0 +1,127 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<style>
+
+
+  table {
+    width: 100%;
+    border: 0px;
+  }
+  .box{
+    border: 1px solid #a3a2a2; margin :0.5em 0em 0em 0em;
+  }
+  th {
+    text-align : left;
+    background-color: #e7dfdf;
+  }
+
+</style>
+
+<table class="box" >
+    <tr>
+        <th style="color:white; background-color: #347efd;">
+         요일별
+        </th>
+    </tr>
+    <tr>
+        <td>
+
+            <div class="ui top attached tabular menu">
+              <a class="item active" data-tab="first">주간종합</a>
+              <a class="item " data-tab="2">할인구분별</a>
+              <a class="item " data-tab="3">과면세별</a>
+                <a class="item " data-tab="4">시간대별</a>
+              <a class="item " data-tab="5">상품분류별</a>
+                <a class="item " data-tab="6">상품별</a>
+              <a class="item " data-tab="7">외식테이블</a>
+                <a class="item " data-tab="8">코너별</a>
+              <a class="item " data-tab="9">포스별</a>
+
+            </div>
+
+
+        </td>
+
+    </tr>
+</table>
+
+<div class="ui bottom attached tab segment active  " data-tab="first">
+
+    <iframe name="day1" src="{{ url_for('_earnings_week1') }}" frameborder="0" width="100%" height="600" marginwidth="0" marginheight="0">
+</iframe>
+
+</div>
+
+<!--<div class="ui bottom attached tab segment " data-tab="2">-->
+
+    <!--<iframe name="day2" src="{{ url_for('_earnings_day2') }}" frameborder="0" width="100%" height="600" marginwidth="0" marginheight="0">-->
+<!--</iframe>-->
+
+<!--</div>-->
+
+<!--<div class="ui bottom attached tab segment  " data-tab="3">-->
+
+    <!--<iframe name="day3" src="{{ url_for('_earnings_day3') }}" frameborder="0" width="100%" height="600" marginwidth="0" marginheight="0">-->
+<!--</iframe>-->
+
+<!--</div>-->
+
+<!--<div class="ui bottom attached tab segment " data-tab="4">-->
+
+    <!--<iframe name="day4" src="{{ url_for('_earnings_day4') }}" frameborder="0" width="100%" height="600" marginwidth="0" marginheight="0">-->
+<!--</iframe>-->
+
+<!--</div>-->
+
+<!--<div class="ui bottom attached tab segment  " data-tab="5">-->
+
+    <!--<iframe name="day5" src="{{ url_for('_earnings_day5') }}" frameborder="0" width="100%" height="600" marginwidth="0" marginheight="0">-->
+<!--</iframe>-->
+
+<!--</div>-->
+
+<!--<div class="ui bottom attached tab segment " data-tab="6">-->
+
+    <!--<iframe name="day6" src="{{ url_for('_earnings_day6') }}" frameborder="0" width="100%" height="600" marginwidth="0" marginheight="0">-->
+<!--</iframe>-->
+
+<!--</div>-->
+
+<!--<div class="ui bottom attached tab segment  " data-tab="7">-->
+
+    <!--<iframe name="day7" src="{{ url_for('_earnings_day7') }}" frameborder="0" width="100%" height="600" marginwidth="0" marginheight="0">-->
+<!--</iframe>-->
+
+<!--</div>-->
+
+<!--<div class="ui bottom attached tab segment " data-tab="8">-->
+
+    <!--<iframe name="day8" src="{{ url_for('_earnings_day8') }}" frameborder="0" width="100%" height="600" marginwidth="0" marginheight="0">-->
+<!--</iframe>-->
+
+<!--</div>-->
+
+<!--<div class="ui bottom attached tab segment  " data-tab="9">-->
+
+    <!--<iframe name="day9" src="{{ url_for('_earnings_day9') }}" frameborder="0" width="100%" height="600" marginwidth="0" marginheight="0">-->
+<!--</iframe>-->
+
+<!--</div>-->
+
+<!--<script type="text/javascript" src="{{ url_for('static',filename='weekdata.js') }} "></script>-->
+<script type="text/javascript">
+
+$(function () {
+
+    $('.menu .item').tab();
+
+});
+
+
+
+</script>
+
+
+{% endblock %}
+

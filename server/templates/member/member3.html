@@ -1,0 +1,778 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<style>
+
+
+  table {
+    width: 100%;
+    border: 0px;
+    background-color :#e7dfdf;
+  }
+  .box{
+    border: 1px solid #a3a2a2; margin :0.5em 0em 0em 0em;
+  }
+  th {
+    text-align : left;
+    background-color: #e7dfdf;
+  }
+
+</style>
+
+<HTML><HEAD><META content="IE=5.0000" http-equiv="X-UA-Compatible">
+<TITLE></TITLE>
+<SCRIPT src="/common/js/udfPage.js"></SCRIPT>
+</HEAD>
+<BODY><LINK rel=stylesheet type=text/css href="/common/css/bok.css">
+<SCRIPT src="/common/js/common.js"></SCRIPT>
+
+<SCRIPT src="/common/js/udfMainFrm.js?ver=20180418"></SCRIPT>
+
+<SCRIPT src="/common/js/IBSheetInfo.js"></SCRIPT>
+
+<SCRIPT src="/common/js/IBSheetConfig.js"></SCRIPT>
+
+<SCRIPT src="/common/js/showitem.js"></SCRIPT>
+<!-- <script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script> -->
+<SCRIPT language=javascript> if(top.MainFrm) { set_url('/master/cust/cust023.jsp'); }</SCRIPT>
+
+<SCRIPT language=javascript>
+function fnSessionCheck()
+{
+    if(top.SessionForm
+    && top.SessionForm.user_id)
+    {
+        if(top.SessionForm.user_id.value != "s92694")
+        {
+            alert("같은 세션으로 다른 사용자로 로그인 하였습니다.\n다시 로그인 하시기 바랍니다.");
+            top.close();
+        }
+    }
+    else
+    if(opener
+    && opener.closed == false
+    && opener.top.SessionForm
+    && opener.top.SessionForm.user_id)
+    {
+        if(opener.top.SessionForm.user_id.value != "s92694")
+        {
+            alert("같은 세션으로 다른 사용자로 로그인 하였습니다.\n다시 로그인 하시기 바랍니다.");
+            top.close();
+            opener.top.close();
+        }
+    }
+    else
+    if(opener
+    && opener.closed == false
+    && opener.opener
+    && opener.opener.closed == false
+    && opener.opener.top.SessionForm
+    && opener.opener.top.SessionForm.user_id)
+    {
+        if(opener.opener.top.SessionForm.user_id.value != "s92694")
+        {
+            alert("같은 세션으로 다른 사용자로 로그인 하였습니다.\n다시 로그인 하시기 바랍니다.");
+            top.close();
+            opener.top.close();
+            opener.opener.top.close();
+        }
+    }
+}
+setTimeout("fnSessionCheck()",0);
+
+if(window.name == 'MainFrm' && parent.SessionForm.pass_ch_option.value == '1')
+{
+    showModalDialog('/master/emp/passwd010.jsp?popup_fg=Y'
+                   ,self
+                   ,'dialogWidth:400px;dialogHeight:340px;dialogTop:100px;dialogLeft:100px;status:no;resizable:yes;scroll:no;');
+}
+</SCRIPT>
+
+<SCRIPT src="/common/js/select_box.js"></SCRIPT>
+
+<FORM name=formAJAX action=/common/jsp/select_qry.jsp><INPUT id=select_source type=hidden value=/master/cust/cust023.jsp name=select_source> <INPUT id=select_idx size=100 type=hidden value=2 name=select_idx> <INPUT id=select_objidx size=100 type=hidden value=0 name=select_objidx> <INPUT id=select_name size=100 type=hidden value=CST_CLS_CD name=select_name> <INPUT id=select_value size=100 type=hidden name=select_value> <INPUT id=select_option size=100 type=hidden value=# name=select_option> <INPUT id=select_query size=100 type=hidden value=SP_HCS_CSTCL_T_S01♪C1♪S92694 name=select_query> <INPUT id=select_title size=100 type=hidden name=select_title> <INPUT id=select_change size=100 type=hidden name=select_change> <INPUT id=select_etc size=100 type=hidden name=select_etc> </FORM>
+<SCRIPT src="/common/js/calendar2.js"></SCRIPT>
+
+<DIV id=cal_div2 style="OVERFLOW: hidden; POSITION: absolute; Z-INDEX: 99; DISPLAY: none" name="cal_div2">
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD><IFRAME id=cal_frm1 height=199 marginHeight=0 src="/common/jsp/calendar.html" frameBorder=0 width=162 name=cal_frm1 marginWidth=0 scrolling=no></IFRAME></TD>
+<TD><IFRAME height=197 marginHeight=0 src="/common/jsp/blank.htm" frameBorder=0 width=2 marginWidth=0 scrolling=no></IFRAME></TD>
+<TD><IFRAME id=cal_frm2 height=199 marginHeight=0 src="/common/jsp/calendar.html" frameBorder=0 width=162 name=cal_frm2 marginWidth=0 scrolling=no></IFRAME></TD></TR>
+<TR>
+<TD colSpan=3><IFRAME id=cal_close_frm height=28 marginHeight=0 src="/common/jsp/calendar_close.jsp?target=2" frameBorder=0 width=326 name=cal_close_frm marginWidth=0 scrolling=no></IFRAME></TD></TR></TBODY></TABLE></DIV>
+<SCRIPT src="/common/js/calendar1.js"></SCRIPT>
+
+<DIV id=cal_div1 style="OVERFLOW: hidden; POSITION: absolute; Z-INDEX: 99; DISPLAY: none">
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD><IFRAME id=cal_frm height=199 marginHeight=0 src="/common/jsp/calendar.html" frameBorder=0 width=162 name=cal_frm marginWidth=0 scrolling=no></IFRAME></TD></TR>
+<TR>
+<TD><IFRAME id=cal_close_frm height=28 marginHeight=0 src="/common/jsp/calendar_close.jsp?target=1" frameBorder=0 width=162 name=cal_close_frm marginWidth=0 scrolling=no></IFRAME></TD></TR></TBODY></TABLE></DIV>
+<SCRIPT language=javascript>
+function init_sheet()
+{
+    mySheet1 = fnGetObjectIdName("mySheet1");
+    with(mySheet1)
+    {
+        //SheetWidth = document.body.clientWidth - 25;
+        InitHostInfo(location.hostname, location.port, "");
+        MergeSheet = msHeaderOnly;
+        Editable = true;
+        InitRowInfo( 3, 1, 10);
+        InitColumnInfo(16, 0, 0, true);
+        InitHeadRow(0,"상태||회원번호|회원명|회원등급|전화|핸드폰|단축번호구분|단축번호|전체실적|전체실적|전체실적|전체실적|SMS\n수신여부|이메일\n수신여부|사용\n여부" , true);
+        InitHeadRow(1,"상태||회원번호|회원명|회원등급|전화|핸드폰|단축번호구분|단축번호|적립매출|적립매출|방문일|방문일|SMS\n수신여부|이메일\n수신여부|사용\n여부" , true);
+        InitHeadRow(2,"상태||회원번호|회원명|회원등급|전화|핸드폰|단축번호구분|단축번호|횟수|금액|최초|최종|SMS\n수신여부|이메일\n수신여부|사용\n여부" , false);
+        //HeadRowHeight=35;  //head 높이 설정
+        //ObjId.InitDataProperty( DataRow, DataCol, [DataType], [Width], [DataAlign], [ColMerge], [SaveName], [KeyField]
+        //                      , [CalcuLogic], [DataFormat],[PointCount], [UpdateEdit], [InsertEdit], [EditLen], [FullInput]
+        //                      , [SortEnable],[ToolTip], [AllCheck], [SaveStatus], [FormatFix]
+        var i = 0;
+        InitDataProperty(0, i++, dtHiddenStatus , 0, daCenter, true , "sStatus");
+        InitDataProperty(0, i++, dtCheckBox     , 0, daCenter, true , "sCheckBox");
+        InitDataProperty(0, i++, dtData         , 0, daCenter, true , "CST_NO"                 , false, "", dfEngKey   , 0, false, false);
+        InitDataProperty(0, i++, dtData         , 0, daCenter, true , "CST_NM"                 , false, "", dfEngKey   , 0, false, false);
+        InitDataProperty(0, i++, dtCombo        , 0, daCenter, true , "CST_CLS_CD"             , false, "", dfHanKey   , 0, true , false);
+        InitDataProperty(0, i++, dtData         , 0, daCenter, true , "TEL_NO"                 , false, "", dfEngKey   , 0, false, false);
+        InitDataProperty(0, i++, dtData         , 0, daCenter, true , "HP_NO"                  , false, "", dfEngKey   , 0, false, false);
+        InitDataProperty(0, i++, dtHidden       , 0, daCenter, true , "S_TEL_FG"               , false, "", dfEngKey   , 0, true , false);
+        InitDataProperty(0, i++, dtData         , 0, daCenter, true , "S_TEL_NO"               , false, "", dfEngKey   , 0, true , false);
+        InitDataProperty(0, i++, dtData         , 0, daRight , true , "ACC_SALE_CNT"           , false, "", dfInteger  , 0, false, false);
+        InitDataProperty(0, i++, dtData         , 0, daRight , true , "ACC_SALE_AMT"           , false, "", dfInteger  , 0, false, false);
+        InitDataProperty(0, i++, dtData         , 0, daCenter, true , "F_SALE_DATE"            , false, "", dfDateYmd  , 0, false, false);
+        InitDataProperty(0, i++, dtData         , 0, daCenter, true , "L_SALE_DATE"            , false, "", dfDateYmd  , 0, false, false);
+        InitDataProperty(0, i++, dtCombo        , 0, daCenter, true , "SMS_RECV_YN"            , false, "", dfEngKey   , 0, true , false);
+        InitDataProperty(0, i++, dtCombo        , 0, daCenter, true , "EMAIL_RECV_YN"          , false, "", dfEngKey   , 0, true , false);
+        InitDataProperty(0, i++, dtCombo        , 0, daCenter, true , "USE_YN"                 , false, "", dfEngKey   , 0, true , false);
+
+        InitDataCombo(0,"CST_CLS_CD","기본등급|프리미엄","0|1","","0")
+        InitDataCombo(0,"SMS_RECV_YN","수신|미수신","Y|N","","")
+        InitDataCombo(0,"EMAIL_RECV_YN","수신|미수신","Y|N","","")
+        InitDataCombo(0,"USE_YN","Yes|No","Y|N","","")
+
+        Visible = true;
+    }
+}
+
+function doAction(str, idx)
+{
+    document.form1.S_METHOD.value = str;
+    document.form1.SHEETSEQ.value = idx;
+    sheet_obj = fnGetObjectIdName("mySheet"+idx);
+
+    switch(str)
+    {
+        case "search":
+            if(!valueCheck(document.form1.CST_NO,             '회원번호'        , 'Char'  ,  0,  10)) { return false; }
+            if(!valueCheck(document.form1.CST_NM,             '회원명'          , 'Char'  ,  0,  12)) { return false; }
+            if(!valueCheck(document.form1.CST_CARD_NO,        '회원카드번호'    , 'Char'  ,  0,  40)) { return false; }
+            if(!valueCheck(document.form1.EMAIL_ADDR,         'E-mail'          , 'Char'  ,  0,  30)) { return false; }
+            if(fnDateCheck())  { return false; }
+            //2014-06-12 안동관
+            //조회조건의 전화번호 또는 핸드폰번호를 전부 입력하지 않고 1~2가지만 넣고 조회하는 경우 느려질 수 있다는 경고 메시지창 띄움.
+            if(document.form1.TEL_NO1.value != '' || document.form1.TEL_NO2.value != '' || document.form1.TEL_NO3.value != '')
+            {
+                if(document.form1.TEL_NO1.value != '' && document.form1.TEL_NO2.value != '' && document.form1.TEL_NO3.value != '') {}
+                else
+                {
+                    /*
+                    if(!confirm('전화번호를 전부 입력하지 않는 경우 조회가 느릴 수 있습니다.\n전화번호를 전부 입력 또는 단축번호를 이용하여 조회하실 경우\n더 빠른 조회가 가능합니다.\n계속 조회하시겠습니까?'))
+                    {
+                        return false;
+                    }
+                    */
+                    alert("전화번호를 전부 입력하여 주십시오.");
+                    return false;
+                }
+            }
+            if(document.form1.HP_NO1.value != '' || document.form1.HP_NO2.value != '' || document.form1.HP_NO3.value != '')
+            {
+                if(document.form1.HP_NO1.value != '' && document.form1.HP_NO2.value != '' && document.form1.HP_NO3.value != '') {}
+                else
+                {
+                    /*
+                    if(!confirm('핸드폰번호를 전부 입력하지 않는 경우 조회가 느릴 수 있습니다.\n핸드폰번호를 전부 입력 또는 단축번호를 이용하여 조회하실 경우\n더 빠른 조회가 가능합니다.\n계속 조회하시겠습니까?'))
+                    {
+                        return false;
+                    }
+                    */
+                	alert("핸드폰번호를 전부 입력하여 주십시오.");
+                    return false;
+                }
+            }
+
+            if(!jsSaveName(form1, sheet_obj)) { return false; }
+            var param = FormQueryStringEnc(document.form1, sheet_obj);
+            sheet_obj.DoSearch4Post("ddd.sheetAction",param);
+            sheet_obj.ShowDebugMsg = false;
+            sheet_obj.Visible = true;
+            sheet_obj.CellFont("FontColor", 2,"CST_NO"   , sheet_obj.LastRow,"CST_NO"   ) = sheet_obj.RgbColor(   0,   0, 255);
+
+            var record_hidden = document.form1.CHG_SHOP_CD.checked;
+
+            //조회 끝나고 나서 페이지 인덱스를 생성
+            var sTD = MakePageButton("document.form1.page_no"        // 페이징 인덱스를 관리할 OBJ
+                                    ,"10"                            // 페이지 목록 나열 갯수
+                                    ,document.form1.page_size.value  // 한 페이지당 레코드 겟수
+                                    ,document.form1.page_no.value    // 현재 페이지의 인덱스
+                                    ,sheet_obj.EtcData("total_rows") // 총레코드갯수
+                                    );
+            fnGetObjectIdName('PAGEBUTTON').innerHTML = sTD;
+            record_col(record_hidden,idx);
+            sheet_obj.CheckAll('sCheckBox') = 0;
+            fn_ResizeColWidth(sheet_obj,[0, 25, 60, 80, 60, 90, 90, 0, 55, 55, 55, 70, 70, 50, 50, 30]);
+            break;
+
+        case "save":
+            var param = FormQueryStringEnc(document.form1, sheet_obj);
+            sheet_obj.CheckAll('sCheckBox') = 0;
+            sheet_obj.DoSave("ddd.sheetAction",param,-1,false);
+            if(sheet_obj.EtcData("retMsg") == "0000")
+            {
+                doAction('search', 1);
+            }
+            break;
+    }
+    if(sheet_obj.EtcData("retMsg") && sheet_obj.EtcData("retMsg") != '' && sheet_obj.EtcData("retMsg") != '0000' && str != "down2Excel")
+    {
+        ErrorShow(sheet_obj.EtcData("retMsg")+'╋'+'https://asp.netusys.com/master/cust/cust023.jsp', "popup", "");
+    }
+}
+
+function replaceAll(str, from , to)
+{
+    var idx = str.indexOf(from);
+
+    while( idx > -1)
+    {
+        str = str.replace(from , to);
+        idx = str.indexOf(from);
+    }
+
+    return str;
+}
+/////////////////////////////////////// window.onload ///////////////////////////////////////
+window.onload = function() { setTimeout("onloadFunctions()",0); }; function onloadFunctions()
+{
+    init_sheet(); set_item();
+    fnResize();
+}
+/////////////////////////////////////// window.onresize ///////////////////////////////////////
+window.onresize = function()
+{
+    fnResize();
+}
+/////////////////////////////////////// fnResize ///////////////////////////////////////
+function fnResize()
+{
+    setObjHeight('mySheet1', 40);
+    fn_ResizeColWidth(mySheet1,[0, 25, 60, 80, 60, 90, 90, 0, 55, 55, 55, 70, 70, 50, 50, 30]);
+}
+function fnShowDetail(Row, Col)
+{
+    var sheet_obj = fnGetObjectIdName("mySheet1");
+    var url = "cust020_cst_info.jsp?CST_NO="+sheet_obj.CellValue(Row,'CST_NO');
+    showModalDialog(url,self,'dialogWidth:650px;dialogHeight:680px;dialogTop:10px;dialogLeft:100px;status:no;resizable:no;scroll:no;edge:sunken;');
+}
+function fnBirth()
+{
+    if(document.form1.DATE_FG.value != 'A') fnGetObjectIdName('birth_date').style.display= "inline";
+    else                                    fnGetObjectIdName('birth_date').style.display= "none";
+}
+
+function check_ex(obj)
+{
+    if(obj.checked)
+    {
+        document.form1.EX_CST.value=obj.checked;
+        fnGetObjectIdName('cust_no').style.display = "none";
+        fnGetObjectIdName('cust_nm').style.display = "none";
+    }
+    else
+    {
+        document.form1.EX_CST.value="";
+        fnGetObjectIdName('cust_no').style.display = "inline";
+        fnGetObjectIdName('cust_nm').style.display = "inline";
+    }
+}
+//매장화면에서 우리가맹점 방문회원이 체크이거나
+//본사화면에서 사용매장 선택인 경우 사용매장실적 칼럼 보임
+function record_col(record_hidden,idx)
+{
+    sheet_obj = fnGetObjectIdName("mySheet"+idx);
+    chg_shop  = document.form1.CHG_SHOP_CD.value;
+
+
+    if(record_hidden == true)
+
+    {
+        sheet_obj.ColHidden('USESHOP_ACC_POINT')    = false;
+        sheet_obj.ColHidden('USESHOP_USE_POINT')    = false;
+        sheet_obj.ColHidden('USESHOP_ADJ_POINT')    = false;
+        sheet_obj.ColHidden('USESHOP_ACC_SALE_CNT') = false;
+        sheet_obj.ColHidden('USESHOP_ACC_SALE_AMT') = false;
+        sheet_obj.ColHidden('USESHOP_F_SALE_DATE')  = false;
+        sheet_obj.ColHidden('USESHOP_L_SALE_DATE')  = false;
+    }
+    else
+    {
+        sheet_obj.ColHidden('USESHOP_ACC_POINT')    = true;
+        sheet_obj.ColHidden('USESHOP_USE_POINT')    = true;
+        sheet_obj.ColHidden('USESHOP_ADJ_POINT')    = true;
+        sheet_obj.ColHidden('USESHOP_ACC_SALE_CNT') = true;
+        sheet_obj.ColHidden('USESHOP_ACC_SALE_AMT') = true;
+        sheet_obj.ColHidden('USESHOP_F_SALE_DATE')  = true;
+        sheet_obj.ColHidden('USESHOP_L_SALE_DATE')  = true;
+    }
+}
+function fnDateCheck()
+{
+    var date1 = fnGetObjectIdName("birth_month").value+fnGetObjectIdName("birth_day").value;
+    var date2 = fnGetObjectIdName("birth_month2").value+fnGetObjectIdName("birth_day2").value;
+    if(date1 > date2)
+    {
+        alert("시작일이 종료일보다 클 수 없습니다.\n기간을 다시 설정하여 주십시오.");
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+function fnSet(str)
+{
+    var setValue = fnGetObjectIdName(str).value;
+    sheet_obj = fnGetObjectIdName("mySheet1");
+    var sRow = sheet_obj.FindCheckedRow("sCheckBox");
+    var arrRow = sRow.split("|");
+    sheet_draw(sheet_obj,'false');
+    for(var i = 0; i<arrRow.length-1; i++)
+    {
+        if(str=="CST_CLS_CD")
+        {
+            var setIndex = fnGetObjectIdName(str).selectedIndex;
+
+            if(setIndex>0)
+            {
+                sheet_obj.CellValue(arrRow[i],"CST_CLS_NM") = fnGetObjectIdName(str).options[setIndex].text;
+                sheet_obj.CellValue(arrRow[i], str) = setValue;
+            }
+        }
+        else if(str=="S_TEL_FG")
+        {
+            var TEL_FG  = fnGetObjectIdName(str).value;
+            var TEL_NO  = sheet_obj.CellValue(arrRow[i],"TEL_NO").split("-");
+            var HP_NO   = sheet_obj.CellValue(arrRow[i],"HP_NO").split("-");
+
+            sheet_obj.CellValue(arrRow[i],"S_TEL_FG") = TEL_FG;
+
+            if(TEL_FG=="0")   // 전화번호 우선 : 전화번호 끝자리가 '0000'인 경우 핸드폰 번호 끝자리로 세팅. 핸드폰 번호도 '0000'인경우 그냥 전화번호로 세팅
+            {
+                if(TEL_NO[2]!='0000' || HP_NO[2] == '0000')
+                {
+                    sheet_obj.CellValue(arrRow[i],"S_TEL_FG") = '0';
+                    sheet_obj.CellValue(arrRow[i],"S_TEL_NO") = TEL_NO[2];
+                }
+                else    //전화번호가 0000이면 핸드폰으로 등록
+                {
+                    sheet_obj.CellValue(arrRow[i],"S_TEL_FG") = '1';
+                    sheet_obj.CellValue(arrRow[i],"S_TEL_NO") = HP_NO[2];
+                }
+            }
+            else                // 핸드폰 우선
+            {
+                if(HP_NO[2]!='0000' || TEL_NO[2]=='0000')
+                {
+                    sheet_obj.CellValue(arrRow[i],"S_TEL_FG") = '1';
+                    sheet_obj.CellValue(arrRow[i],"S_TEL_NO") = HP_NO[2];
+                }
+                else    //핸드폰 번호가 0000이면 전화번호로 등록
+                {
+                    sheet_obj.CellValue(arrRow[i],"S_TEL_FG") = '0';
+                    sheet_obj.CellValue(arrRow[i],"S_TEL_NO") = TEL_NO[2];
+                }
+            }
+        }
+        else
+        {
+            sheet_obj.CellValue(arrRow[i], str) = setValue;
+        }
+    }
+    sheet_draw(sheet_obj,'true');
+}
+function openExtend()
+{
+    if(document.form1.openSearch.value == 0)
+    {
+        document.form1.openSearch.value = 1;
+        fnGetObjectIdName('EXTEND').style.display = 'inline';
+    }
+    else if(document.form1.openSearch.value == 1)
+    {
+        document.form1.openSearch.value = 0;
+        fnGetObjectIdName('EXTEND').style.display = 'none';
+    }
+    setObjHeight('TableNm1', 30);
+}
+function fnTelCh(obj)
+{
+    if(obj.value == 'S')   //단축번호
+    {
+        fnGetObjectIdName('span_s_tel_no').style.display = 'inline';
+        fnGetObjectIdName('span_hp_no').style.display    = 'none';
+        fnGetObjectIdName('span_tel_no').style.display   = 'none';
+
+        document.form1.HP_NO1.value = '';
+        document.form1.HP_NO2.value = '';
+        document.form1.HP_NO3.value = '';
+
+        document.form1.TEL_NO1.value = '';
+        document.form1.TEL_NO2.value = '';
+        document.form1.TEL_NO3.value = '';
+    }
+    else if(obj.value == 'H')  //핸드폰번호
+    {
+        fnGetObjectIdName('span_s_tel_no').style.display = 'none';
+        fnGetObjectIdName('span_hp_no').style.display    = 'inline';
+        fnGetObjectIdName('span_tel_no').style.display   = 'none';
+
+        document.form1.S_TEL_NO.value = '';
+
+        document.form1.TEL_NO1.value = '';
+        document.form1.TEL_NO2.value = '';
+        document.form1.TEL_NO3.value = '';
+    }
+    else if(obj.value == 'T')  //전화번호
+    {
+        fnGetObjectIdName('span_s_tel_no').style.display = 'none';
+        fnGetObjectIdName('span_hp_no').style.display    = 'none';
+        fnGetObjectIdName('span_tel_no').style.display   = 'inline';
+
+        document.form1.S_TEL_NO.value = '';
+
+        document.form1.HP_NO1.value = '';
+        document.form1.HP_NO2.value = '';
+        document.form1.HP_NO3.value = '';
+    }
+}
+</SCRIPT>
+
+<SCRIPT for=mySheet1 event=OnClick(Row,Col,Value)>
+    if(Col == SaveNameCol('CST_NO') && Row > 1)    fnShowDetail(Row, Col);
+</SCRIPT>
+
+<SCRIPT for=mySheet1 event="OnMouseMove(Button, Shift, X, Y)">
+if(MouseRow >= HeaderRows && MouseRow < HeaderRows+RowCount)
+{
+    if(MouseCol == SaveNameCol('CST_NO'))   MousePointer = "Hand";
+}
+</SCRIPT>
+
+<SCRIPT>if(parent && parent.HistoryFrm && parent.HistoryFrm.MainFrmPage && parent.HistoryFrm.MainFrmPage.pgm_nm && parent.HistoryFrm.MainFrmPage.pgm_nm.value != '') {document.write("<table width='100%' border='0' cellpadding='0' cellspacing='0' background='/image/title_bg.gif'><tr height='30'><td width='10'></td><td>  <table border='0' cellpadding='0' cellspacing='0'>  <tr>  <td><img src='/image/title_icon.gif'></td>  <td width='10'></td>  <td>    <table border='0' cellpadding='0' cellspacing='0'><tr><td height='3'></td></tr><tr>    <td><font color='#FFFFFF' style='font-size:14px;'><b>"+parent.HistoryFrm.MainFrmPage.pgm_nm.value+"</b></font></td>    </tr></table>  </td>  <td width='40'></td>  <td><span id='span_mymenu'></span></td>  <td width='10'></td>  <td><img src='/image/icon01/btn_column.gif'  onclick='parent.set_menu_item();' style='cursor:hand;'></td>  </tr>  </table></td><td align='right'><font color='#FFFFFF'>"+parent.HistoryFrm.MainFrmPage.pgm_lcls_nm.value+((parent.HistoryFrm.MainFrmPage.pgm_mcls_nm.value == '') ? '' : ' &gt; '+parent.HistoryFrm.MainFrmPage.pgm_mcls_nm.value)+' &gt; '+parent.HistoryFrm.MainFrmPage.pgm_nm.value+"</font></td><td width='10'></td></tr></table>");fnSetPgmId(parent.HistoryFrm.MainFrmPage.pgm_id.value);document.getElementById('span_mymenu').innerHTML = parent.HistoryFrm.getMyMenuStr(parent.HistoryFrm.MainFrmPage.pgm_id.value);}</SCRIPT>
+
+<TABLE cellSpacing=0 cellPadding=0 width="100%" background=/image/title_bg.gif border=0>
+<TBODY>
+<TR height=30>
+<TD width=10></TD>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD><IMG src="/image/title_icon.gif"></TD>
+<TD width=10></TD>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD height=3></TD></TR>
+<TR>
+<TD><FONT style="FONT-SIZE: 14px" color=#ffffff><B>회원정보일괄변경</B></FONT></TD></TR></TBODY></TABLE></TD>
+<TD width=40></TD>
+<TD><SPAN id=span_mymenu><IMG onclick="top.HistoryFrm.fnEditMyMenu('Y','000509')" style="CURSOR: hand" src="https://asp.netusys.com/image/icon01/mymenu_plus.gif"></SPAN></TD>
+<TD width=10></TD>
+<TD><IMG onclick=parent.set_menu_item(); style="CURSOR: hand" src="/image/icon01/btn_column.gif"></TD></TR></TBODY></TABLE></TD>
+<TD align=right><FONT color=#ffffff>회원관리 &gt; 회원정보 &gt; 회원정보일괄변경</FONT></TD>
+<TD width=10></TD></TR></TBODY></TABLE><!-- Search Area -->
+<FORM name=form1><!-- IBFrame 을 위한 변수 선언 (필수)--><INPUT type=hidden value=master.cust.cust023 name=S_CONTROLLER> <INPUT type=hidden name=S_METHOD> <INPUT type=hidden name=S_SAVENAME> <!-- IBFrame 을 위한 변수 선언 (선택)--><INPUT type=hidden name=S_FORWARD> <INPUT type=hidden name=S_TREECOL> <INPUT type=hidden name=SHEETSEQ> <INPUT type=hidden name=SaleYN> <INPUT type=hidden name=ORDERYN> <INPUT type=hidden name=cst_nos> <INPUT type=hidden name=EX_CST> <INPUT type=hidden name=EX_VISIT> <INPUT type=hidden value=1 name=page_no> <INPUT id=list type=hidden name=list> <INPUT type=hidden value=C name=r_ogn_fg> <INPUT type=hidden value=S92694 name=r_ogn_cd> <INPUT type=hidden name=s_DM_RECV_YN> <INPUT type=hidden value=N name=MVIEW_YN>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" bgColor=#e9e9e9 border=0>
+<TBODY>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=27>
+<TD width=10></TD>
+<TD><!-- 툴팁 -->
+<DIV id=tooltip style="POSITION: absolute; DISPLAY: none"></DIV><!-- 조회조건 시작 -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD width="95%" align=left>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD><IMG src="/image/s_icon.gif"> <SELECT name=TERM_FG> <OPTION selected value=A>기간 &nbsp;미사용&nbsp;</OPTION> <OPTION value=I>가입일</OPTION> <OPTION value=S>최종 &nbsp;방문일&nbsp;</OPTION></SELECT> <INPUT onclick=fnShowCal2(1); id=date1_1 class=read1hc style="CURSOR: hand" readOnly size=10 value=2018-07-23 name=date1_1> - <INPUT onclick=fnShowCal2(1); id=date1_2 class=read1hc style="CURSOR: hand" readOnly size=10 value=2018-07-23 name=date1_2> <IMG onclick=fnShowCal2(1); style="CURSOR: hand" src="/image/calendar/calendar_btn.gif"><INPUT id=date_period1 type=hidden value=366 name=date_period1></TD>
+<TD width=5></TD>
+<TD><IMG src="/image/s_icon.gif"> 신규회원 <INPUT onclick="check_ex(this); " type=checkbox value=0 name=EXCST></TD>
+<TD width=5></TD>
+<TD id=cust_no style="DISPLAY: inline"><IMG src="/image/s_icon.gif"> 회원번호 <INPUT onkeypress="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','1'); }" class=input1hc maxLength=8 size=8 name=CST_NO></TD>
+<TD width=5></TD>
+<TD id=cust_nm style="DISPLAY: inline"><IMG src="/image/s_icon.gif"> 회원명 <INPUT onkeypress="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','1'); }" class="input1h imeHan" maxLength=12 size=8 name=CST_NM></TD>
+<TD width=5></TD>
+<TD><IMG src="/image/s_icon.gif"> 등급
+<SCRIPT>
+select_name[0] = new Array();
+select_value[0] = new Array();
+select_option[0] = new Array();
+select_query[0] = new Array();
+select_title[0] = new Array();
+select_change[0] = new Array();
+select_etc[0] = new Array();
+</SCRIPT>
+ <SPAN id=divAjax_0_s_CST_CLS_CD style="OVERFLOW-Y: scroll"><SELECT onchange="ajax_nextload(0,0); " id=SelectObj_0_0 name=s_CST_CLS_CD> <OPTION selected value="">전체</OPTION> <OPTION value=0>기본등급</OPTION> <OPTION value=1>프리미엄</OPTION></SELECT></SPAN>
+<SCRIPT>
+select_name[0][0] = "s_CST_CLS_CD";
+select_title[0][0] = "";
+select_value[0][0] = "";
+select_option[0][0] = "전체";
+select_query[0][0] = "SP_HCS_CSTCL_T_S01♪C1♪S92694";
+select_change[0][0] = "";
+select_etc[0][0] = "";
+</SCRIPT>
+
+<SCRIPT>
+select_step2(0,0);
+</SCRIPT>
+</TD>
+<TD width=5></TD>
+<TD><IMG src="/image/s_icon.gif"> 검색줄수 <INPUT onkeypress="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','1'); }" class=input1hr size=3 value=500 name=page_size></TD></TR></TBODY></TABLE></TD>
+<TD width="5%" align=right>
+<TABLE onclick="document.form1.page_no.value='1'; doAction('search','1'); fnResize();" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_black_l_bg.gif"></TD>
+<TD background=/image/btn_black_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>조회</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_black_r_bg.gif"></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TD>
+<TD width=10></TD></TR>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=1 bgColor=#d6d6d6>
+<TD colSpan=3></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" bgColor=#e9e9e9 border=0>
+<TBODY>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=27>
+<TD width=10></TD>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD width="100%" align=left>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD><IMG src="/image/s_icon.gif"> <SELECT onchange=fnBirth(); name=DATE_FG> <OPTION selected value=A>기념일미사용</OPTION> <OPTION value=I>생일</OPTION> <OPTION value=S>결혼기념일</OPTION></SELECT> <SPAN id=birth_date style="DISPLAY: none">월<SELECT name=birth_month> <OPTION selected value=01>01</OPTION> <OPTION value=02>02</OPTION> <OPTION value=03>03</OPTION> <OPTION value=04>04</OPTION> <OPTION value=05>05</OPTION> <OPTION value=06>06</OPTION> <OPTION value=07>07</OPTION> <OPTION value=08>08</OPTION> <OPTION value=09>09</OPTION> <OPTION value=10>10</OPTION> <OPTION value=11>11</OPTION> <OPTION value=12>12</OPTION></SELECT>일<SELECT name=birth_day> <OPTION selected value=01>01</OPTION> <OPTION value=02>02</OPTION> <OPTION value=03>03</OPTION> <OPTION value=04>04</OPTION> <OPTION value=05>05</OPTION> <OPTION value=06>06</OPTION> <OPTION value=07>07</OPTION> <OPTION value=08>08</OPTION> <OPTION value=09>09</OPTION> <OPTION value=10>10</OPTION> <OPTION value=11>11</OPTION> <OPTION value=12>12</OPTION> <OPTION value=13>13</OPTION> <OPTION value=14>14</OPTION> <OPTION value=15>15</OPTION> <OPTION value=16>16</OPTION> <OPTION value=17>17</OPTION> <OPTION value=18>18</OPTION> <OPTION value=19>19</OPTION> <OPTION value=20>20</OPTION> <OPTION value=21>21</OPTION> <OPTION value=22>22</OPTION> <OPTION value=23>23</OPTION> <OPTION value=24>24</OPTION> <OPTION value=25>25</OPTION> <OPTION value=26>26</OPTION> <OPTION value=27>27</OPTION> <OPTION value=28>28</OPTION> <OPTION value=29>29</OPTION> <OPTION value=30>30</OPTION> <OPTION value=31>31</OPTION></SELECT> ~ 월<SELECT name=birth_month2> <OPTION selected value=01>01</OPTION> <OPTION value=02>02</OPTION> <OPTION value=03>03</OPTION> <OPTION value=04>04</OPTION> <OPTION value=05>05</OPTION> <OPTION value=06>06</OPTION> <OPTION value=07>07</OPTION> <OPTION value=08>08</OPTION> <OPTION value=09>09</OPTION> <OPTION value=10>10</OPTION> <OPTION value=11>11</OPTION> <OPTION value=12>12</OPTION></SELECT>일<SELECT name=birth_day2> <OPTION selected value=01>01</OPTION> <OPTION value=02>02</OPTION> <OPTION value=03>03</OPTION> <OPTION value=04>04</OPTION> <OPTION value=05>05</OPTION> <OPTION value=06>06</OPTION> <OPTION value=07>07</OPTION> <OPTION value=08>08</OPTION> <OPTION value=09>09</OPTION> <OPTION value=10>10</OPTION> <OPTION value=11>11</OPTION> <OPTION value=12>12</OPTION> <OPTION value=13>13</OPTION> <OPTION value=14>14</OPTION> <OPTION value=15>15</OPTION> <OPTION value=16>16</OPTION> <OPTION value=17>17</OPTION> <OPTION value=18>18</OPTION> <OPTION value=19>19</OPTION> <OPTION value=20>20</OPTION> <OPTION value=21>21</OPTION> <OPTION value=22>22</OPTION> <OPTION value=23>23</OPTION> <OPTION value=24>24</OPTION> <OPTION value=25>25</OPTION> <OPTION value=26>26</OPTION> <OPTION value=27>27</OPTION> <OPTION value=28>28</OPTION> <OPTION value=29>29</OPTION> <OPTION value=30>30</OPTION> <OPTION value=31>31</OPTION></SELECT></SPAN> </TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> <SELECT onchange=fnTelCh(this);> <OPTION selected value=S>단축번호</OPTION> <OPTION value=H>핸드폰번호</OPTION> <OPTION value=T>전화번호</OPTION></SELECT> <SPAN id=span_s_tel_no><INPUT onkeypress="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','1'); }" class=input1c maxLength=4 size=4 name=S_TEL_NO></SPAN> <SPAN id=span_hp_no style="DISPLAY: none"><INPUT class=input1c maxLength=4 size=4 name=HP_NO1>- <INPUT onkeypress="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','1'); }" class=input1c maxLength=4 size=4 name=HP_NO2>- <INPUT onkeypress="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','1'); }" class=input1c maxLength=4 size=4 name=HP_NO3> </SPAN><SPAN id=span_tel_no style="DISPLAY: none"><INPUT class=input1c maxLength=4 size=4 name=TEL_NO1>- <INPUT onkeypress="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','1'); }" class=input1c maxLength=4 size=4 name=TEL_NO2>- <INPUT onkeypress="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','1'); }" class=input1c maxLength=4 size=4 name=TEL_NO3> </SPAN></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+<TABLE style="MARGIN-BOTTOM: 2px; MARGIN-TOP: 2px" cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD align=left>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD><IMG src="/image/s_icon.gif"> 성별 <SELECT name=SEX_FG> <OPTION selected value=A>전체</OPTION> <OPTION value=F>여</OPTION> <OPTION value=M>남</OPTION></SELECT></TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> 결혼 <SELECT name=WEDDING_YN> <OPTION selected value=A>전체</OPTION> <OPTION value=N>미혼</OPTION> <OPTION value=Y>기혼</OPTION></SELECT> </TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> E-mail <INPUT class=input1 onkeydown="if(event.keyCode == 13) doAction('search','1');" maxLength=30 size=25 name=EMAIL_ADDR></TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> 이메일수신 <SELECT name=s_EMAIL_RECV_YN> <OPTION selected value="">전체</OPTION> <OPTION value=N>미수신</OPTION> <OPTION value=Y>수신</OPTION></SELECT></TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> SMS수신 <SELECT name=s_SMS_RECV_YN> <OPTION selected value="">전체</OPTION> <OPTION value=N>미수신</OPTION> <OPTION value=Y>수신</OPTION></SELECT></TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> 사용여부 <SELECT name=s_USE_YN> <OPTION selected value="">전체</OPTION> <OPTION value=N>No</OPTION> <OPTION value=Y>Yes</OPTION></SELECT></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TD>
+<TD width=10></TD></TR>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=1 bgColor=#d6d6d6>
+<TD colSpan=3></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" bgColor=#e9e9e9 border=0>
+<TBODY>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=27>
+<TD width=10></TD>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD width="100%" align=left>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD><IMG src="/image/s_icon.gif"> <SELECT name=SALE_FG> <OPTION selected value=C>적립매출횟수</OPTION> <OPTION value=A>적립매출금액</OPTION></SELECT> <INPUT onfocus="RmComma(this); select();" onblur=AddComma(this) class=input1c maxLength=11 size=11 name=HP_SALE1> ~ <INPUT onfocus="RmComma(this); select();" onblur=AddComma(this) class=input1c maxLength=11 size=11 name=HP_SALE2> </TD>
+<TD><INPUT type=hidden name=INS_SHOP_CD></TD>
+<TD><INPUT type=hidden name=CHG_SHOP_CD></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD width="90%" align=left>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR>
+<TD><IMG src="/image/s_icon.gif"> <SELECT name=PNT_FG> <OPTION value=AC>적립 &nbsp;포인트</OPTION> <OPTION selected value=A>가용 &nbsp;포인트</OPTION> <OPTION value=U>사용 &nbsp;포인트</OPTION> <OPTION value=C>조정 &nbsp;포인트</OPTION></SELECT> <INPUT onfocus="RmComma(this); select();" onblur=AddComma(this) class=input1c maxLength=11 size=11 name=HP_CARD1> ~ <INPUT onfocus="RmComma(this); select();" onblur=AddComma(this) class=input1c maxLength=11 size=11 name=HP_CARD2> </TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> 카드사용
+<SCRIPT>
+select_name[1] = new Array();
+select_value[1] = new Array();
+select_option[1] = new Array();
+select_query[1] = new Array();
+select_title[1] = new Array();
+select_change[1] = new Array();
+select_etc[1] = new Array();
+</SCRIPT>
+ <SPAN id=divAjax_1_CST_CARD_USE_FG style="OVERFLOW-Y: scroll"><SELECT onchange="ajax_nextload(1,0); " id=SelectObj_1_0 name=CST_CARD_USE_FG> <OPTION selected value="">전체</OPTION> <OPTION value=0>정상</OPTION> <OPTION value=1>중지</OPTION> <OPTION value=2>재발급중</OPTION> <OPTION value=Y>정상</OPTION></SELECT></SPAN>
+<SCRIPT>
+select_name[1][0] = "CST_CARD_USE_FG";
+select_title[1][0] = "";
+select_value[1][0] = "";
+select_option[1][0] = "전체";
+select_query[1][0] = "SP_CCD_CODEM_T_S01♪C1♪025";
+select_change[1][0] = "";
+select_etc[1][0] = "";
+</SCRIPT>
+
+<SCRIPT>
+select_step2(1,0);
+</SCRIPT>
+</TD>
+<TD width=10></TD>
+<TD><IMG src="/image/s_icon.gif"> 회원카드번호 <INPUT class=input1h maxLength=40 size=16 name=CST_CARD_NO></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TD>
+<TD width=10></TD></TR>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=1 bgColor=#d6d6d6>
+<TD colSpan=3></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" bgColor=#e9e9e9 border=0>
+<TBODY>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=27>
+<TD width=10></TD>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR height=26>
+<TD><IMG src="/image/s_icon.gif"> 회원등급
+<SCRIPT>
+select_name[2] = new Array();
+select_value[2] = new Array();
+select_option[2] = new Array();
+select_query[2] = new Array();
+select_title[2] = new Array();
+select_change[2] = new Array();
+select_etc[2] = new Array();
+</SCRIPT>
+ <SPAN id=divAjax_2_CST_CLS_CD style="OVERFLOW-Y: scroll"><SELECT onchange="ajax_nextload(2,0); " id=SelectObj_2_0 name=CST_CLS_CD> <OPTION selected value="">-선택-</OPTION> <OPTION value=0>기본등급</OPTION> <OPTION value=1>프리미엄</OPTION></SELECT></SPAN>
+<SCRIPT>
+select_name[2][0] = "CST_CLS_CD";
+select_title[2][0] = "";
+select_value[2][0] = "";
+select_option[2][0] = "#";
+select_query[2][0] = "SP_HCS_CSTCL_T_S01♪C1♪S92694";
+select_change[2][0] = "";
+select_etc[2][0] = "";
+</SCRIPT>
+
+<SCRIPT>
+select_step2(2,0);
+</SCRIPT>
+</TD>
+<TD>
+<TABLE onclick="fnSet('CST_CLS_CD')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>적용</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=5></TD>
+<TD><IMG src="/image/s_icon.gif"> 단축번호 <SELECT name=S_TEL_FG> <OPTION selected value="">-선택-</OPTION> <OPTION value=0>전화번호 우선</OPTION> <OPTION value=1>핸드폰 우선</OPTION></SELECT></TD>
+<TD>
+<TABLE onclick="fnSet('S_TEL_FG')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>적용</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=5></TD>
+<TD><IMG src="/image/s_icon.gif"> SMS수신 <SELECT name=SMS_RECV_YN> <OPTION selected value=Y>Yes</OPTION> <OPTION value=N>No</OPTION></SELECT></TD>
+<TD>
+<TABLE onclick="fnSet('SMS_RECV_YN')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>적용</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=5></TD>
+<TD><IMG src="/image/s_icon.gif"> 이메일수신 <SELECT name=EMAIL_RECV_YN> <OPTION selected value=Y>Yes</OPTION> <OPTION value=N>No</OPTION></SELECT></TD>
+<TD>
+<TABLE onclick="fnSet('EMAIL_RECV_YN')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>적용</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=5></TD>
+<TD><IMG src="/image/s_icon.gif"> 사용여부 <SELECT name=USE_YN> <OPTION selected value=Y>Yes</OPTION> <OPTION value=N>No</OPTION></SELECT></TD>
+<TD>
+<TABLE onclick="fnSet('USE_YN')" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
+<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>적용</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD>
+<TD width=5></TD>
+<TD>
+<TABLE onclick="doAction('save',1)" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TBODY>
+<TR vAlign=middle>
+<TD><IMG id=btn_l_bg src="/image/btn_black_l_bg.gif"></TD>
+<TD background=/image/btn_black_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>저장</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
+<TD><IMG id=btn_r_bg src="/image/btn_black_r_bg.gif"></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><!-- 조회조건 끝 --></TD></TD>
+<TD width=10></TD></TR>
+<TR height=2>
+<TD colSpan=3></TD></TR>
+<TR height=1 bgColor=#d6d6d6>
+<TD colSpan=3></TD></TR></TBODY></TABLE>
+<TABLE height=6 cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR>
+<TD></TD></TR></TBODY></TABLE>
+<TABLE id=TableNm1 height=30 cellSpacing=1 cellPadding=4 width="100%" bgColor=#aaaaaa border=0 name="TableNm1">
+<TBODY>
+<TR bgColor=#ffffff vAlign=top>
+<TD height="100%" width="100%">
+<SCRIPT>makeIBSheet('mySheet1');</SCRIPT>
+
+<OBJECT id=mySheet1 style="HEIGHT: 337px" name=mySheet1 codeBase="/common/object/IBSheet3.CAB#version=3,4,0,387" classid=CLSID:341FBC5F-2AE4-41B8-BFE5-A03170569A27 width="100%" height="100%"><PARAM NAME="_ExtentX" VALUE="25982"><PARAM NAME="_ExtentY" VALUE="8916"><PARAM NAME="ConfigXml" VALUE="/common/gridstyle/GridConfig.xml"><PARAM NAME="Version" VALUE="3.4.0.387"></OBJECT>
+<SCRIPT>document.getElementById('mySheet1').SetExcelColDialog(0);</SCRIPT>
+</TD></TR></TBODY></TABLE>
+<DIV id=PAGEBUTTON></DIV></FORM></BODY></HTML>
+
+{% endblock %}
