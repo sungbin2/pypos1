@@ -194,7 +194,7 @@ def _earnings_day_(_id,dates,datee):
                         cnt_days['일자별'][d]['영수증별'][r]['상품'][g]['판매이익'] += (each3.공급가 + each3.면세)
                         cnt_days['일자별'][d]['영수증별'][r]['상품'][g]['영수건수'] += 1
 
-            
+
         return c.jsonify(cnt_days)
 
     c.abort(404)
