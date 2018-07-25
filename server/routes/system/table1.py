@@ -66,8 +66,8 @@ def _system_table(group_id):
 
 @app.route('/system/table2', methods=['GET', 'POST'])
 def _system_table2():
-    shop_id = c.session['store']
-    only = c.get_settings(orm, shop_id)
+    store_id = c.session['store']
+    only = c.get_settings(orm, store_id)
 
     if c.is_GET():
         if c.is_json():
@@ -78,9 +78,11 @@ def _system_table2():
                                      TABLEBORDER_WIDTH=c.TABLEBORDER_WIDTH, TABLEBORDER_HEIGHT=c.TABLEBORDER_HEIGHT, )
     elif c.is_POST():
         with orm.session_scope() as ss:  # type:c.typeof_Session
-            next_one = c.newitem_web(orm.setting, c.session)
+            next_one = c.newitem_web(orm.settings, c.session)
             next_one.j = only.j.copy()
+            print(c.data_POST())
             for each in c.data_POST():
+                print(each)
                 next_one.j['테이블'] = c.json.loads(each)
             ss.add(next_one)
             return 'modified'

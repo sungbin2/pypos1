@@ -33,6 +33,9 @@
                 <tr>
                     <th >
                     매출종합
+                        <div style="float:right;">
+                            <button class="btn" id="excel1" style="margin-top: 8">엑셀</button>
+                        </div>
                     </th>
                 </tr>
                 <tr>
@@ -50,6 +53,9 @@
                 <tr>
                     <th>
                         결제수단별매출
+                        <div style="float:right;">
+                            <button class="btn" id="excel2" style="margin-top: 8">엑셀</button>
+                        </div>
                     </th>
                 </tr>
                 <tr>
@@ -59,7 +65,7 @@
                         showLineNumber: true,
                          page: { display: false  },
                          sortable: true,
-                    }" style="height: 250px;"></div>
+                    }" style="height: 230px;"></div>
                     </td>
 
                 </tr>
@@ -68,6 +74,9 @@
                 <tr>
                     <th>
                     회원포인트 적립/사용현황
+                        <div style="float:right;">
+                            <button class="btn" id="excel3" style="margin-top: 8">엑셀</button>
+                        </div>
                     </th>
                 </tr>
                 <tr>
@@ -86,11 +95,14 @@
 
     </tr>
 </table>
-<table class="dayall" style="border :1px solid white; width : 60%">
-<table class="box" style="width : 60%" >
+<!--<table class="dayall" style="border :1px solid white; width : 60%">-->
+<table class="box" style="width : 59%" >
     <tr>
         <th>
          상품별 매출현황
+            <div style="float:right;">
+                <button class="btn" id="excel4" style="margin-top: 8">엑셀</button>
+            </div>
         </th>
     </tr>
     <tr>
@@ -100,17 +112,17 @@
                         showLineNumber: true,
                          page: { display: false  },
                          sortable: true,
-                    }" style="height: 350px;"></div>
+                    }" style="height: 320px;"></div>
         </td>
 
     </tr>
 
 </table>
-<table class="box" style="width : 60%" >
+<table class="box" style="width : 59%" >
 
     <tr>
         <td>
-            <div class="chart" style="height: 200px;">
+            <div class="chart" style="height: 220px;">
                 <canvas id="myChart" height="30vh" width="100vw"></canvas>
 
             </div>
@@ -119,7 +131,7 @@
     </tr>
 
 </table>
-</table>
+
 <script type="text/javascript" src="{{ url_for('static',filename='daypicker.js') }} "></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
@@ -191,6 +203,19 @@ function load() {
 
             });
 
+        $('#excel1').click(function () {
+            Grid1.exportExcel("grid-to-excel.xls")
+        })
+         $('#excel2').click(function () {
+            Grid2.exportExcel("grid-to-excel.xls")
+        })
+         $('#excel3').click(function () {
+            Grid3.exportExcel("grid-to-excel.xls")
+        })
+         $('#excel4').click(function () {
+            Grid4.exportExcel("grid-to-excel.xls")
+        })
+
         $('#load').click(function () {
 
         data0 = [];
@@ -247,6 +272,10 @@ function load() {
             Grid1.setData(gridList1);
             Grid2.setData(gridList2);
             Grid3.setData(gridList3);
+
+            gridList4.sort(function(b,a) {
+                return a['실매출'] < b['실매출'] ? -1 : a['실매출'] > b['실매출'] ? 1 : 0; });
+
             Grid4.setData(gridList4);
 
             if( gridList1.length == 0 ) {
@@ -258,6 +287,7 @@ function load() {
 
             data = {
                 datasets: [{
+                    label: '상품별 매출현황',
                     data: [],
                     backgroundColor: [
                     'rgba(255, 99, 132)',

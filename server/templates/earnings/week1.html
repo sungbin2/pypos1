@@ -13,6 +13,10 @@
                     <span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
                 </div>
                 <button class="btn" id="load" style=" margin-top: 8">조회</button>
+                <div style="float:right;">
+                    <button class="btn" id="excel" style="margin-top: 8">엑셀</button>
+                </div>
+
             </div>
         </div>
         </th>
@@ -157,7 +161,9 @@ function load() {
 
             ]]
     });
-
+    $('#excel').click(function () {
+        firstGrid.exportExcel("grid-to-excel.xls")
+    })
 
 
     $('#load').click(function () {

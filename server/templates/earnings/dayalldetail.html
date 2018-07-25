@@ -30,6 +30,9 @@
     <tr>
         <th >
         당일매출 집계내역  ( 결제합계 = 가액 + 부가세 + 봉사료 - 에누리 + TaxRefund환급수수료 )
+            <div style="float:right;">
+                <button class="btn" id="excel1" style="margin-top: 8">엑셀</button>
+            </div>
         </th>
     </tr>
     <tr>
@@ -48,6 +51,9 @@
     <tr>
         <th>
             당일매출 상세내역 ( 결제합계 = 가액 + 부가세 + 봉사료 - 에누리 + TaxRefund환급수수료 )
+            <div style="float:right;">
+                <button class="btn" id="excel2" style="margin-top: 8">엑셀</button>
+            </div>
         </th>
     </tr>
     <tr>
@@ -204,6 +210,12 @@ var  gridList1 = [];var  gridList2 = [];
 
         reset()
 
+        $('#excel1').click(function () {
+            Grid1.exportExcel("grid-to-excel.xls")
+        })
+         $('#excel2').click(function () {
+            Grid2.exportExcel("grid-to-excel.xls")
+        })
 
         if ( $("#hide").is(":checked")  == false ) {
             remove(gridList1,data1,foot1)

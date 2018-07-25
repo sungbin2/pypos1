@@ -131,8 +131,9 @@ def get_settings(orm, store_id):
         only = ss.query(orm.setting) \
             .filter_by(s=store_id) \
             .filter_by(isdel=X) \
-            .order_by(ss.desc(orm.setting.s)) \
+            .order_by(ss.desc(orm.setting.i)) \
             .first()
+
         return OBJ_cp(only)
     
 def get_settings1(orm, store_id):

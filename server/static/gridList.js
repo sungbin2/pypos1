@@ -8,7 +8,6 @@ function loaddata() {
     for( i in _data['일자별'] ) {
         data0.push(_data['일자별'][i]);
     }
-    console.log(data0)
     for( i in data0) {
 
         n = parseInt(data0[i]['총거래액']) / parseInt(data0[i]['영수건수'])

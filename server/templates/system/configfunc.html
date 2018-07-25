@@ -26,7 +26,7 @@
 <table class="func" style="width: 54%;  " >
     <tr>
         <th>
-         기능 <button  style="float: right" onclick="save()">저장</button>
+         기능 <button id="btn_reset" >포스기능 일괄셋팅</button><button  style="float: right" onclick="save()">저장</button>
         </th>
     </tr>
     <tr>
@@ -43,6 +43,9 @@
 
 </table>
   </table>
+
+<script src="{{ url_for('static',filename='FUNC.js') }}"></script>
+<script src="{{ url_for('static',filename='funcreset.json') }}"></script>
 <script type="text/javascript">
 
 
@@ -189,6 +192,28 @@ function save() {
 
 }
 
+$('#btn_reset').click(function () {
+     var bool = confirm("모든 포스의 기능이 관리자가 설정한 값으로 세팅됩니다. \n매장환경및 포스환경설정값에 따라 포스기능이 상이할 수 있습니다.\n계속하시겠습니까?")
+     if(bool){
+
+            $.ajax({
+                method: "POST",
+                url: (_url + '/' + id ),
+                data: JSON.stringify(_datareset)
+            })
+                .done(function (msg) {
+                    if (msg == 'modified') {
+                        alert("저장되었습니다");
+                        load();
+                        <!--window.location.replace(_url);-->
+                          }
+                    else
+                        alert("alert:" + msg);
+            });
+
+     }else { alert("취소하셨습니다.")  }
+
+});
 
 </script>
 
