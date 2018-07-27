@@ -22,7 +22,7 @@ def _goods_item_(_id):
             l = []
             with orm.session_scope() as ss:  # type:c.typeof_Session
                 q1 = ss.query(orm.상품_품목) \
-                    .filter_by(s=c.session['store']) \
+                    .filter_by(s=store_id) \
                     .filter_by(isdel='X') \
                     .all()
                 for x in q1:
@@ -57,11 +57,8 @@ def _goods_item_(_id):
 
                 for x in only:
 
-                    print(x.i, c.data_POST()['i'])
                     if int(x.i) == int(c.data_POST()['i']):
-                        print(c.data_POST()['프린터j'])
                         for k, v in c.data_POST().items():
-                            print(k,v)
                             if hasattr(x, k) and k != 'i':
                                 if getattr(x, k) != v:
                                     print(k, 'is changed')

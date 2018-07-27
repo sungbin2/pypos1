@@ -4,6 +4,10 @@
 
 {% block body %}
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+
+
 <script src="{{ url_for('static',filename='weather.json') }}"></script>
 
 
@@ -156,10 +160,18 @@ var callbackFunction = function(data) {
 }
 </script>
 <script src="https://query.yahooapis.com/v1/public/yql?q=select item.forecast from weather.forecast where u='c' and woeid in (select woeid from geo.places(1) where text='seoul')&format=json&callback=callbackFunction"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
 <script type="text/javascript" src="{{ url_for('static',filename='gridList.js') }} "></script>
 <script>
+
+window.chartColors = {
+	red: 'rgb(255, 99, 132)',
+	orange: 'rgb(255, 159, 64)',
+	yellow: 'rgb(255, 205, 86)',
+	green: 'rgb(75, 192, 192)',
+	blue: 'rgb(54, 162, 235)',
+	purple: 'rgb(153, 102, 255)',
+	grey: 'rgb(201, 203, 207)',
+};
 
 
 var firstGrid
@@ -227,15 +239,16 @@ function fnLoadChart(n) {
                         label: '일자별 매출내역(1주간)',
                         data: data1,
                         backgroundColor: [
-                            'rgba(255, 99, 132)',
-                            'rgba(54, 162, 235)',
-                            'rgba(255, 206, 86)',
-                            'rgba(75, 192, 192)',
-                            'rgba(153, 102, 255)',
-                            'rgba(255, 159, 64)',
-                            'rgba(255, 206, 86)',
-                             'rgba(54, 162, 235)',
+                            window.chartColors.red,
+                            window.chartColors.orange,
+                            window.chartColors.yellow,
+                            window.chartColors.green,
+                            window.chartColors.blue,
+                            window.chartColors.purple,
+                            window.chartColors.red,
+                            window.chartColors.orange,
                         ],
+
                 }],
                 labels: []
             }
@@ -251,14 +264,8 @@ function fnLoadChart(n) {
             $("canvas").remove();
             $("div.chart").append('<canvas id="myChart" height="30vh" width="70vw"></canvas>');
 
-            var ctx = document.getElementById("myChart");
-            var myChart = new Chart(ctx, {
-                            type: 'bar',
-                            data: data,
-                            options: {
-                                responsive: true
-                            }
-                        });
+            chartdraw()
+
             break;
         case 'prod_week':
             firstGrid = new ax5.ui.grid({
@@ -274,14 +281,14 @@ function fnLoadChart(n) {
                         label: '상품별 Top10 매출내역(1주간)',
                         data: data1,
                         backgroundColor: [
-                            'rgba(255, 99, 132)',
-                            'rgba(54, 162, 235)',
-                            'rgba(255, 206, 86)',
-                            'rgba(75, 192, 192)',
-                            'rgba(153, 102, 255)',
-                            'rgba(255, 159, 64)',
-                            'rgba(255, 206, 86)',
-                             'rgba(54, 162, 235)',
+                            window.chartColors.red,
+                            window.chartColors.orange,
+                            window.chartColors.yellow,
+                            window.chartColors.green,
+                            window.chartColors.blue,
+                            window.chartColors.purple,
+                            window.chartColors.red,
+                            window.chartColors.orange,
                         ],
                 }],
                 labels: []
@@ -317,13 +324,7 @@ function fnLoadChart(n) {
             $("div.chart").append('<canvas id="myChart" height="30vh" width="70vw"></canvas>');
 
             var ctx = document.getElementById("myChart");
-            var myChart = new Chart(ctx, {
-                            type: 'bar',
-                            data: data,
-                            options: {
-                                responsive: true
-                            }
-                        });
+            chartdraw()
             break;
         case 'week_month':
 
@@ -372,14 +373,14 @@ function fnLoadChart(n) {
                             label: '요일별 매출내역('+dates+'~'+datee+')',
                             data: data1,
                             backgroundColor: [
-                                'rgba(255, 99, 132)',
-                                'rgba(54, 162, 235)',
-                                'rgba(255, 206, 86)',
-                                'rgba(75, 192, 192)',
-                                'rgba(153, 102, 255)',
-                                'rgba(255, 159, 64)',
-                                'rgba(255, 206, 86)',
-                                 'rgba(54, 162, 235)',
+                                window.chartColors.red,
+                                window.chartColors.orange,
+                                window.chartColors.yellow,
+                                window.chartColors.green,
+                                window.chartColors.blue,
+                                window.chartColors.purple,
+                                window.chartColors.red,
+                                window.chartColors.orange,
                             ],
                     }],
                     labels: []
@@ -396,14 +397,7 @@ function fnLoadChart(n) {
                 $("canvas").remove();
                 $("div.chart").append('<canvas id="myChart" height="30vh" width="70vw"></canvas>');
 
-                var ctx = document.getElementById("myChart");
-                var myChart = new Chart(ctx, {
-                                type: 'bar',
-                                data: data,
-                                options: {
-                                    responsive: true
-                                }
-                });
+                chartdraw()
             });
             break;
 
@@ -414,7 +408,16 @@ function fnLoadChart(n) {
 
 }
 
-
+function chartdraw() {
+    var ctx = document.getElementById("myChart").getContext('2d');;
+    var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: data,
+                    options: {
+                        responsive: true
+                    }
+                });
+}
 
 </script>
 

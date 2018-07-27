@@ -1,16 +1,15 @@
 <script>window.ichae_net = {};</script>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"/>
-
+<script src="{{ url_for('static',filename='open/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ url_for('static',filename='open/jquery-ui.min.js') }}"></script>
+<script src="{{ url_for('static',filename='open/semantic.min.js') }}"></script>
 <!--[if lte IE 9]>
 <script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.0/jquery.xdomainrequest.min.js'></script>
 <![endif]-->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.0/semantic.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.0/semantic.min.css"/>
+<link rel="stylesheet" href="{{ url_for('static',filename='open/jquery-ui.css') }}"/>
+<link rel="stylesheet" href="{{ url_for('static',filename='open/semantic.min.css') }}"/>
 
 
 
@@ -35,19 +34,23 @@
 <script src="{{ url_for('static',filename='String.Format.js') }}"></script>
 
 
-<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/ax5ui/ax5ui-grid/master/dist/ax5grid.css">
-<script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5core/master/dist/ax5core.min.js"></script>
-<script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5ui-grid/master/dist/ax5grid.min.js"></script>
-<script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5ui-modal/master/dist/ax5modal.min.js"></script>
-<script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5ui-mask/master/dist/ax5mask.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/ax5ui/ax5ui-modal/master/dist/ax5modal.css" />
-<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/ax5ui/ax5ui-mask/master/dist/ax5mask.css">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='open/ax5/ax5grid.css') }}">
+<script type="text/javascript" src="{{ url_for('static',filename='open/ax5/ax5core.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='open/ax5/ax5grid.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='open/ax5/ax5modal.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='open/ax5/ax5mask.min.js') }}"></script>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='open/ax5/ax5modal.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='open/ax5/ax5mask.css') }}">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdn.rawgit.com/ax5ui/ax5ui-calendar/master/dist/ax5calendar.css">
-<link rel="stylesheet" href="https://cdn.rawgit.com/ax5ui/ax5ui-picker/master/dist/ax5picker.css">
-<script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5ui-calendar/master/dist/ax5calendar.min.js"></script>
-<script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5ui-formatter/master/dist/ax5formatter.min.js"></script>
-<script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5ui-picker/master/dist/ax5picker.min.js"></script>
+<link rel="stylesheet" href="{{ url_for('static',filename='open/ax5/ax5calendar.css') }}">
+<link rel="stylesheet" href="{{ url_for('static',filename='open/ax5/ax5picker.css') }}">
+<script type="text/javascript" src="{{ url_for('static',filename='open/ax5/ax5grid.css') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='open/ax5/ax5calendar.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='open/ax5/ax5picker.min.js') }}"></script>
+
+
+<script src="{{ url_for('static',filename='open/chart/chart.js') }}"></script>
+<script src="{{ url_for('static',filename='open/chart/moment.js') }}"></script>
 
 <link rel="stylesheet" href="{{ url_for('static',filename='griddata.css') }} ">
 

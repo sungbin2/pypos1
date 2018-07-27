@@ -62,6 +62,7 @@ import server.routes.member.memberdata
 free_for_all = [
     '_login',
     '_getsession',
+	'_autosession',
 ]
 
 
@@ -98,6 +99,30 @@ def _getsession():
                 rtn = 'FAILED'
             else:
                 c.account_session(orm, account, c.session)
+            return rtn
+
+@app.route('/autosession', methods=['GET'])
+def _autosession():
+    if c.is_GET():
+        with orm.session_scope() as ss:  # type:c.typeof_Session
+            rtn = 'SUCCESS'
+            d = c.data_GET()
+            ip = c.request.remote_addr
+            print(ip)
+            print(d)
+            id = d['id']
+            pw = d['pw']
+
+            account = ss.query(orm.account) \
+                .filter_by(아이디=id) \
+                .first()
+            if account is None:
+                rtn = 'FAILED'
+            elif account is None:
+                rtn = 'FAILED'
+            else:
+                c.account_session(orm, account, c.session)
+                return c.redirect(c.url_for('_dashboard'))
             return rtn
 
 

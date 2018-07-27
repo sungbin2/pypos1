@@ -17,4 +17,4 @@ _mailinglist/*
 .idea/
 
 *.idea/*
-./server/main_.py
+/.idea/*
