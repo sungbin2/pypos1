@@ -59,6 +59,8 @@ import server.routes.earnings.table
 import server.routes.member.member
 import server.routes.member.memberdata
 
+import server.routes.board.board
+
 free_for_all = [
     '_login',
     '_getsession',

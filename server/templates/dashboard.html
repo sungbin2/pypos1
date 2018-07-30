@@ -4,8 +4,6 @@
 
 {% block body %}
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
 
 
 <script src="{{ url_for('static',filename='weather.json') }}"></script>
@@ -207,124 +205,151 @@ var gridList1 = [];
 var data = {};
 var data1 = [];
 
-
 $.getJSON("{{ url_for('_earnings_day' ) }}/"+"{{ store_id }}&"+dates+"&"+datee, function (json) {
-    _data = json;
+				_data = json;
 
-}).done(function () {
+			}).done(function () {
+			
+				fnLoadChart('day_week')
 
-
-    fnLoadChart('day_week')
-
-});
+			});
 
 function fnLoadChart(n) {
 
     switch (n) {
         case 'day_week':
-
-            loaddata();
-
-            firstGrid = new ax5.ui.grid({
-                target: $('[data-ax5grid="first-grid"]'),
-                columns: [
-                    {key: "일자", label: "일자", width: 150, align: "center" },
-                    {key: "요일", label: "요일", width: 50, align: "center" },
-                    {key: "총매출", label: "매출액" ,width: 150 , formatter: "money",align: "right"},
-                ]
-            });
-            data1 = [];
-            data = {
-                datasets: [{
-                        label: '일자별 매출내역(1주간)',
-                        data: data1,
-                        backgroundColor: [
-                            window.chartColors.red,
-                            window.chartColors.orange,
-                            window.chartColors.yellow,
-                            window.chartColors.green,
-                            window.chartColors.blue,
-                            window.chartColors.purple,
-                            window.chartColors.red,
-                            window.chartColors.orange,
-                        ],
-
-                }],
-                labels: []
-            }
+			dates = lastWeek()
+			datee = today()
+		    gridList = [];
 
 
-            firstGrid.setData(gridList);
+			$.getJSON("{{ url_for('_earnings_day' ) }}/"+"{{ store_id }}&"+dates+"&"+datee, function (json) {
+				_data = json;
 
-            for ( i in gridList) {
-                data1.push(gridList[i]['총매출'])
-                data['labels'].push(gridList[i]['일자'])
-            }
+			}).done(function () {
 
-            $("canvas").remove();
-            $("div.chart").append('<canvas id="myChart" height="30vh" width="70vw"></canvas>');
+                loaddata();
 
-            chartdraw()
+                firstGrid = new ax5.ui.grid({
+                    target: $('[data-ax5grid="first-grid"]'),
+                    columns: [
+                        {key: "일자", label: "일자", width: 150, align: "center" },
+                        {key: "요일", label: "요일", width: 50, align: "center" },
+                        {key: "총매출", label: "매출액" ,width: 150 , formatter: "money",align: "right"},
+                    ]
+                });
+
+                data1 = [];
+                data = {
+                    datasets: [{
+                            label: '일자별 매출내역(1주간)',
+                            data: data1,
+                            backgroundColor: [
+                                window.chartColors.red,
+                                window.chartColors.orange,
+                                window.chartColors.yellow,
+                                window.chartColors.green,
+                                window.chartColors.blue,
+                                window.chartColors.purple,
+                                window.chartColors.grey,
+                                window.chartColors.red,
+                            ],
+
+                    }],
+                    labels: []
+                }
+
+
+                firstGrid.setData(gridList);
+
+                for ( i in gridList) {
+                    data1.push(gridList[i]['총매출'])
+                    data['labels'].push(gridList[i]['일자'])
+                }
+
+                $("canvas").remove();
+                $("div.chart").append('<canvas id="myChart" height="30vh" width="70vw"></canvas>');
+
+                chartdraw()
+			});
+			
+		
+
+
 
             break;
         case 'prod_week':
-            firstGrid = new ax5.ui.grid({
-                target: $('[data-ax5grid="first-grid"]'),
-                columns: [
-                    {key: "상품", label: "상품", width: 200, align: "center" },
-                    {key: "매출액", label: "매출액" ,width: 150 , formatter: "money",align: "right"},
-                ]
-            });
-            data1 = [];
-            data = {
-                datasets: [{
-                        label: '상품별 Top10 매출내역(1주간)',
-                        data: data1,
-                        backgroundColor: [
-                            window.chartColors.red,
-                            window.chartColors.orange,
-                            window.chartColors.yellow,
-                            window.chartColors.green,
-                            window.chartColors.blue,
-                            window.chartColors.purple,
-                            window.chartColors.red,
-                            window.chartColors.orange,
-                        ],
-                }],
-                labels: []
-            }
-            var temp = [];
-            gridList = [];
+		
+			dates = lastWeek()
+			datee = today()
+		
+		
+			$.getJSON("{{ url_for('_earnings_day' ) }}/"+"{{ store_id }}&"+dates+"&"+datee, function (json) {
+				_data = json;
 
-            for ( i in data0 ) {
-                for ( j in data0[i]['상품별'] ) {
-                    if ( temp[data0[i]['상품별'][j]] == undefined ) {  temp[j] = {  '매출액' : 0 } }
-                    temp[j]['매출액'] += data0[i]['상품별'][j]['총거래액']
+			}).done(function () {
+
+                firstGrid = new ax5.ui.grid({
+                    target: $('[data-ax5grid="first-grid"]'),
+                    columns: [
+                        {key: "상품", label: "상품", width: 200, align: "center" },
+                        {key: "매출액", label: "매출액" ,width: 150 , formatter: "money",align: "right"},
+                    ]
+                });
+                data1 = [];
+                data = {
+                    datasets: [{
+                            label: '상품별 Top10 매출내역(1주간)',
+                            data: data1,
+                            backgroundColor: [
+                                window.chartColors.red,
+                                window.chartColors.orange,
+                                window.chartColors.yellow,
+                                window.chartColors.green,
+                                window.chartColors.blue,
+                                window.chartColors.purple,
+                                window.chartColors.grey,
+                                window.chartColors.red,
+                            ],
+                    }],
+                    labels: []
                 }
-            }
+                var temp = [];
+                gridList = [];
+
+                for ( i in data0 ) {
+                    for ( j in data0[i]['상품별'] ) {
+                        if ( temp[data0[i]['상품별'][j]] == undefined ) {  temp[j] = {  '매출액' : 0 } }
+                        temp[j]['매출액'] += data0[i]['상품별'][j]['총거래액']
+                    }
+                }
 
 
-            for( i in temp ) {
-                gridList.push( {'상품' : _data['상품목록'][i] , '매출액' : temp[i]['매출액']} )
-            }
+                for( i in temp ) {
+                    gridList.push( {'상품' : _data['상품목록'][i] , '매출액' : temp[i]['매출액']} )
+                }
 
-            gridList.sort(function(b,a) {
-                return a['매출액'] < b['매출액'] ? -1 : a['매출액'] > b['매출액'] ? 1 : 0; });
+                gridList.sort(function(b,a) {
+                    return a['매출액'] < b['매출액'] ? -1 : a['매출액'] > b['매출액'] ? 1 : 0; });
 
 
 
-            firstGrid.setData(gridList);
+                firstGrid.setData(gridList);
 
-            for ( i in gridList) {
-                data1.push(gridList[i]['매출액'])
-                data['labels'].push(gridList[i]['상품'])
-            }
+                for ( i in gridList) {
+                    data1.push(gridList[i]['매출액'])
+                    data['labels'].push(gridList[i]['상품'])
+                }
 
-            $("canvas").remove();
-            $("div.chart").append('<canvas id="myChart" height="30vh" width="70vw"></canvas>');
+                $("canvas").remove();
+                $("div.chart").append('<canvas id="myChart" height="30vh" width="70vw"></canvas>');
 
-            var ctx = document.getElementById("myChart");
-            chartdraw()
+                var ctx = document.getElementById("myChart");
+                chartdraw()
+			});
+			
+		
+
             break;
         case 'week_month':
 
@@ -379,8 +404,8 @@ function fnLoadChart(n) {
                                 window.chartColors.green,
                                 window.chartColors.blue,
                                 window.chartColors.purple,
+                                window.chartColors.grey,
                                 window.chartColors.red,
-                                window.chartColors.orange,
                             ],
                     }],
                     labels: []
@@ -418,6 +443,9 @@ function chartdraw() {
                     }
                 });
 }
+
+
+
 
 </script>
 

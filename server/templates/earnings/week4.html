@@ -22,7 +22,6 @@
                  <div data-ax5grid="first-grid" data-ax5grid-config="{
                         header: { align: 'center' },
                         frozenColumnIndex: 1,
-                        showLineNumber: true,
                         page: { display: false  }
                     }" style="height: 270;"></div>
         </td>
@@ -51,7 +50,20 @@
 
 var  gridList = [];
 var  data0 = [];
+var datag
 var  week = new Array('일', '월', '화', '수', '목', '금', '토');
+var functime = [ { "명칭" : '심야' , '시작' : '00' , '끝' : '06'  } ,
+                     { "명칭" : '아침' , '시작' : '06' , '끝' : '11'  } ,
+                     { "명칭" : '점심' , '시작' : '11' , '끝' : '16'  } ,
+                     { "명칭" : '저녁' , '시작' : '16' , '끝' : '24'  } ]
+
+var footsum = [
+                        {label: "합계", colspan: 1, align: "center"},
+                        {key: "실매출", collector: "sum", formatter: "money", align: "right"},
+                        {key: "영수건수", collector: "sum", formatter: "money", align: "right"},
+                        {key: "고객수" , collector: "sum", formatter: "money", align: "right"},
+                    ]
+
 load()
 
 
@@ -85,83 +97,38 @@ function modal1() {
 function load() {
 
 
+
+       datag = [
+                {key: "요일", label: "요일", width: 35, align: "center"},
+                {
+                    label: "합계", columns: [ // child columns
+                        {key: "실매출", label: "실매출" ,width: 80 , formatter: "money",align: "right"},
+                        {key: "영수건수", label: "매출건수" ,width: 60 ,align: "right"},
+                        {key: "고객수", label: "고객수" ,width: 50,align: "right"},
+                    ]
+                }
+            ]
+
+
         var firstGrid = new ax5.ui.grid({
-        target: $('[data-ax5grid="first-grid"]'),
-        columns: [
-            {key: "요일", label: "요일", width: 35, align: "center" ,formatter: function(){
-                return '<a onClick=modal1(); >' + this.value + '</a>';
-            }},
-            {
-                label: "매출현황", columns: [ // child columns
-                    {key: "총매출", label: "총매출" ,width: 80 , formatter: "money",align: "right"},
-                    {key: "총할인", label: "총할인" ,width: 80 , formatter: "money",align: "right"},
-                    {key: "실매출", label: "실매출" ,width: 80 , formatter: "money",align: "right"},
-                    {key: "가액", label: "가액" ,width: 80 , formatter: "money",align: "right"},
-                    {key: "부가세", label: "부가세" ,width: 80 , formatter: "money",align: "right"},
-                    {key: "영수건수", label: "영수건수" ,width: 60 ,align: "right"},
-                    {key: "영수단가", label: "영수단가" ,width: 80 , formatter: "money",align: "right"}
-                ]
-            },
-            {key: "봉사료", label: "봉사료", width: 80 ,align: "right", formatter: "money"},
-            {key: "에누리", label: "에누리", width: 80 ,align: "right", formatter: "money"},
-            {
-                label: "결제수단", columns: [ // child columns
-                    {key: "결제합계", label: "결제합계" ,align: "right", formatter: "money"},
-                    {key: "단순현금", label: "단순현금" ,align: "right", formatter: "money"},
-                    {key: "현금영수", label: "현금영수" ,align: "right", formatter: "money"},
-                    {key: "신용카드", label: "신용카드" ,align: "right", formatter: "money"},
-                    {key: "외상", label: "외상" ,align: "right", formatter: "money"},
-                    {key: "상품권", label: "상품권" ,align: "right", formatter: "money"},
-                    {key: "식권", label: "식권" ,align: "right", formatter: "money"},
-                    {key: "회원포인트", label: "회원포인트" ,align: "right", formatter: "money"},
-                    {key: "제휴카드", label: "제휴카드" ,align: "right", formatter: "money"},
-                    {key: "사원카드", label: "사원카드" ,align: "right", formatter: "money"},
-                    {key: "모바일쿠폰", label: "모바일쿠폰" ,align: "right", formatter: "money"},
-                    {key: "캐시비", label: "캐시비" ,align: "right", formatter: "money"},
-                    {key: "선불카드", label: "선불카드" ,align: "right", formatter: "money"}
-                ]
-            },
-            {
-                label: "포장/배달현황", columns: [ // child columns
-                    {key: "일반", label: "일반" ,align: "right", formatter: "money"},
-                    {key: "포장", label: "포장" ,align: "right", formatter: "money"},
-                    {key: "배달", label: "배달" ,align: "right", formatter: "money"},
-
-                ]
-            },
-        ],
-        footSum: [
-            [
-                {label: "합계", colspan: 1, align: "center"},
-                {key: "총매출", collector: "sum", formatter: "money", align: "center"},
-                {key: "총할인", collector: "sum", formatter: "money", align: "right"},
-                {key: "실매출", collector: "sum", formatter: "money", align: "right"},
-                {key: "가액", collector: "sum", formatter: "money", align: "right"},
-                {key: "부가세", collector: "sum", formatter: "money", align: "right"},
-                {key: "영수건수", collector: "sum", formatter: "money", align: "right"},
-                {key: "영수단가", collector: "sum", formatter: "money", align: "right"},
-                {key: "d7"},
-                {key: "e1", collector: "sum", formatter: "money", align: "right"},
-                {key: "e2", collector: "sum", formatter: "money", align: "right"},
-                {key: "e3", collector: "sum", formatter: "money", align: "right"},
-                {key: "e4", collector: "sum", formatter: "money", align: "right"},
-                {key: "e5", collector: "sum", formatter: "money", align: "right"},
-                {key: "e6", collector: "sum", formatter: "money", align: "right"},
-                {key: "f1", collector: "sum", formatter: "money", align: "right"},
-                {key: "f2", collector: "sum", formatter: "money", align: "right"},
-                {key: "f3", collector: "sum", formatter: "money", align: "right"},
-                {key: "g", collector: "sum", formatter: "money", align: "right"},
-                {key: "h", collector: "sum", formatter: "money", align: "right"},
-                {key: "l5", collector: "sum", formatter: "money", align: "right"},
-
-
-            ]]
-    });
+            target: $('[data-ax5grid="first-grid"]'),
+            columns: datag,
+            footSum: [footsum]
+        });
 
 
 
     $('#load').click(function () {
-
+        datag = [
+                {key: "요일", label: "요일", width: 35, align: "center"},
+                {
+                    label: "합계", columns: [ // child columns
+                        {key: "실매출", label: "실매출" ,width: 80 , formatter: "money",align: "right"},
+                        {key: "영수건수", label: "매출건수" ,width: 60 ,align: "right"},
+                        {key: "고객수", label: "고객수" ,width: 50,align: "right"},
+                    ]
+                }
+            ]
         gridList = [];
         data0 = [];
         var dates = $('input[id=dates]').val();
@@ -175,6 +142,32 @@ function load() {
 
         }).done(function () {
 
+
+            time = [];
+            data = {};
+            data1 = [];
+
+
+            data = {
+                datasets: [{
+                    label: '요일별 종합현황',
+                    data: data1,
+                    backgroundColor: [
+                    'rgba(255, 99, 132)',
+                    'rgba(54, 162, 235)',
+                    'rgba(255, 206, 86)',
+                    'rgba(75, 192, 192)',
+                    'rgba(153, 102, 255)',
+                    'rgba(255, 159, 64)',
+                    'rgba(255, 206, 86)',
+                    'rgba(54, 162, 235)',
+                      ],
+                }],
+
+                // These labels appear in the legend and in the tooltips when hovering different arcs
+                labels: []
+            };
+
             for( i in _data['일자별'] ) {
                 data0.push(_data['일자별'][i]);
             }
@@ -186,81 +179,129 @@ function load() {
                     for ( j in week ) {
                             if ( j == d ) {
 
-                                n = parseInt(data0[i]['총거래액']) / parseInt(data0[i]['영수건수'])
-                                if ( gridList[j] == undefined ) { gridList[j] = {'요일' : week[j] , '총매출' : 0, '총할인' : 0 ,'실매출' : 0, '영수건수' : 0 , '영수단가' : 0 , '가액' :0 , '부가세' : 0,'봉사료' : 0,'에누리' : 0,'결제합계' : 0,'단순현금' : 0,'현금영수' : 0,'신용카드' : 0,'외상' : 0,'상품권' : 0,'식권' : 0,'회원포인트' : 0,'제휴카드' : 0,'사원카드' : 0,'모바일쿠폰' : 0,'캐시비' : 0,'선불카드' : 0,'일반' : 0,'포장' : 0,'배달' : 0 } };
-                                gridList[j]['총매출'] += data0[i]['총거래액'];
-                                gridList[j]['총할인'] += data0[i]['총할인액'];
+                                if ( gridList[j] == undefined ) { gridList[j] = {'요일' : week[j] ,'실매출' : 0,'영수건수' : 0,'고객수' : 0 } };
                                 gridList[j]['실매출'] += data0[i]['실거래액'];
                                 gridList[j]['영수건수'] += data0[i]['영수건수'];
-                                gridList[j]['영수단가'] += Math.round(n);
-                                gridList[j]['가액'] += data0[i]['판매이익'];
-                                gridList[j]['부가세'] += data0[i]['세금'];
-                                gridList[j]['봉사료'] += 0
-                                gridList[j]['에누리'] += 0
-                                gridList[j]['결제합계'] += data0[i]['실거래액'];
-                                gridList[j]['단순현금'] += data0[i]['수단별']['현금']['실거래액'];
-                                gridList[j]['현금영수'] += 0
-                                gridList[j]['신용카드'] += data0[i]['수단별']['카드']['실거래액'] + data0[i]['수단별']['카드(임의)']['실거래액'];
-                                gridList[j]['외상'] += 0
-                                gridList[j]['상품권'] += 0
-                                gridList[j]['식권'] += 0
-                                gridList[j]['회원포인트'] += 0
-                                gridList[j]['제휴카드'] += 0
-                                gridList[j]['사원카드'] += 0
-                                gridList[j]['모바일쿠폰'] += 0
-                                gridList[j]['캐시비'] += 0
-                                gridList[j]['선불카드'] += 0
-                                gridList[j]['일반'] += data0[i]['실거래액'];
-                                gridList[j]['포장'] += 0
-                                gridList[j]['배달'] += 0
+                                gridList[j]['고객수'] += data0[i]['영수건수'];
+
 
                             }
                     }
                 }
             }
 
+            for ( i in data0) {
+                d = new Date(data0[i]['영업일자']).getDay()
+                for ( k in week ) {
+                    if ( k == d ) {
+                        for ( j in data0[i]['영수증별'] ) {
+
+
+                                if ( time[k] == undefined ) { time[k] = [] }
+                                var temp = data0[i]['영수증별'][j]['주문일시'].substr(0,2)
+
+
+                                for( each in functime ) {
+
+                                        if ( temp >= functime[each]['시작'] && temp < functime[each]['끝'] ) {
+                                            if ( time[k][functime[each]['명칭']] == undefined ) {
+                                                time[k][functime[each]['명칭']] = { '영수건수' : 0 , '실거래액' : 0  }
+                                            }
+                                            time[k][functime[each]['명칭']]['영수건수'] += 1
+                                            time[k][functime[each]['명칭']]['실거래액'] += data0[i]['영수증별'][j]['실거래액']
+
+                                        }
+
+                                }
+                        }
+                    }
+                }
+            }
+            for ( each in functime ) {
+
+                datag.push( {'label' : functime[each]['명칭']+"["+functime[each]['시작']+"~"+functime[each]['끝']+"]" , columns:
+                                [ {key : 't실매출'+functime[each]['명칭'], label: "실매출" ,collector: "sum", formatter: "money", align: "center" },
+                                  {key : 't매출건수'+functime[each]['명칭'], label: "매출건수" ,collector: "sum", formatter: "money", align: "center" },
+                                  {key : 't고객수'+functime[each]['명칭'], label: "고객수" ,collector: "sum", formatter: "money", align: "center" }
+
+                    ]}
+                );
+
+                footsum.push( {key : 't실매출'+functime[each]['명칭'],collector: "sum", formatter: "money", align: "center"} )
+                footsum.push( {key : 't매출건수'+functime[each]['명칭'],collector: "sum", formatter: "money", align: "center"})
+                footsum.push( {key : 't고객수'+functime[each]['명칭'],collector: "sum", formatter: "money", align: "center"})
+
+                for ( i in time ) {
+                    for ( j in gridList ) {
+                        if ( gridList[j]['t실매출' + functime[each]['명칭']] == undefined ) {
+                            gridList[j]['t실매출' + functime[each]['명칭']] = 0
+                            gridList[j]['t매출건수' + functime[each]['명칭']] = 0
+                            gridList[j]['t고객수' + functime[each]['명칭']] = 0
+
+                        }
+
+
+                        if( i == j ) {
+                            for( k in time[i] ) {
+                                if ( functime[each]['명칭'] == k ) {
+                                    gridList[j]['t실매출'+functime[each]['명칭']] += time[i][k]['실거래액']
+                                    gridList[j]['t매출건수'+functime[each]['명칭']] += time[i][k]['영수건수']
+                                    gridList[j]['t고객수'+functime[each]['명칭']] += time[i][k]['영수건수']
+                                }
+                            }
+
+                        }
+
+                    }
+                }
+
+                data['labels'].push( functime[each]['명칭']+"["+functime[each]['시작']+"~"+functime[each]['끝']+"]" )
+
+
+
+            }
+
+
+
+        firstGrid = new ax5.ui.grid({
+                target: $('[data-ax5grid="first-grid"]'),
+                columns: datag,
+                footSum: [footsum ]
+            });
+
+
+
+
         firstGrid.setData(gridList);
 
-        data = {};
-        data1 = [];
 
-        data = {
-            datasets: [{
-                label: '요일별 종합현황',
-                data: data1,
-                backgroundColor: [
-                'rgba(255, 99, 132)',
-                'rgba(54, 162, 235)',
-                'rgba(255, 206, 86)',
-                'rgba(75, 192, 192)',
-                'rgba(153, 102, 255)',
-                'rgba(255, 159, 64)',
-                'rgba(255, 206, 86)',
-                'rgba(54, 162, 235)',
-                  ],
-            }],
 
-            // These labels appear in the legend and in the tooltips when hovering different arcs
-            labels: []
-        };
+        var timedata = { '심야' : 0 ,'아침' : 0 ,'점심' : 0 ,'저녁' : 0  };
 
         for ( i in gridList ) {
-            data1.push( gridList[i]['총매출'] )
-            data['labels'].push( week[i] )
+            timedata['심야'] += gridList[i]['t실매출심야']
+            timedata['아침'] += gridList[i]['t실매출아침']
+            timedata['점심'] += gridList[i]['t실매출점심']
+            timedata['저녁'] += gridList[i]['t실매출저녁']
         }
+        for (i in timedata){
+            data1.push( timedata[i] )
+        }
+
+
+
 
         $("canvas").remove();
         $("div.chart").append('<canvas id="myChart" height="20vh" width="100vw"></canvas>');
 
         var ctx = document.getElementById("myChart");
         var myChart = new Chart(ctx, {
-                        type: 'bar',
+                        type: 'pie',
                         data: data,
                         options: {
                             responsive: true
                         }
                     });
-        console.log(data)
     });
 });
 

@@ -1,12 +1,14 @@
 {% extends "layout.html" %}
 {% block body %}
-    {% from 'macro/form.html' import input,radio,select with context %}
 
-    <div >
-                사원정보조회
-    </div>
-    <br/>
-    <br/>
+
+<table width='100%' >
+    <tr>
+        <th style="color:white; background-color: #347efd;">
+         사원정보조회
+        </th>
+    </tr>
+</table>
 
     <table width="100%" border='0' cellpadding='0' cellspacing='0'>
         <tr height='25'>
@@ -21,28 +23,12 @@
                         </select> <input type='text'       id='date1_1' name='date1_1' value='2018-05-15' size='8' class='read1hc' onclick="fnShowCal2(1);" readonly style='cursor:hand;' > - <input type='text'    id='date1_2' name='date1_2' value='2018-05-15' size='8' class='read1hc' onclick="fnShowCal2(1);" readonly style='cursor:hand;' > <img src='{{ url_for('static', filename='image/calendar/calendar_btn.gif') }}' onclick="fnShowCal2(1);" style='cursor:hand;'><input type='hidden'     id='date_period1' name='date_period1' value='366'></td>
                         <td id="cust_no" style='display:inline;'><img src='{{ url_for('static', filename='image/s_icon.gif') }}'> 사원번호 <input type='text' name='EMP_NO' value='' size='5'  maxlength='5' class='input1hc' onkeydown="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','1');fnResize(); }"></td>
                         <td id="cust_nm" style='display:inline;'><img src='{{ url_for('static', filename='image/s_icon.gif') }}'> 사원명   <input type='text' name='EMP_NM' value='' size='5' maxlength='8' class='input1h imeHan' onkeydown="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','1');fnResize(); }"></td>
-                        <td id="cust_nm" style='display:inline;'><img src='{{ url_for('static', filename='image/s_icon.gif') }}'> 사원아이디   <input type='text' name='EMP_ID' value='' size='5' maxlength='8' class='input1h imeHan' onkeydown="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','1');fnResize(); }"></td>
+                        <td id="cust_nm" style='display:inline;'><img src='{{ url_for('static', filename='image/s_icon.gif') }}'> 사원아이디   <input type='text' name='USER_ID' value='' size='5' maxlength='8' class='input1h imeHan' onkeydown="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','1');fnResize(); }"></td>
                         <td><img src='{{ url_for('static', filename='image/s_icon.gif') }}'> 검색줄수 <input type='text' name='page_size' size='5' value='500' class='input1hr' onkeydown="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','1');fnResize(); }"></td>
-                        <td align="right"><table border='0' cellpadding='0' cellspacing='0' style='cursor:pointer;' onclick="document.form1.page_no.value='1'; doAction('search','1');fnResize();">
-                            <tr valign='middle'>
-                                <td><img id='btn_l_bg' src='{{ url_for('static', filename='image/btn_black_l_bg.gif') }}') }}'></td>
-                                <td background='{{ url_for('static', filename='image/btn_black_c_bg.gif') }}'><img src='/image/blank.gif' width='4' height='13'><font color='#ffffff'>조회</font><img src='/image/blank.gif' width='4' height='13'></td>
-                                <td><img id='btn_r_bg' src='{{ url_for('static', filename='image/btn_black_r_bg.gif') }}'></td>
-                            </tr>
-                        </table></td>
+                        <td align="right"><button id="list" style="background-color :#4e4765;"> <font color='#ffffff'>조회</font>   </button><button id="excel" style="background-color :#4e4765;"><font color='#ffffff'>엑셀</font>  </button></td>
                     </tr>
                 </table>
             </td>
-            <td align="right">
-                <table border='0' cellpadding='0' cellspacing='0'>
-                    <tr>
-                        <td><table border='0' cellpadding='0' cellspacing='0' style='cursor:pointer;' onclick="doAction('down2Excel','1');">
-                            <tr valign='middle'>
-                                <td><img id='btn_l_bg' src='{{ url_for('static', filename='image/btn_black_l_bg.gif') }}'></td>
-                                <td background='{{ url_for('static', filename='image/btn_black_c_bg.gif') }}'><img src='/image/blank.gif' width='4' height='13'><font color='#ffffff'>엑셀</font><img src='/image/blank.gif' width='4' height='13'></td>
-                                <td><img id='btn_r_bg' src='{{ url_for('static', filename='image/btn_black_r_bg.gif') }}'></td>
-                            </tr>
-                        </table></td>
                     </tr>
                 </table>
             </td>
@@ -63,11 +49,11 @@
                             <span id='divAjax_1_EMP_CLASS_CD' style='display:;overflow-y:scroll;'> </span>
        </td>
                         <td width='5'></td>
-                        <td><img src='{{ url_for('static', filename='image/s_icon.gif') }}'> 퇴직구분   <select name='RETIRE_FG'  >
-                            <option value='' selected>전체</option>
-                            <option value='0'>재직</option>
-                            <option value='1'>퇴직</option>
-                            <option value='2'>휴식</option>
+                        <td><img src='{{ url_for('static', filename='image/s_icon.gif') }}'> 퇴직구분   <select name='재직상태'  >
+                            <option value='전체' selected>전체</option>
+                            <option value='재직'>재직</option>
+                            <option value='퇴직'>퇴직</option>
+                            <option value='휴식'>휴식</option>
                         </select></td>
                         <td width='10'></td>
                         <td>
@@ -142,32 +128,66 @@
 
 <script>
 var _data
+var firstGrid
+var gridList
 
-$.getJSON("{{ url_for('_info_staff_list') }}", function (json) {
-    _data = json;
-}).done(function () {
+function load() {
+    $.getJSON("{{ url_for('_info_staff_list') }}", function (json) {
+        _data = json;
+    }).done(function () {
+
+        gridList = [];
+        firstGrid = new ax5.ui.grid({
+                target: $('[data-ax5grid="first-grid"]'),
+                columns: [
+                    {key: "사원번호", label: "사원번호", width: 70, align: "center" },
+                    {key: "사원명", label: "사원명", width: 70, align: "center" },
+                    {key: "사원ID", label: "사원ID", width: 70, align: "center" },
+                    {key: "사원구분", label: "사원구분", width: 70, align: "center" },
+                    {key: "사원직책", label: "사원직책", width: 70, align: "center" },
+                    {key: "퇴직구분", label: "퇴직구분", width: 70, align: "center" },
+                    {key: "전화번호", label: "전화번호", width: 70, align: "center" },
+                    {key: "핸드폰번호", label: "핸드폰번호", width: 90, align: "center" },
+                    {key: "SMS수신여부", label: "SMS수신여부", width: 90, align: "center" },
+                    {key: "카드번호", label: "카드번호", width: 70, align: "center" },
+                    {key: "SMS", label: "SMS", width: 70, align: "center" },
+                ]
+        });
+
+        for ( i  in  _data ) {
+            if ( gridList[i] == undefined ) { gridList[i] = {} }
+            gridList[i]['사원번호'] = _data[i]['직원번호']
+            gridList[i]['사원명'] = _data[i]['직원명']
+            gridList[i]['웹사용자ID'] = _data[i]['직원번호']
+            gridList[i]['퇴직구분'] = _data[i]['재직상태']
+        }
+        firstGrid.setData(gridList);
+
+    })
+}
+
+load()
 
 
-    var firstGrid = new ax5.ui.grid({
-            target: $('[data-ax5grid="first-grid"]'),
-            columns: [
-                {key: "사원번호", label: "사원번호", width: 70, align: "center" },
-                {key: "사원명", label: "사원명", width: 70, align: "center" },
-                {key: "사원ID", label: "사원ID", width: 70, align: "center" },
-                {key: "사원구분", label: "사원구분", width: 70, align: "center" },
-                {key: "사원직책", label: "사원직책", width: 70, align: "center" },
-                {key: "퇴직구분", label: "퇴직구분", width: 70, align: "center" },
-                {key: "전화번호", label: "전화번호", width: 70, align: "center" },
-                {key: "핸드폰번호", label: "핸드폰번호", width: 70, align: "center" },
-                {key: "SMS수신여부", label: "SMS수신여부", width: 70, align: "center" },
-                {key: "카드번호", label: "카드번호", width: 70, align: "center" },
-                {key: "SMS", label: "SMS", width: 70, align: "center" },
-            ]
+$('#list').on('click', function () {
+
+     gridList = [];
+
+     for ( i  in  _data ) {
+
+            if ( $('input[name="EMP_NO"]').val() == _data[i]['직원번호'] || $('input[name="EMP_NM"]').val() == _data[i]['직원명'] || $('input[name="USER_ID"]').val() == _data[i]['직원번호'] || $('select[name="재직상태"]').val() == _data[i]['재직상태']) {
+                if ( gridList[i] == undefined ) { gridList[i] = {} }
+                gridList[i]['사원번호'] = _data[i]['직원번호']
+                gridList[i]['사원명'] = _data[i]['직원명']
+                gridList[i]['웹사용자ID'] = _data[i]['직원번호']
+                gridList[i]['퇴직구분'] = _data[i]['재직상태']
+            }else if ( $('input[name="EMP_NO"]').val() == '' && $('input[name="EMP_NM"]').val() == '' && $('input[name="USER_ID"]').val() == '' && $('select[name="재직상태"]').val() == '전체' ) load();
+        }
+
+     console.log(gridList)
+     firstGrid.setData(gridList);
+
 });
-
-
-})
-
 
 </script>
 
