@@ -581,7 +581,7 @@ function remove(r,d,f) {
     }
 
     for ( i in b ) {
-        for ( j in d )
+        for ( j in d ) {
             if ( b[i] == d[j]['label'] ) {
                 const itemToFind2 = d.find(function(item) {return item.label == b[i]} )
                 const idx2 = d.indexOf(itemToFind2)
@@ -591,6 +591,7 @@ function remove(r,d,f) {
                 const idx3 = f.indexOf(itemToFind3)
                 if (idx3 > -1) f.splice(idx3, 1)
             }
+        }
     }
 
 }
