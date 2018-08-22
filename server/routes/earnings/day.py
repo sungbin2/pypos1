@@ -264,17 +264,25 @@ def _earnings_day_(_id,dates,datee):
 
                 t = each.table_idx
                 g = each.group_idx
-                gt = str(g) + str(t)
+                gt = str(g) + '-' + str(t)
 
                 if gt not in cnt_days['일자별'][d]['테이블별']:
                     cnt_days['일자별'][d]['테이블별'][gt] = {'총거래액': 0, '총할인액': 0, '실거래액': 0, '세금': 0, '면세': 0, '판매이익': 0,  '영수건수': 0}
+
+
                 cnt_days['일자별'][d]['테이블별'][gt]['총거래액'] += each.총금액
                 cnt_days['일자별'][d]['테이블별'][gt]['총할인액'] += each.총할인
                 cnt_days['일자별'][d]['테이블별'][gt]['실거래액'] += each.합계
                 cnt_days['일자별'][d]['테이블별'][gt]['세금'] += each.세
                 cnt_days['일자별'][d]['테이블별'][gt]['면세'] += each.면세
                 cnt_days['일자별'][d]['테이블별'][gt]['판매이익'] += (each.공급가 + each.면세)
-                cnt_days['일자별'][d]['테이블별'][gt]['영수건수'] += 1
+
+                if each.유형 == 'A' or each.유형 == 'B':
+                    cnt_days['일자별'][d]['테이블별'][gt]['영수건수'] += 1
+                else:
+                    cnt_days['일자별'][d]['테이블별'][gt]['영수건수'] += -1
+
+
 
                 r = each.i
                 if r not in cnt_days['일자별'][d]['영수증별']:

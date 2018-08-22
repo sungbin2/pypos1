@@ -1,60 +1,22 @@
-{% include 'ax5.html' %}
 
 <table class="box day" >
-    <tr>
-        <th >
-         <div class="row" >
-            <div class="col-md-6">
-                <label style=" margin-top: 8; float:left;">조회일자</label>
-                <div class="input-group" data-ax5picker="basic" style="height:20px;width:300px; float:left;" >
-                    <input id='dates' type="text" class="form-control" placeholder="yyyy/mm/dd" >
-                    <span class="input-group-addon">~</span>
-                    <input id='datee'type="text" class="form-control" placeholder="yyyy/mm/dd">
-                    <span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
-                </div>
-                <button class="btn" id="load" style=" margin-top: 8">조회</button>
-            </div>
-        </div>
-        </th>
-    </tr>
     <tr>
         <td>
 
             <table  style="border :1px solid white; width : 100%">
-            <table class="func" style="float:left;width: 45%;" >
+            <table class="func" style="float:left;width: 100%;" >
                 <tr>
                     <th>
-                     시간대별
+                     외식테이블
                     </th>
                 </tr>
                 <tr>
                     <td>
-                        <div data-ax5grid="first-grid" data-ax5grid-config="{
+                        <div data-ax5grid="first-grid4" data-ax5grid-config="{
                                     showLineNumber: true,
                                    header: { align: 'center' },
                                      page: { display: false  },
-                                     sortable: true,
-                                }" style="height:480;"></div>
-                    </td>
-
-                </tr>
-
-            </table>
-            <table class="func" style="width: 54%;  " >
-                <tr>
-                    <th>
-                     매출상세 <span id="범위"></span><button  style="float: right" onclick="">엑셀</button>
-                    </th>
-                </tr>
-                <tr>
-                    <td>
-                        <div data-ax5grid="second-grid" data-ax5grid-config="{
-                                    showLineNumber: true,
-                                    header: { align: 'center' },
-                                     page: { display: false  },
-                                     sortable: true,
-                                     <!--showRowSelector: true,-->
-                                }" style="height:480;"></div>
+                                }" style="height:500px;"></div>
                     </td>
 
                 </tr>
@@ -68,61 +30,27 @@
 
 
 
-<script type="text/javascript" src="{{ url_for('static',filename='datepicker.js') }} "></script>
-<script type="text/javascript" src="{{ url_for('static',filename='gridList.js') }} "></script>
-
 <script type="text/javascript">
 
+var firstGrid4;
 
-var functime = [ { "명칭" : '심야' , '시작' : '00' , '끝' : '06'  } ,
-                     { "명칭" : '아침' , '시작' : '06' , '끝' : '11'  } ,
-                     { "명칭" : '점심' , '시작' : '11' , '끝' : '16'  } ,
-                     { "명칭" : '저녁' , '시작' : '16' , '끝' : '24'  } ]
 
-var _data = []; var data0 =[]; var time = []; var t_gridList = [];
-var gridList = [];
-var gridList1 = [];
-var secondGrid
-load()
+ function load4() {
 
 
 
-var mask = new ax5.ui.mask();
-var modal = new ax5.ui.modal();
-var modalCallBack = function(){
-    modal.close();
-};
-
-function modal1() {
-        modal.open({
-            width: 600,
-            iframe: {
-                method: "get",
-                url: "{{ url_for('_earnings_modal') }}",
-                param: "callBack=modalCallBack"
-            },
-            onStateChanged: function () {
-                // mask
-                if (this.state === "open") {
-                    mask.open();
-                }
-                else if (this.state === "close") {
-                    mask.close();
-                }
-            }
-        })
-}
-
-function load() {
-
-
-    var firstGrid = new ax5.ui.grid({
-        target: $('[data-ax5grid="first-grid"]'),
+        firstGrid4 = new ax5.ui.grid({
+        target: $('[data-ax5grid="first-grid4"]'),
         columns: [
-                {key: "시간대", label: "시간대", width: 140, align: "left",treeControl: true},
-                {key: "영수건수", label: "영수건수" ,width: 80 ,align: "right"},
-                {key: "실매출", label: "실매출" ,width: 80 ,align: "right" ,formatter: function(){ return '<a onClick=detail("' + this.item.시간대 + '"); >' + ax5.util.number(this.value,{"money": true})  + '</a>'; }},
-                {key: "영수단가", label: "영수단가" ,width: 80 , formatter: "money",align: "right"}
+                {key: "테이블", label: "테이블", width: 140, align: "left",treeControl: true},
+                {key: "속성", label: "속성" ,width: 60 ,align: "right"},
+                {key: "평균점유시간", label: "평균점유시간(시간:분)" ,width: 100 ,align: "right" },
+                {key: "회전수", label: "회전수" ,width: 80 , formatter: "money",align: "right"},
+                {key: "고객수", label: "고객수" ,width: 80 , formatter: "money",align: "right"},
+                {key: "총매출", label: "총매출" ,width: 80 , formatter: "money",align: "right"},
+                {key: "할인액", label: "할인액" ,width: 80 , formatter: "money",align: "right"},
+                {key: "봉사료", label: "봉사료" ,width: 80 , formatter: "money",align: "right"},
+                {key: "실매출", label: "실매출" ,width: 80 , formatter: "money",align: "right"},
             ],
             tree: {
                 use: true,
@@ -143,187 +71,148 @@ function load() {
             }
     });
 
-    secondGrid = new ax5.ui.grid({
-            target: $('[data-ax5grid="second-grid"]'),
-            columns: [
-                {key: "상품코드", label: "상품코드", formatter: "money" ,align: "center"},
-                {key: "상품명", label: "상품명",align: "left",width: 150},
-                {key: "수량", label: "수량",  align: "right"},
-                {key: "실매출", label: "실매출", formatter: "money" , align: "right"},
-                ],
-            footSum: [
-                [
-                    {label: "합계", colspan: 2, align: "center"},
-                    {key: "수량", collector: "sum", formatter: "money", align: "right"},
-                    {key: "실매출", collector: "sum", formatter: "money", align: "right"},
-                ]]
+        $('#excel').click(function () {
+            firstGrid4.exportExcel("grid-to-excel.xls")
+        })
 
-        });
+  }
 
 
 
-    $('#load').click(function () {
+function loaddata4() {
 
-        gridList = [];
-        data0 = [];
-
-
-        var dates = $('input[id=dates]').val();
-        var datee = $('input[id=datee]').val();
+    gridList = [];
+    data0 = [];
 
 
-        $.getJSON("{{ url_for('_earnings_day' ) }}/"+"{{ store_id }}&"+dates+"&"+datee, function (json) {
-            _data = json;
+    var dates = $('input[id=dates]').val();
+    var datee = $('input[id=datee]').val();
 
-        }).done(function () {
+    $.getJSON("{{ url_for('_earnings_day' ) }}/"+"{{ store_id }}&"+dates+"&"+datee, function (json) {
+        _data = json;
 
-        for( i in _data['일자별'] ) {
-            data0.push(_data['일자별'][i]);
+    }).done(function () {
+
+    for( i in _data['일자별'] ) {
+        data0.push(_data['일자별'][i]);
+    }
+
+    console.log(_data)
+    console.log(data0)
+
+    group = [];
+
+    for ( i in data0) {
+        if (group[i] == undefined) { group[i] = {  '회전수' :0 , '고객수' :0, '총매출' :0 , '할인액' : 0 , '봉사료' : 0 , '실매출' : 0  }; }
+
+        for (j in data0[i]['테이블별']) {
+
+            group[i]['회전수'] += data0[i]['테이블별'][j]['영수건수']
+            group[i]['고객수'] += data0[i]['테이블별'][j]['영수건수']
+            group[i]['총매출'] += data0[i]['테이블별'][j]['총거래액']
+            group[i]['할인액'] += data0[i]['테이블별'][j]['총할인액']
+            <!--group[i]['봉사료'] += data0[i]['테이블별'][j]['봉사료']-->
+            group[i]['실매출'] += data0[i]['테이블별'][j]['실거래액'];
+
+
+            group[i]['회전수'+j] = data0[i]['테이블별'][j]['영수건수'];
+            group[i]['고객수'+j] = data0[i]['테이블별'][j]['영수건수']
+            group[i]['총매출'+j] = data0[i]['테이블별'][j]['총거래액']
+            group[i]['할인액'+j] = data0[i]['테이블별'][j]['총할인액']
+            <!--group[i]['봉사료'+j] = data0[i]['테이블별'][j]['봉사료']-->
+            group[i]['실매출'+j] = data0[i]['테이블별'][j]['실거래액'];
         }
-
-        time = [];
-
-        for ( i in data0) {
-            for ( j in data0[i]['영수증별'] ) {
-                    var temp = data0[i]['영수증별'][j]['주문일시'].substr(0,2)
-                    if ( time[temp] == undefined ) {
-                        time[temp] = { '영수건수' : 0 , '실거래액' : 0 , '상품' : {} }
-                    }
-                    time[temp]['영수건수'] += 1
-                    time[temp]['실거래액'] += data0[i]['영수증별'][j]['실거래액']
-                    for ( k in data0[i]['영수증별'][j]['상품']) {
-                        if ( time[temp]['상품'][k] == undefined ) {
-                            time[temp]['상품'][k] = {  '상품명' : 0 , '수량' : 0, '실매출' : 0 }
-                        }
-                        time[temp]['상품'][k]['상품명'] = _data['상품목록'][k]
-                        time[temp]['상품'][k]['수량'] += 1
-                        time[temp]['상품'][k]['실매출'] += data0[i]['영수증별'][j]['상품'][k]['실거래액']
-
-
-                    }
-
-            }
-        }
-        n=0; y=0
-        gridList[n] = { id : y , '시간대' : '전체'  ,'영수건수' :0 , '실매출' :0 , '영수단가' : 0 }
-        for ( i in time ) {
-
-            gridList[n]['영수건수'] += time[i]['영수건수']
-            gridList[n]['실매출'] += time[i]['실거래액']
-            gridList[n]['영수단가'] += Math.round(time[i]['실거래액'] / time[i]['영수건수'])
-        }
-        n++
-        //반복
-
-
-        for ( each in functime ) {
-
-            gridList[n] = {pid : y , id : n , '시간대' : functime[each]['명칭']+"["+functime[each]['시작']+"~"+functime[each]['끝']+"]" ,'영수건수' :0 , '실매출' :0 , '영수단가' : 0  };
-            for ( i in time ) {
-                if ( i >= functime[each]['시작'] && i < functime[each]['끝'] ) {
-
-                    gridList[n]['영수건수'] += time[i]['영수건수']
-                    gridList[n]['실매출'] += time[i]['실거래액']
-                    gridList[n]['영수단가'] += Math.round(time[i]['실거래액'] / time[i]['영수건수'])
-
-                }
-            }
-
-            var nn = n
-            t_gridList = [];
-            n++
-
-            for ( i in time ) {
-                if ( i >= functime[each]['시작'] && i < functime[each]['끝'] ) {
-
-                    t_gridList[n]={ pid : nn  }
-                    t_gridList[n]['시간대'] = i
-                    t_gridList[n]['영수건수'] = time[i]['영수건수']
-                    t_gridList[n]['실매출'] = time[i]['실거래액']
-                    t_gridList[n]['영수단가'] = Math.round(time[i]['실거래액'] / time[i]['영수건수'])
-
-                    n++
-                }
-            }
-
-            t_gridList.sort(function(a,b) {
-                return a['시간대'] < b['시간대'] ? -1 : a['시간대'] > b['시간대'] ? 1 : 0; });
-
-            for ( i in t_gridList) {
-                gridList.push(t_gridList[i])
-            }
-        }
-
-        firstGrid.setData(gridList);
-
-        });
-
-    })
-
-}
-
-function detail(t) {
-
-    gridList1 = [];
-    var t_gridList1 = [];
-    var n=0; var n=0;
-    $('#범위').text(t)
-
-    switch(t) {
-                case '전체':
-                    for ( i in time) {
-                        for ( j in time[i]['상품'] ) {
-                            if ( t_gridList1[j] == undefined ) {   t_gridList1[j] = { '상품코드' : j , '상품명' : "" , '수량' : 0 , '실매출' : 0 }   }
-                            t_gridList1[j]['상품명'] = time[i]['상품'][j]['상품명']
-                            t_gridList1[j]['수량'] += time[i]['상품'][j]['수량']
-                            t_gridList1[j]['실매출'] += time[i]['상품'][j]['실매출']
-                        }
-                    }
-                    for ( i in t_gridList1) {
-                        gridList1.push( t_gridList1[i] );
-                    }
-                    break;
-
-                default:
-
-                    for ( each in functime ) {
-                        if (functime[each]['명칭']+"["+functime[each]['시작']+"~"+functime[each]['끝']+"]" == t) {
-                             for ( i in time) {
-                                if ( i >= functime[each]['시작'] && i < functime[each]['끝'] ) {
-                                    for ( j in time[i]['상품'] ) {
-                                        if ( t_gridList1[j] == undefined ) {   t_gridList1[j] = { '상품코드' : j , '상품명' : "" , '수량' : 0 , '실매출' : 0 }   }
-                                        t_gridList1[j]['상품명'] = time[i]['상품'][j]['상품명']
-                                        t_gridList1[j]['수량'] += time[i]['상품'][j]['수량']
-                                        t_gridList1[j]['실매출'] += time[i]['상품'][j]['실매출']
-                                    }
-                                }
-                            }
-                            for ( i in t_gridList1) {
-                                gridList1.push( t_gridList1[i] );
-                            }
-                        }
-                    }
-
-                    for ( i in time) {
-                        if ( i == t ) {
-                            for ( j in time[i]['상품'] ) {
-
-                                gridList1[n] = {};
-                                gridList1[n]['상품코드'] = j
-                                gridList1[n]['상품명'] = time[i]['상품'][j]['상품명']
-                                gridList1[n]['수량'] = time[i]['상품'][j]['수량']
-                                gridList1[n]['실매출'] = time[i]['상품'][j]['실매출']
-
-                                n++;
-                            }
-                        }
-                    }
-                    break;
 
     }
 
-    secondGrid.setData(gridList1);
+    n=0; y=0;
+    gridList[n] = { id : y , '테이블' : '전체'  ,'속성' :'' , '평균점유시간' :'', '회전수' :0 , '고객수' :0, '총매출' :0 , '할인액' : 0 , '봉사료' : 0 , '실매출' : 0 }
+    for ( i in group ) {
+
+        gridList[n]['회전수'] += group[i]['회전수']
+        gridList[n]['고객수'] += group[i]['고객수']
+        gridList[n]['총매출'] += group[i]['총매출']
+        gridList[n]['할인액'] += group[i]['할인액']
+        <!--gridList[n]['봉사료'] += group[i]['봉사료']-->
+        gridList[n]['실매출'] += group[i]['실매출']
+
+    }
+    n++;
+
+    for ( each1 in _data['테이블목록'] ) {
+        gridList[n] = {pid : y , id : n , '테이블' : _data['테이블목록'][each1]['그룹명'] ,'속성' :'' , '평균점유시간' :'', '회전수' :0 , '고객수' :0, '총매출' :0 , '할인액' : 0 , '봉사료' : 0 , '실매출' : 0 };
+
+        for ( k in data0 ) {
+            for ( each2 in data0[k]['테이블별'] ) {
+                var e = each2.split('-')
+
+                if ( e[0] == each1 ) {
+                    for ( i in group ) {
+                        if ( group[i]['회전수'+each2] != undefined ){
+                            gridList[n]['회전수'] += group[i]['회전수'+each2]
+                            gridList[n]['고객수'] += group[i]['고객수'+each2]
+                            gridList[n]['총매출'] += group[i]['총매출'+each2]
+                            gridList[n]['할인액'] += group[i]['할인액'+each2]
+                            <!--gridList[n]['봉사료'] += group[i]['봉사료'+each2]-->
+                            gridList[n]['실매출'] += group[i]['실매출'+each2]
+
+                        }
+
+                    }
+                }
+            }
+        }
+
+
+
+
+        var nn = n;
+        n++
+
+        for ( j in data0 ) {
+            for ( each in data0[j]['테이블별'] ) {
+                console.log(each1)
+
+                var e = each.split('-')
+
+                if ( e[0] == each1 ) {
+                    gridList[n] = {pid : nn , id : n , '테이블' : _data['테이블목록'][0]['tbls'][e[1]]['name'] ,'속성' :'' , '평균점유시간' :'', '회전수' :0 , '고객수' :0, '총매출' :0 , '할인액' : 0 , '봉사료' : 0 , '실매출' : 0 };
+
+                    for ( i in group ) {
+                        if ( group[i]['회전수'+each] != undefined ){
+                            gridList[n]['회전수'] += group[i]['회전수'+each]
+                            gridList[n]['고객수'] += group[i]['고객수'+each]
+                            gridList[n]['총매출'] += group[i]['총매출'+each]
+                            gridList[n]['할인액'] += group[i]['할인액'+each]
+                            <!--gridList[n]['봉사료'] += group[i]['봉사료'+each]-->
+                            gridList[n]['실매출'] += group[i]['실매출'+each]
+
+                        }
+
+                    }
+                    n++ ;
+                }
+            }
+        }
+
+    nn++;
+    }
+
+
+
+    console.log(gridList)
+
+
+
+    firstGrid4.setData(gridList);
+
+
+    });
+
+
+
 }
+
 
 
 </script>

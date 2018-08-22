@@ -162,7 +162,7 @@
                                 gridList[k]['t고객수'+l+m] = 0
                                 for ( j in data0[i]['테이블별'] ) {
 
-                                    if ((l+m) == j ) {
+                                    if ((l+'-'+m) == j ) {
                                         gridList[k]['t실매출'+l+m] = data0[i]['테이블별'][j]['실거래액']
                                         gridList[k]['t회전수'+l+m] = data0[i]['테이블별'][j]['영수건수']
                                         gridList[k]['t고객수'+l+m] = data0[i]['테이블별'][j]['영수건수']
