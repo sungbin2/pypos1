@@ -102,11 +102,12 @@ $('#load').click(function () {
             }).done(function () {
 
                 var n=0;
+                var sale = { 'A' : '판매', 'B' : '판매' , 'C' :'반품' }
 
                 for( i in _data['일자별'] ) {
                     data0.push(_data['일자별'][i]);
                 }
-
+                console.log(data0)
                 for ( i in data0) {
 
                     for( j in data0[i]['영수증별'] ) {
@@ -116,7 +117,7 @@ $('#load').click(function () {
                             gridList1[n] = {};
                             gridList1[n]['포스번호'] = '01'
                             gridList1[n]['영수증번호'] = j
-                            gridList1[n]['구분'] = '매출'
+                            gridList1[n]['구분'] = sale[data0[i]['영수증별'][j]['구분']]
                             gridList1[n]['테이블명'] = data0[i]['영수증별'][j]['테이블명']
                             gridList1[n]['최초주문'] = data0[i]['영수증별'][j]['주문일시']
                             gridList1[n]['결제시각'] = data0[i]['영수증별'][j]['결제일시']

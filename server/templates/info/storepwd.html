@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<FORM method=post name=form1 action=passwd010_save.jsp target=BlankFrm2><INPUT type=hidden name=PUPUP_FG> <INPUT type=hidden value=s92694 name=USER_ID> <INPUT type=hidden value=황의순 name=USER_NM>
 <TABLE cellSpacing=0 cellPadding=0 width=380 border=0>
 <TBODY>
 <TR>
@@ -16,7 +15,7 @@
 <TBODY>
 <TR>
 <TD>
-<TABLE onclick=doSave(); style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TABLE onclick="save();" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
 <TBODY>
 <TR vAlign=middle>
 <TD><IMG id=btn_l_bg src="{{ url_for('static', filename='image/btn_black_l_bg.gif') }}"></TD>
@@ -51,19 +50,94 @@
 <TBODY>
 <TR height=24>
 <TD><FONT color=red>*</FONT>ID</TD>
-<TD>s92694</TD></TR>
+<TD><span id="s"></span></TD></TR>
 <TR height=24>
 <TD><FONT color=red>*</FONT>사용자명</TD>
-<TD>황의순</TD></TR>
+
+     <form id="form_modify" class="ui form" action="" method="post">
+         <INPUT name=start type="hidden" value="">
+<TD><span id="대표자"></span></TD></TR>
 <TR height=24>
 <TD><FONT color=red>*</FONT>현재패스워드</TD>
-<TD><INPUT class="input1 imeEngOnly" onkeydown="if(event.keyCode == 13) document.form1.NEW_USER_PWD.select();" maxLength=10 size=22 type=password value="" name=OLD_USER_PWD></TD></TR>
+<TD><INPUT class="input1 imeEngOnly"  maxLength=10 size=22 type=password value="" name='구패스워드'></TD></TR>
 <TR height=24>
 <TD><FONT color=red>*</FONT>신규패스워드</TD>
-<TD><INPUT class="input1 imeEngOnly" onkeydown="if(event.keyCode == 13) document.form1.NEW_USER_PWD_CONFIRM.select();" maxLength=10 size=22 type=password value="" name=NEW_USER_PWD></TD></TR>
+<TD><INPUT class="input1 imeEngOnly"  maxLength=10 size=22 type=password value="" name='패스워드'></TD></TR>
 <TR height=24>
 <TD><FONT color=red>*</FONT>신규패스워드확인</TD>
-<TD><INPUT class="input1 imeEngOnly" onkeydown="if(event.keyCode == 13) doSave();" maxLength=10 size=22 type=password value="" name=NEW_USER_PWD_CONFIRM></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></FORM>
+<TD><INPUT class="input1 imeEngOnly"  maxLength=10 size=22 type=password value="" name='패스워드2'>
+
+<INPUT name='end' type="hidden" value="">
+</TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+  </form>
+
+<script>
+var _data;var _data1;
+var storeid
+
+$.getJSON("{{ url_for('_info_store_') }}", function (json) {
+    _data = json;
+}).done(function () {
+
+     $('#s').html( _data['s'])
+     $('#대표자').html( _data['대표자'])
+     storeid = _data['s']
+})
+
+
+
+function save() {
+
+
+
+<!--$.getJSON("{{ url_for('_info_account') }}/"+storeid, function (json) {-->
+    <!--_data1 = json;-->
+<!--}).done(function () {-->
+
+   <!--console.log(_data1)-->
+
+<!--})-->
+
+
+
+
+
+
+
+
+
+    if ($('input[name="패스워드"]').val() != $('input[name="패스워드2"]').val()) {return alert("입력 하신 새패스워드가 다릅니다.");}
+
+
+
+
+    var input = $('#form_modify').serialize()
+
+    console.log(input)
+
+    $.ajax({
+        method: "POST",
+        url: "{{ url_for('_info_account') }}/"+storeid ,
+        data: JSON.stringify(input)
+    })
+        .done(function (msg) {
+            if (msg == 'modified'){
+
+                alert("패스워드가 변경되었습니다.")
+                window.location.replace("{{ url_for('_info_storepwd_') }}");
+            }else{ alert("현재 패스워드가 다릅니다.") }
+
+
+    });
+
+}
+
+
+</script>
+
+
+
+
 
 
 {% endblock %}

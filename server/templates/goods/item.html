@@ -11,16 +11,6 @@
 
 <div>
 
-<TABLE cellSpacing=0 cellPadding=0 width="100%" bgColor=#e9e9e9 border=0><TBODY>
-<TR height=2>
-<TD colSpan=3></TD></TR>
-<TR height=27>
-<TD width=10></TD>
-<TD>
-<TABLE height=2 cellSpacing=0 cellPadding=0 width="100%" border=0>
-<TBODY>
-<TR>
-<TD></TD></TR></TBODY></TABLE>
 <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
 <TBODY>
 <TR>
@@ -28,34 +18,34 @@
 <TABLE cellSpacing=0 cellPadding=0 border=0>
 <TBODY>
 <TR>
-<TD><IMG src="/image/s_icon.gif"> <SELECT onchange=fnRegDateOption(); name=op_regdate> <OPTION selected value=N>조건없음</OPTION> <OPTION value=Y>등록일자</OPTION></SELECT> <SPAN id=span_regdate style="DISPLAY: none"><INPUT onclick=fnShowCal2(1); id=date1_1 class=read1hc style="CURSOR: hand" readOnly size=10 value=2018-07-13 name=date1_1> - <INPUT onclick=fnShowCal2(1); id=date1_2 class=read1hc style="CURSOR: hand" readOnly size=10 value=2018-07-13 name=date1_2> <IMG onclick=fnShowCal2(1); style="CURSOR: hand" src="/image/calendar/calendar_btn.gif"><INPUT id=date_period1 type=hidden value=366 name=date_period1></SPAN></TD>
+<TD> <SELECT onchange=fnRegDateOption(); name=op_regdate> <OPTION selected value=N>조건없음</OPTION> <OPTION value=Y>등록일자</OPTION></SELECT> <SPAN id=span_regdate style="DISPLAY: none"><INPUT onclick=fnShowCal2(1); id=date1_1 class=read1hc style="CURSOR: hand" readOnly size=10 value=2018-07-13 name=date1_1> - <INPUT onclick=fnShowCal2(1); id=date1_2 class=read1hc style="CURSOR: hand" readOnly size=10 value=2018-07-13 name=date1_2> <INPUT id=date_period1 type=hidden value=366 name=date_period1></SPAN></TD>
 <TD width=10></TD>
-<TD><IMG src="/image/s_icon.gif"> 코드 <INPUT class=input1hc onkeydown="if(event.keyCode == 13) { document.form1.p_PROD_CD.value = ''; document.form1.page_no.value='1'; doAction('search','1'); }" size=12 name=s_PROD_CD></TD>
+<TD> 코드 <INPUT class=input1hc  size=12 name=s_PROD_CD></TD>
 <TD width=10></TD>
-<TD><IMG src="/image/s_icon.gif"> 명 <INPUT class="input1h imeHan" onkeydown="if(event.keyCode == 13) { document.form1.p_PROD_CD.value = ''; document.form1.page_no.value='1'; doAction('search','1'); }" size=12 name=s_PROD_NM></TD>
+<TD> 명 <INPUTsize=12 name=s_PROD_NM></TD>
 <TD width=10></TD>
-<TD><IMG src="/image/s_icon.gif"> 바코드 <INPUT onkeypress="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','1'); }" onblur="" class="input1hc imeEng" maxLength=26 size=13 name=s_BAR_CD></TD>
+<TD> 바코드 <INPUT maxLength=26 size=13 name=s_BAR_CD></TD>
 <TD width=10></TD>
-<TD><IMG src="/image/s_icon.gif"> 검색줄수 <INPUT onkeypress="if(event.keyCode == 13) { document.form1.page_no.value='1'; doAction('search','1'); }" class=input1hr size=5 value=500 name=page_size></TD>
+<TD> 검색줄수 <INPUT  size=5 value=500 name=page_size></TD>
 <TD width=10></TD>
 <TD>
-<TABLE onclick="document.form1.p_PROD_CD.value = ''; document.form1.page_no.value='1'; doAction('search','1');" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TABLE  style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
 <TBODY>
 <TR vAlign=middle>
-<TD><IMG id=btn_l_bg src="/image/btn_black_l_bg.gif"></TD>
-<TD background=/image/btn_black_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>조회</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
-<TD><IMG id=btn_r_bg src="/image/btn_black_r_bg.gif"></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD>
+<TD></TD>
+<TD ><FONT color=#ffffff>조회</FONT></TD>
+<TD></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD>
 <TD align=right>
 <TABLE cellSpacing=0 cellPadding=0 border=0>
 <TBODY>
 <TR>
 <TD>
-<TABLE onclick="doAction('delete','1');" style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
+<TABLE style="CURSOR: pointer" cellSpacing=0 cellPadding=0 border=0>
 <TBODY>
 <TR vAlign=middle>
-<TD><IMG id=btn_l_bg src="/image/btn_red_l_bg.gif"></TD>
-<TD background=/image/btn_red_c_bg.gif><IMG src="/image/blank.gif" width=4 height=13><FONT color=#ffffff>일괄삭제</FONT><IMG src="/image/blank.gif" width=4 height=13></TD>
-<TD><IMG id=btn_r_bg src="/image/btn_red_r_bg.gif"></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+<TD></TD>
+<TD ><FONT color=#ffffff>일괄삭제</FONT></TD>
+<TD></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
 <TABLE height=2 cellSpacing=0 cellPadding=0 width="100%" border=0>
 <TBODY>
 <TR>
@@ -67,12 +57,12 @@
 <TABLE cellSpacing=0 cellPadding=0 border=0>
 <TBODY>
 <TR>
-<TD><IMG src="/image/s_icon.gif"> 분류조회
+<TD> 분류조회
 <DIV style="DISPLAY: none"><INPUT type=hidden name=LCLS_CD><INPUT type=hidden name=MCLS_CD><INPUT type=hidden name=SCLS_CD><INPUT type=hidden name=SIZE_CLS_CD></DIV><INPUT onclick="prod_cls_tree_win('0','S','S92694')" id=cls_text class=read1h style="CURSOR: hand" readOnly size=30 value=전체 name=cls_text>
 <DIV id=span_cls style="BORDER-TOP: 0px; BORDER-RIGHT: 0px; BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; Z-INDEX: 99; DISPLAY: none"></DIV></TD>
 <TD style="DISPLAY: none"><INPUT type=hidden name=BrandCD></TD>
 <TD width=10></TD>
-<TD><IMG src="/image/s_icon.gif"> 거래처
+<TD> 거래처
  <SPAN id=divAjax_0_s_VENDOR_CD style="OVERFLOW-Y: scroll"><SELECT onchange="ajax_nextload(0,0); " id=SelectObj_0_0 name=s_VENDOR_CD> <OPTION selected value="">-전체-</OPTION> <OPTION value=0001>테스트거래처</OPTION></SELECT></SPAN>
 </TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
 <TABLE height=2 cellSpacing=0 cellPadding=0 width="100%" border=0>
@@ -154,8 +144,8 @@
 <TBODY>
 <TR>
 <TD bgColor=#eef1e8 align=right><FONT color=red>*</FONT>단가구분</TD>
-<TD bgColor=#e6ebde colSpan=3><INPUT type=hidden value=0 name=B_PRICE_MGR_FG>
- <SPAN id=divAjax_0_PRICE_MGR_FG style="OVERFLOW-Y: scroll"><SELECT onchange="ajax_nextload(0,0); fn_PRICE_MGR_FG()" id=SelectObj_0_0 name=PRICE_MGR_FG> <OPTION selected value=0>정가상품</OPTION> <OPTION value=1>싯가상품</OPTION> <OPTION value=2>저울상품</OPTION></SELECT></SPAN>
+<TD bgColor=#e6ebde colSpan=3><INPUT type=hidden value='X' name='시가1'>
+ <SPAN id=divAjax_0_PRICE_MGR_FG style="OVERFLOW-Y: scroll"><SELECT name='시가'> <OPTION selected value='X'>정가상품</OPTION> <OPTION value='O'>싯가상품</OPTION> <OPTION value='O'>저울상품</OPTION></SELECT></SPAN>
 &nbsp; 저장 후 저울상품으로 또는 저울상품은 변경불가 </TD></TR>
 <TR>
 <TD bgColor=#eef1e8 align=right><FONT color=red>*</FONT>상품코드</TD>
@@ -169,12 +159,12 @@
 <DIV style="DISPLAY: none"><INPUT type=hidden value=02 name=LCLS_CD><INPUT type=hidden name=MCLS_CD><INPUT type=hidden name=SCLS_CD></DIV><INPUT type=hidden value="" name=pi>
 <select id="rselect" style="width:20rem" ></select></TD></TR>
 <TR>
-<TD bgColor=#eef1e8 align=right>거래처</TD>
+<TD bgColor=#eef1e8 align=right><FONT  style="CURSOR: hand; COLOR: blue">거래처</TD>
 <TD bgColor=#e6ebde colSpan=3><INPUT type=hidden name=b_VENDOR_CDS> <INPUT type=hidden name=VENDOR_CDS> <INPUT onclick=vendor_win(); id=vendor_text class=read1h readOnly size=50 name=VENDOR_NMS> <INPUT onclick=vendor_win(); class=button1 type=button value=거래처선택>
 <DIV id=span_vendor style="BORDER-TOP: 0px; BORDER-RIGHT: 0px; BORDER-BOTTOM: 0px; POSITION: absolute; BORDER-LEFT: 0px; Z-INDEX: 99; DISPLAY: none"></DIV></TD></TR>
 <TR>
 <TD bgColor=#eef1e8 align=right>주방프린터</TD>
-<TD bgColor=#e6ebde colSpan=3><INPUT type=hidden name='프린터j'>
+<TD bgColor=#e6ebde colSpan=3><INPUT type=hidden name='프린터j' value=''>
     <!--<select id="pselect" style="width:20rem"  ></select>-->
     <table cellpadding="0" cellspacing="0" style="cursor:pointer" onClick="multiSelect('OPEN')">
  <tr>
@@ -192,35 +182,35 @@
 <TR>
 <TD bgColor=#eef1e8 align=right><FONT color=red>*</FONT>판매상품여부</TD>
 <TD bgColor=#e6ebde><SELECT onchange=fnSaleYn() name=isdel> <OPTION selected value=X>Yes</OPTION> <OPTION value=O>No</OPTION></SELECT></TD>
-<TD bgColor=#eef1e8 align=right>원산지</TD>
+<TD bgColor=#eef1e8 align=right><FONT  style="CURSOR: hand; COLOR: blue">원산지</TD>
 <TD bgColor=#e6ebde>
 <SPAN id=divAjax_1_ORG_PLACE_CD style="OVERFLOW-Y: scroll"><SELECT onchange="" name=ORG_PLACE_CD><OPTION selected value="">-선택-</OPTION></SELECT></SPAN>
 
 <INPUT onclick="fnCodeRegWin('003','ORG_PLACE_CD');" class=button1 style="WIDTH: 70px" type=button value=원산지관리></TD></TR>
 <TR>
 <TD bgColor=#eef1e8 align=right><FONT color=red>*</FONT>최초판매단가</TD>
-<TD bgColor=#e6ebde><INPUT type=hidden value=0 name=b_SALE_UPRC><INPUT onfocus="RmComma(this); select();" onblur=AddComma(this) class=input1hr maxLength=10 size=10 value=0 name='단가'> (VAT포함)</TD>
-<TD bgColor=#eef1e8 align=right>매핑상품코드</TD>
+<TD bgColor=#e6ebde><INPUT type=hidden value=O name='세포함'><INPUT onfocus="RmComma(this); select();" onblur=AddComma(this) class=input1hr maxLength=10 size=10 value=0 name='단가'> (VAT포함)</TD>
+<TD bgColor=#eef1e8 align=right><FONT  style="CURSOR: hand; COLOR: blue">매핑상품코드</TD>
 <TD bgColor=#e6ebde><INPUT class="input1 imeEng" maxLength=26 size=26 name=MAP_PROD_CD></TD></TR>
 <TR>
-<TD bgColor=#eef1e8 align=right><FONT color=red>*</FONT>원가단가</TD>
+<TD bgColor=#eef1e8 align=right><FONT color=red>*</FONT><FONT  style="CURSOR: hand; COLOR: blue">원가단가</TD>
 <TD bgColor=#e6ebde><INPUT type=hidden value=0 name=b_COST_UPRC><INPUT onfocus="RmComma(this); select();" onblur=AddComma(this); class=input1hr maxLength=10 size=10 value=0 name=COST_UPRC> (VAT별도)</TD>
 <TD bgColor=#eef1e8 align=right>바코드</TD>
 <TD bgColor=#e6ebde><INPUT type=hidden name=b_BAR_CD><INPUT class="input1h imeEng" maxLength=26 size=18 name='바코드'> <INPUT onclick=fnMakeBarcode(); class=button1 style="WIDTH: 60px" type=button value=자동생성> </TD></TR>
 <TR>
-<TD bgColor=#eef1e8 align=right><FONT color=red>*</FONT>주문상품구분</TD>
-<TD bgColor=#e6ebde colSpan=3><SELECT onchange=fnOrderYn() name=ORD_PROD_YN> <OPTION selected value=S>사입상품</OPTION> <OPTION value=N>주문불가</OPTION></SELECT> &nbsp; <FONT onclick=showDesc(); style="CURSOR: hand; COLOR: blue">주문상품설명</FONT> </TD></TR>
+<TD bgColor=#eef1e8 align=right><FONT color=red>*</FONT><FONT  style="CURSOR: hand; COLOR: blue">주문상품구분</TD>
+<TD bgColor=#e6ebde colSpan=3><SELECT onchange=fnOrderYn() name=ORD_PROD_YN> <OPTION selected value=S>사입상품</OPTION> <OPTION value=N>주문불가</OPTION></SELECT> &nbsp; <FONT  style="CURSOR: hand; COLOR: blue">주문상품설명</FONT> </TD></TR>
 <TR id=tr_ord_prod_yn1>
-<TD bgColor=#eef1e8 align=right><FONT color=red>*</FONT>주문단위</TD>
+<TD bgColor=#eef1e8 align=right><FONT color=red>*</FONT><FONT  style="CURSOR: hand; COLOR: blue">주문단위</TD>
 <TD bgColor=#e6ebde colSpan=3>
 <SPAN id=divAjax_2_ORD_UNIT_FG style="OVERFLOW-Y: scroll"><SELECT onchange="" name=ORD_UNIT_FG><OPTION selected value=0>낱개</OPTION><OPTION value=1>박스</OPTION><OPTION value=2>kg</OPTION></SELECT></SPAN>
 
-<INPUT onclick="fnCodeRegWin('013','ORD_UNIT_FG'); select_step2(fnGetSelectIdx('STOCK_UNIT_FG'),0);" class=button1 style="WIDTH: 70px" type=button value=단위관리> <SPAN id=span_ORD_UNIT_QTY style="DISPLAY: inline">입수 <INPUT type=hidden value=1 name=b_ORD_UNIT_QTY><INPUT onfocus="RmComma(this); select();" onblur="CaluateCost(this); AddComma(this);" class=input1hr maxLength=8 size=4 value=1 name=ORD_UNIT_QTY> 재고단위
+<INPUT onclick="fnCodeRegWin('013','ORD_UNIT_FG'); select_step2(fnGetSelectIdx('STOCK_UNIT_FG'),0);" class=button1 style="WIDTH: 70px" type=button value=단위관리> <SPAN id=span_ORD_UNIT_QTY style="DISPLAY: inline">입수 <INPUT type=hidden value=1 name=b_ORD_UNIT_QTY><INPUT onfocus="RmComma(this); select();" onblur="CaluateCost(this); AddComma(this);" class=input1hr maxLength=8 size=4 value=1 name=ORD_UNIT_QTY> <FONT  style="CURSOR: hand; COLOR: blue">재고단위
  <SPAN id=divAjax_3_STOCK_UNIT_FG style="OVERFLOW-Y: scroll"><SELECT onchange="" name=STOCK_UNIT_FG><OPTION selected value=0>낱개</OPTION><OPTION value=1>박스</OPTION><OPTION value=2>kg</OPTION></SELECT></SPAN>
 
-<BR></SPAN>최소주문 <INPUT onfocus="RmComma(this); select();" onblur=AddComma(this) class=input1hr maxLength=8 size=4 value=1 name=ORD_MIN_QTY> &nbsp; <SPAN id=span_ORD_UNIT_ALLOW style="DISPLAY: inline"><INPUT type=checkbox value=E name=ORD_UNIT_ALLOW_A>낱개주문 <INPUT type=checkbox value=E name=ORD_UNIT_ALLOW_R>낱개반품 </SPAN></TD></TR>
+<BR></SPAN>최소주문 <INPUT onfocus="RmComma(this); select();" onblur=AddComma(this) class=input1hr maxLength=8 size=4 value=1 name=ORD_MIN_QTY> &nbsp; <SPAN id=span_ORD_UNIT_ALLOW style="DISPLAY: inline"><INPUT type=checkbox value=E name=ORD_UNIT_ALLOW_A><FONT  style="CURSOR: hand; COLOR: blue">낱개주문 <INPUT type=checkbox value=E name=ORD_UNIT_ALLOW_R><FONT  style="CURSOR: hand; COLOR: blue">낱개반품 </SPAN></TD></TR>
 <TR id=tr_ord_prod_yn2 style="DISPLAY: none">
-<TD bgColor=#eef1e8 align=right><FONT color=red>*</FONT>공급단가</TD>
+<TD bgColor=#eef1e8 align=right><FONT color=red>*</FONT><FONT  style="CURSOR: hand; COLOR: blue">공급단가</TD>
 <TD bgColor=#e6ebde colSpan=3><INPUT type=hidden value=Y name=SPLY_UPRC_YN> <SPAN id=span_SPLY_UPRC><INPUT type=hidden value=0 name=b_SPLY_UPRC><INPUT onfocus="RmComma(this); select();" onblur=AddComma(this); class=input1hr maxLength=10 size=10 value=0 name=SPLY_UPRC> () &nbsp; <INPUT onclick=fnSplyUprcDesc() type=checkbox value=Y name=SPLY_UPRC_SYNC_YN>매장공급단가 일괄적용 </SPAN></TD></TR></TBODY></TABLE></TD>
 <TD width=6></TD>
 <TD width=170>
@@ -275,18 +265,18 @@
 <TR>
 <TD bgColor=#eef1e8 width="15%" align=right><FONT color=red>*</FONT>과세여부</TD>
 <TD bgColor=#e6ebde width="10%"><SELECT name='과세여부'> <OPTION selected value=O>Yes</OPTION> <OPTION value=X>No</OPTION></SELECT></TD>
-<TD bgColor=#eef1e8 width="15%" align=right><FONT color=red>*</FONT>재고관리여부</TD>
+<TD bgColor=#eef1e8 width="15%" align=right><FONT color=red>*</FONT><FONT  style="CURSOR: hand; COLOR: blue">재고관리여부</TD>
 <TD bgColor=#e6ebde width="10%"><SELECT name=STOCK_MGR_YN> <OPTION selected value=O>Yes</OPTION> <OPTION value=X>No</OPTION></SELECT></TD>
-<TD bgColor=#eef1e8 width="15%" align=right><FONT color=red>*</FONT>사용여부</TD>
+<TD bgColor=#eef1e8 width="15%" align=right><FONT color=red>*</FONT><FONT  style="CURSOR: hand; COLOR: blue">사용여부</TD>
 <TD bgColor=#e6ebde width="10%"><INPUT type=hidden value=Y name=b_USE_YN><SELECT name=USE_YN> <OPTION selected value=Y>Yes</OPTION> <OPTION value=N>No</OPTION></SELECT></TD>
-<TD bgColor=#eef1e8 width="15%" align=right><FONT color=red>*</FONT>안전재고</TD>
+<TD bgColor=#eef1e8 width="15%" align=right><FONT color=red>*</FONT><FONT  style="CURSOR: hand; COLOR: blue">안전재고</TD>
 <TD bgColor=#e6ebde width="10%"><INPUT onfocus="RmComma(this); select();" onblur=AddComma(this); class=input1hr maxLength=10 size=6 value=0 name=SAFE_STOCK_QTY></TD></TR>
 <TR>
-<TD bgColor=#eef1e8 align=right><FONT color=red>*</FONT>봉사료부과여부</TD>
+<TD bgColor=#eef1e8 align=right><FONT color=red>*</FONT><FONT  style="CURSOR: hand; COLOR: blue">봉사료부과여부</TD>
 <TD bgColor=#e6ebde><SELECT name=TIP_MENU_YN> <OPTION value=Y>Yes</OPTION> <OPTION selected value=N>No</OPTION></SELECT></TD>
-<TD bgColor=#eef1e8 align=right><FONT color=red>*</FONT>포장시할인금액</TD>
+<TD bgColor=#eef1e8 align=right><FONT color=red>*</FONT><FONT  style="CURSOR: hand; COLOR: blue">포장시할인금액</TD>
 <TD bgColor=#e6ebde><INPUT onfocus="RmComma(this); select();" onblur=AddComma(this) class=input1r maxLength=10 size=8 value=0 name=TOGO_CHARGE></TD><INPUT type=hidden value=0 name=DLV_CHARGE>
-<TD bgColor=#eef1e8 align=right><FONT color=red>*</FONT>코너</TD>
+<TD bgColor=#eef1e8 align=right><FONT color=red>*</FONT><FONT  style="CURSOR: hand; COLOR: blue">코너</TD>
 <TD bgColor=#e6ebde>
 <SPAN id=divAjax_4_CORNER_CD style="OVERFLOW-Y: scroll"><SELECT onchange="ajax_nextload(4,0); " id=SelectObj_4_0 name=CORNER_CD> <OPTION selected value=00>기본코너</OPTION> <OPTION value=01>현대</OPTION> <OPTION value=02>포스</OPTION></SELECT></SPAN>
 
@@ -294,13 +284,13 @@
 <TD bgColor=#eef1e8></TD>
 <TD bgColor=#e6ebde></TD></TR>
 <TR>
-<TD bgColor=#eef1e8 width="15%" align=right><FONT color=red>*</FONT>품절여부</TD>
+<TD bgColor=#eef1e8 width="15%" align=right><FONT color=red>*</FONT><FONT  style="CURSOR: hand; COLOR: blue">품절여부</TD>
 <TD bgColor=#e6ebde width="85%" colSpan=7><SELECT name=STOCK_OUT_YN> <OPTION value=Y>Yes</OPTION> <OPTION selected value=N>No</OPTION> <OPTION value=H>분배허용</OPTION></SELECT> (Yes : 주문불가, No : 주문가능, 분배허용 : 본사에서만 분배허용)</TD></TR>
 <TR>
-<TD bgColor=#eef1e8 width="15%" align=right><FONT color=red>*</FONT>초기재고</TD>
+<TD bgColor=#eef1e8 width="15%" align=right><FONT color=red>*</FONT><FONT  style="CURSOR: hand; COLOR: blue">초기재고</TD>
 <TD bgColor=#e6ebde width="85%" colSpan=7><INPUT onfocus="RmComma(this); select();" onblur=AddComma(this); class=input1hr maxLength=5 size=10 value=0 name=START_STOCK_QTY> 상품등록 후 재고조정 형식으로 초기재고가 생성됩니다. </TD></TR>
 <TR>
-<TD bgColor=#eef1e8 width="15%" align=right><FONT color=red>*</FONT>보증금상품구분</TD>
+<TD bgColor=#eef1e8 width="15%" align=right><FONT color=red>*</FONT><FONT  style="CURSOR: hand; COLOR: blue">보증금상품구분</TD>
 <TD bgColor=#e6ebde width="85%" colSpan=7>
 <SPAN id=divAjax_5_DEPOSIT_FG style="OVERFLOW-Y: scroll"><SELECT onchange="ajax_nextload(5,0); fn_DEPOSIT_FG();" id=SelectObj_5_0 name=DEPOSIT_FG> <OPTION selected value=0>일반</OPTION> <OPTION value=1>보증금포함</OPTION> <OPTION value=2>보증금회수</OPTION></SELECT></SPAN>
 &nbsp;&nbsp; <SPAN id=span_DEPOSIT_FG style="DISPLAY: none"><FONT color=red>*</FONT>보증금단가 <INPUT onfocus="RmComma(this); select();" onblur=AddComma(this) class=input1r maxLength=10 size=6 value=0 name=DEPOSIT_UPRC></SPAN> <SPAN id=span_DEPOSIT_FG1 style="DISPLAY: none">&nbsp;&nbsp; 커피의 경우 처럼 보증금을 포함하고 있는 상품을 등록합니다.</SPAN> <SPAN id=span_DEPOSIT_FG2 style="DISPLAY: none">&nbsp; 커피컵의 경우 처럼 보증금을 반환하는 상품을 등록합니다.</SPAN> </TD></TR>
@@ -308,22 +298,22 @@
 <TD bgColor=#eef1e8 width="15%" align=right><FONT color=red>*</FONT>판매가격통제</TD>
 <TD bgColor=#e6ebde width="85%" colSpan=7><INPUT type=hidden value=S name=b_PRICE_CTRL_FG><SELECT onchange=fn_PRICE_CTRL_FG(); name=PRICE_CTRL_FG> <OPTION value=H>본사</OPTION> <OPTION selected value=S>매장</OPTION></SELECT> <SPAN id=span_PRICE_CTRL_FG_H style="DISPLAY: none">&nbsp;&nbsp; 매장의 판매가를 본사에서 결정하며, 매장에서는 변경 불가 합니다.</SPAN> <SPAN id=span_PRICE_CTRL_FG_S style="DISPLAY: inline">&nbsp; 매장의 판매가를 매장자체에서 결정하며, 본사에서는 변경 불가 합니다.</SPAN> </TD></TR>
 <TR>
-<TD bgColor=#eef1e8 width="15%" align=right><FONT color=red>*</FONT>세트상품구분</TD>
+<TD bgColor=#eef1e8 width="15%" align=right><FONT color=red>*</FONT><FONT  style="CURSOR: hand; COLOR: blue">세트상품구분</TD>
 <TD bgColor=#e6ebde width="85%" colSpan=7><INPUT type=hidden value=0 name=b_SET_PROD_FG>
  <SPAN id=divAjax_6_SET_PROD_FG style="OVERFLOW-Y: scroll"><SELECT onchange="ajax_nextload(6,0); " id=SelectObj_6_0 name=SET_PROD_FG> <OPTION selected value=0>일반상품</OPTION> <OPTION value=1>세트상품</OPTION> <OPTION value=2>코스요리</OPTION> <OPTION value=3>레시피상품</OPTION></SELECT></SPAN>
 </TD></TR>
 <TR>
-<TD bgColor=#eef1e8 width="15%" align=right><FONT color=red>*</FONT>사이드메뉴사용</TD>
+<TD bgColor=#eef1e8 width="15%" align=right><FONT color=red>*</FONT><FONT  style="CURSOR: hand; COLOR: blue">사이드메뉴사용</TD>
 <TD bgColor=#e6ebde width="85%" colSpan=7><SELECT onchange=fn_SIDE_MENU_YN(); name=SIDE_MENU_YN> <OPTION value=Y>Yes</OPTION> <OPTION selected value=N>No</OPTION></SELECT><SPAN id=span_SIDE_MENU style="DISPLAY: none"> &nbsp;&nbsp; 속성 :
  <SPAN id=divAjax_7_SDA_CLS_CD style="OVERFLOW-Y: scroll"><SELECT onchange="ajax_nextload(7,0); " id=SelectObj_7_0 name=SDA_CLS_CD> <OPTION selected value="">-선택-</OPTION> <OPTION value=01>1111</OPTION> <OPTION value=02>222</OPTION></SELECT></SPAN>
 &nbsp;&nbsp;&nbsp;&nbsp; 선택메뉴 :
  <SPAN id=divAjax_8_SDS_GRP_CD style="OVERFLOW-Y: scroll"><SELECT onchange="ajax_nextload(8,0); " id=SelectObj_8_0 name=SDS_GRP_CD> <OPTION selected value="">-선택-</OPTION> <OPTION value=000001>현대포스a세트</OPTION> <OPTION value=000002>현대포스b세트</OPTION> <OPTION value=000003>11</OPTION> <OPTION value=000004>맛선택</OPTION></SELECT></SPAN>
 </SPAN></TD></TR><INPUT type=hidden name=SELL_AUTO_ORDER_YN><INPUT type=hidden name=SELL_AUTO_ORDER_RATE>
 <TR>
-<TD bgColor=#eef1e8 width="15%" align=right><FONT color=red>*</FONT>포인트적립여부</TD>
+<TD bgColor=#eef1e8 width="15%" align=right><FONT color=red>*</FONT><FONT  style="CURSOR: hand; COLOR: blue">포인트적립여부</TD>
 <TD bgColor=#e6ebde width="85%" colSpan=7><SELECT name=CST_ACCDC_YN> <OPTION selected value=Y>Yes</OPTION> <OPTION value=N>No</OPTION></SELECT></TD></TR><INPUT type=hidden name=STAMP_ACC_YN> <INPUT type=hidden name=STAMP_ACC_QTY> <INPUT type=hidden name=STAMP_USE_YN> <INPUT type=hidden name=STAMP_USE_QTY>
 <TR>
-<TD bgColor=#eef1e8 width="15%" align=right><FONT color=red>*</FONT>모바일주문구분</TD>
+<TD bgColor=#eef1e8 width="15%" align=right><FONT color=red>*</FONT><FONT  style="CURSOR: hand; COLOR: blue">모바일주문구분</TD>
 <TD bgColor=#e6ebde width="85%" colSpan=7><SELECT name=MOBILE_ORDER_FG> <OPTION selected value=0>일반/POS</OPTION> <OPTION value=1>MOBILE 전용</OPTION> <OPTION value=2>공통</OPTION></SELECT></TD></TR></TBODY></TABLE>
 <TABLE height=6 cellSpacing=0 cellPadding=0 width="100%" border=0>
 <TBODY>
@@ -370,13 +360,15 @@ load()
 function load() {
     _data = [];
     gridList = [];
+    itemgroup = [];
 
     $.getJSON("{{ url_for('_system_printer') }}", function (json) {
             _data = json;
     }).done(function () {
 
         for ( i in _data ) {
-            printer[_data[i]['idx']] = _data[i]['프린터명']
+            if ( _data[i]['enabled'] == true )
+                printer[_data[i]['idx']] = _data[i]['프린터명']
         }
 
     });
@@ -385,6 +377,7 @@ function load() {
     $.getJSON("{{ url_for('_goods_itemgroup') }}/"+"{{ store_id }}", function (json) {
             _data = json;
     }).done(function () {
+
 
         for ( i in _data ) {
             itemgroup[_data[i].i] = _data[i]['분류명']
@@ -409,19 +402,20 @@ function load() {
 
 
           firstGrid.setData(gridList);
-
-          if ($('#rselect').val() == null) {
+          if ($('#rselect')[0].length == 0) {
              var options = itemgroup.map(function(val, ind){
                     return $("<option></option>").val(ind).html(val);
                     });
              $('#rselect').append(options);
-             $('input[name="pi"]').val($('#rselect').val())
+
 
              var options1 = printer.map(function(val, ind){
-                    return "<li><input type='checkbox' class='psc' name="+val+" value="+ind+">"+val+"</li>"
+                    return "<li><input type='checkbox' id='psc"+ind+"' class='psc' name='"+val+"' value="+ind+">"+val+"</li>"
                     });
              $('#pselect').append(options1);
           }
+          $("#rselect").val($("#rselect")[0][0].value).prop("selected", true);
+          $('input[name="pi"]').val($('#rselect').val())
 
 
 
@@ -434,10 +428,11 @@ function loaditem(item) {
     var psc = [];
     var psn = [];
 
-    for ( j in printer) {
-        $('input[value='+j+']').prop('checked', false)
-    }
 
+    for ( j in printer) {
+        $('input[id=psc'+j+']').prop('checked', false)
+    }
+    $('#ps').text('')
 
   for ( i in _data) {
     if (item == _data[i]['i'] ) {
@@ -447,10 +442,14 @@ function loaditem(item) {
         $('input[name="단가"]').val(_data[i]['단가'])
         $('input[name="바코드"]').val(_data[i]['바코드'])
         $("#rselect").val(_data[i]['pi']).prop("selected", true);
+        $('select[name="판매상품여부"]').val(_data[i]['isdel']);
+        $('select[name="과세여부"]').val(_data[i]['과세여부'])
+        $('select[name="시가"]').val(_data[i]['시가'])
+
 
 
         for ( j in _data[i]['프린터j']) {
-            $('input[value='+j+']').prop('checked', true)
+            $('input[id=psc'+_data[i]['프린터j'][j]+']').prop('checked', true)
         }
 
     }
@@ -468,6 +467,14 @@ function loaditem(item) {
 
 function newrow() {
     $('input[name="i"]').val('신규')
+    $('input[name="품목명"]').val('')
+    $('input[name="단가"]').val('')
+    $('input[name="바코드"]').val('')
+    $("#rselect").val('').prop("selected", true);
+    $('select[name="판매상품여부"]').val('O');
+    $('select[name="과세여부"]').val('O')
+    $('select[name="시가"]').val('X')
+
 }
 
 
@@ -486,8 +493,8 @@ function save() {
         .done(function (msg) {
             if (msg == 'modified'){
 
-                console.log('modified');
                 load()
+                newrow()
                 }
 
     });

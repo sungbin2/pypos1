@@ -43,8 +43,8 @@ function lastMonth() {
 var now = new Date();
 
 
-//$("#dates").val( today());
-//$("#datee").val( today());
+$("#dates").val(Month());
+$("#datee").val(Month());
 
 
 var picker = new ax5.ui.picker();

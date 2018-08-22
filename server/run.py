@@ -6,7 +6,7 @@ sys.path.append(os.getcwd())
 
 framework = 'flask'
 _host = '0.0.0.0'
-_port = 8080
+_port = 8081
 
 print('********************************************************')
 print(' FRAMEWORK: ', framework)

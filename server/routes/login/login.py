@@ -27,6 +27,8 @@ def _login():
                 error = '아이디 / 패스워드를 잘못 입력하셨습니다.'
             else:
                 c.account_session(orm, account, c.session)
+                if account.s == 0:
+                    return c.redirect('http://asp.van.or.kr:8082/window')
                 return c.redirect(c.url_for('hello_world'))
 
     return c.display(error=error)

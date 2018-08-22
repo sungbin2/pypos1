@@ -37,11 +37,6 @@
 <script type="text/javascript">
 
 
-
-
-
-
-
     load()
 
 
@@ -190,7 +185,7 @@
             var result = [];
             var data0 = [];
 
-             $.getJSON("{{ url_for('_earnings_day' ) }}/"+"{{ store_id }}&"+dates+"-01&"+datee+"-30", function (json) {
+             $.getJSON("{{ url_for('_earnings_day' ) }}/"+"{{ store_id }}&"+dates+"-01&"+datee+"-31", function (json) {
                 _data = json;
 
             }).done(function () {

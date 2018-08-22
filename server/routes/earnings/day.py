@@ -50,7 +50,7 @@ def _earnings_day_(_id,dates,datee):
     cnt_days['상품분류'] = {}
     cnt_days['일자별'] = {}
     cnt_days['테이블목록'] = {}
-    
+    cashm = {'현금', '카드', '카드(임의)', '포인트'}
 
     cnt = 0
     if c.is_GET():
@@ -68,42 +68,109 @@ def _earnings_day_(_id,dates,datee):
                 .filter(orm.판매_품목.d <= datee) \
                 .all()
 
-            for each in lst:
-                d = each.d.strftime('%Y-%m-%d')
+            lst0 = ss.query(orm.판매) \
+                .filter_by(s=store_id) \
+                .filter_by(isdel='X') \
+                .filter(orm.판매.d >= dates) \
+                .filter(orm.판매.d <= datee) \
+                .all()
+
+            for each0 in lst0:
+                d = each0.d.strftime('%Y-%m-%d')
                 if d not in cnt_days['일자별']:
-                    cnt_days['일자별'][d] = {'영업일자': d,
-                                   '총거래액': 0, '총할인액': 0, '실거래액': 0, '세금': 0, '면세' : 0,'판매이익': 0, '판매건수' : 0 ,'영수건수' : 0 , '분류별' : {} ,'상품별' : {} , '수단별' : {} ,'영수증별' : {},'테이블별' : {} }
-                cnt_days['일자별'][d]['총거래액'] += each.단가
-                cnt_days['일자별'][d]['총할인액'] += each.할인
-                cnt_days['일자별'][d]['실거래액'] += each.합계
-                cnt_days['일자별'][d]['세금'] += each.세
-                cnt_days['일자별'][d]['면세'] += each.면세
-                cnt_days['일자별'][d]['판매이익'] += (each.공급가 + each.면세)
+                    cnt_days['일자별'][d] = {'영업일자': d,  '구분' :  { '판매' : { '총거래액': 0, '총할인액': 0, '실거래액': 0, '세금': 0, '면세' : 0,'판매이익': 0, '판매건수' : 0 ,'영수건수' : 0  }  , '반품': {'총거래액': 0, '총할인액': 0, '실거래액': 0, '세금': 0, '면세' : 0,'판매이익': 0, '판매건수' : 0 ,'영수건수' : 0  } },
+                                   '총거래액': 0, '총할인액': 0, '실거래액': 0, '세금': 0, '면세' : 0,'판매이익': 0, '판매건수' : 0 ,'영수건수' : 0 , '분류별' : {} ,'상품별' : {} , '수단별' : {} ,'수단별매출' : {}, '수단별반품' : {},'영수증별' : {},'테이블별' : {} }
 
-                cnt_days['일자별'][d]['판매건수'] += 1
+                if each0.유형 == 'A' or each0.유형 == 'B':
+                    cnt_days['일자별'][d]['구분']['판매']['총거래액'] += each0.총금액
+                    cnt_days['일자별'][d]['구분']['판매']['총할인액'] += each0.총할인
+                    cnt_days['일자별'][d]['구분']['판매']['실거래액'] += each0.합계
+                    cnt_days['일자별'][d]['구분']['판매']['세금'] += each0.세
+                    cnt_days['일자별'][d]['구분']['판매']['면세'] += each0.면세
+                    cnt_days['일자별'][d]['구분']['판매']['판매이익'] += (each0.공급가 + each0.면세)
 
-                p = str(each.품목pi)
+                    cnt_days['일자별'][d]['구분']['판매']['판매건수'] += 1
 
-                if p not in cnt_days['일자별'][d]['분류별']:
-                    cnt_days['일자별'][d]['분류별'][p] = {'총거래액': 0, '총할인액': 0, '실거래액': 0, '세금': 0, '판매이익': 0, '영수건수': 0}
 
-                cnt_days['일자별'][d]['분류별'][p]['총거래액'] += each.단가
-                cnt_days['일자별'][d]['분류별'][p]['총할인액'] += each.할인
-                cnt_days['일자별'][d]['분류별'][p]['실거래액'] += each.합계
-                cnt_days['일자별'][d]['분류별'][p]['세금'] += each.세
-                cnt_days['일자별'][d]['분류별'][p]['판매이익'] += (each.공급가 + each.면세)
-                cnt_days['일자별'][d]['분류별'][p]['영수건수'] += 1
 
-                s = each.품목i
-                if s not in cnt_days['일자별'][d]['상품별']:
-                    cnt_days['일자별'][d]['상품별'][s] = {'ppi': {}, '총거래액': 0, '총할인액': 0, '실거래액': 0, '세금': 0, '판매이익': 0, '영수건수': 0}
-                cnt_days['일자별'][d]['상품별'][s]['ppi'] = each.품목pi
-                cnt_days['일자별'][d]['상품별'][s]['총거래액'] += each.단가
-                cnt_days['일자별'][d]['상품별'][s]['총할인액'] += each.할인
-                cnt_days['일자별'][d]['상품별'][s]['실거래액'] += each.합계
-                cnt_days['일자별'][d]['상품별'][s]['세금'] += each.세
-                cnt_days['일자별'][d]['상품별'][s]['판매이익'] += (each.공급가 + each.면세)
-                cnt_days['일자별'][d]['상품별'][s]['영수건수'] += 1
+                if each0.유형 == 'C':
+                    cnt_days['일자별'][d]['구분']['반품']['총거래액'] += each0.총금액
+                    cnt_days['일자별'][d]['구분']['반품']['총할인액'] += each0.총할인
+                    cnt_days['일자별'][d]['구분']['반품']['실거래액'] += each0.합계
+                    cnt_days['일자별'][d]['구분']['반품']['세금'] += each0.세
+                    cnt_days['일자별'][d]['구분']['반품']['면세'] += each0.면세
+                    cnt_days['일자별'][d]['구분']['반품']['판매이익'] += (each0.공급가 + each0.면세)
+
+                    cnt_days['일자별'][d]['구분']['반품']['판매건수'] += -1
+
+
+
+                for each in lst:
+                    if each0.i == each.판매i:
+
+                        cnt_days['일자별'][d]['총거래액'] += each.단가
+                        cnt_days['일자별'][d]['총할인액'] += each.할인
+                        cnt_days['일자별'][d]['실거래액'] += each.합계
+                        cnt_days['일자별'][d]['세금'] += each.세
+                        cnt_days['일자별'][d]['면세'] += each.면세
+                        cnt_days['일자별'][d]['판매이익'] += (each.공급가 + each.면세)
+
+                        cnt_days['일자별'][d]['판매건수'] += 1
+
+                        if each.유형 == 'C':
+                            cnt_days['일자별'][d]['총거래액'] += -each.단가
+                            cnt_days['일자별'][d]['총할인액'] += -each.할인
+                            cnt_days['일자별'][d]['실거래액'] += -each.합계
+                            cnt_days['일자별'][d]['세금'] += -each.세
+                            cnt_days['일자별'][d]['면세'] += -each.면세
+                            cnt_days['일자별'][d]['판매이익'] += -(each.공급가 + each.면세)
+
+                            cnt_days['일자별'][d]['판매건수'] += -1
+
+                        p = str(each.품목pi)
+
+                        if p not in cnt_days['일자별'][d]['분류별']:
+                            cnt_days['일자별'][d]['분류별'][p] = {'총거래액': 0, '총할인액': 0, '실거래액': 0, '세금': 0, '판매이익': 0, '영수건수': 0}
+
+                        cnt_days['일자별'][d]['분류별'][p]['총거래액'] += each.단가
+                        cnt_days['일자별'][d]['분류별'][p]['총할인액'] += each.할인
+                        cnt_days['일자별'][d]['분류별'][p]['실거래액'] += each.합계
+                        cnt_days['일자별'][d]['분류별'][p]['세금'] += each.세
+                        cnt_days['일자별'][d]['분류별'][p]['판매이익'] += (each.공급가 + each.면세)
+                        cnt_days['일자별'][d]['분류별'][p]['영수건수'] += 1
+
+                        if each.유형 == 'C':
+                            cnt_days['일자별'][d]['분류별'][p]['총거래액'] += -each.단가
+                            cnt_days['일자별'][d]['분류별'][p]['총할인액'] += -each.할인
+                            cnt_days['일자별'][d]['분류별'][p]['실거래액'] += -each.합계
+                            cnt_days['일자별'][d]['분류별'][p]['세금'] += -each.세
+                            cnt_days['일자별'][d]['분류별'][p]['판매이익'] += -(each.공급가 + each.면세)
+                            cnt_days['일자별'][d]['분류별'][p]['영수건수'] += -1
+
+                        s = each.품목i
+                        if s not in cnt_days['일자별'][d]['상품별']:
+                            cnt_days['일자별'][d]['상품별'][s] = {'ppi': {}, '총거래액': 0, '총할인액': 0, '실거래액': 0, '세금': 0, '판매이익': 0,
+                                                            '영수건수': 0}
+                        cnt_days['일자별'][d]['상품별'][s]['ppi'] = each.품목pi
+                        cnt_days['일자별'][d]['상품별'][s]['총거래액'] += each.단가
+                        cnt_days['일자별'][d]['상품별'][s]['총할인액'] += each.할인
+                        cnt_days['일자별'][d]['상품별'][s]['실거래액'] += each.합계
+                        cnt_days['일자별'][d]['상품별'][s]['세금'] += each.세
+                        cnt_days['일자별'][d]['상품별'][s]['판매이익'] += (each.공급가 + each.면세)
+                        cnt_days['일자별'][d]['상품별'][s]['영수건수'] += 1
+
+                        if each.유형 == 'C':
+                            cnt_days['일자별'][d]['상품별'][s]['총거래액'] += -each.단가
+                            cnt_days['일자별'][d]['상품별'][s]['총할인액'] += -each.할인
+                            cnt_days['일자별'][d]['상품별'][s]['실거래액'] += -each.합계
+                            cnt_days['일자별'][d]['상품별'][s]['세금'] += -each.세
+                            cnt_days['일자별'][d]['상품별'][s]['판매이익'] += -(each.공급가 + each.면세)
+                            cnt_days['일자별'][d]['상품별'][s]['영수건수'] += -1
+
+
+
+
+
 
             lst1 = ss.query(orm.상품_품목) \
                 .filter_by(s=store_id) \
@@ -133,9 +200,11 @@ def _earnings_day_(_id,dates,datee):
 
             for each in lst3:
                 d = each.d.strftime('%Y-%m-%d')
-                cashm = {'현금', '카드', '카드(임의)','포인트'}
+
                 for each1 in cashm:
-                    cnt_days['일자별'][d]['수단별'][each1] = {'판매i': 0, '실거래액': 0, '세금': 0, '면세' : 0, '판매이익': 0, '영수건수': 0}
+                    cnt_days['일자별'][d]['수단별'][each1] = {'판매i': 0, '실거래액': 0, '세금': 0, '면세' : 0, '판매이익': 0, '영수건수': 0 }
+                    cnt_days['일자별'][d]['수단별반품'][each1] = {'판매i': 0, '실거래액': 0, '세금': 0, '면세': 0, '판매이익': 0, '영수건수': 0}
+                    cnt_days['일자별'][d]['수단별매출'][each1] = {'판매i': 0, '실거래액': 0, '세금': 0, '면세': 0, '판매이익': 0, '영수건수': 0}
 
             for each in lst3:
                 d = each.d.strftime('%Y-%m-%d')
@@ -144,11 +213,34 @@ def _earnings_day_(_id,dates,datee):
 
                 # if cash not in cnt_days['일자별'][d]['수단별']:
                 #     cnt_days['일자별'][d]['수단별'][cash] = {'판매i' : 0 , '실거래액': 0, '세금': 0, '면세' : 0, '판매이익': 0, '영수건수': 0}
-                cnt_days['일자별'][d]['수단별'][cash]['실거래액'] += each.합계
-                cnt_days['일자별'][d]['수단별'][cash]['세금'] += each.세
-                cnt_days['일자별'][d]['수단별'][cash]['면세'] += each.면세
-                cnt_days['일자별'][d]['수단별'][cash]['판매이익'] += (each.공급가 + each.면세)
-                cnt_days['일자별'][d]['수단별'][cash]['영수건수'] += 1
+                if each.유형 == 'A' or each.유형 == 'B':
+                    cnt_days['일자별'][d]['수단별매출'][cash]['실거래액'] += each.합계
+                    cnt_days['일자별'][d]['수단별매출'][cash]['세금'] += each.세
+                    cnt_days['일자별'][d]['수단별매출'][cash]['면세'] += each.면세
+                    cnt_days['일자별'][d]['수단별매출'][cash]['판매이익'] += (each.공급가 + each.면세)
+                    cnt_days['일자별'][d]['수단별매출'][cash]['영수건수'] += 1
+
+                    cnt_days['일자별'][d]['수단별'][cash]['실거래액'] += each.합계
+                    cnt_days['일자별'][d]['수단별'][cash]['세금'] += each.세
+                    cnt_days['일자별'][d]['수단별'][cash]['면세'] += each.면세
+                    cnt_days['일자별'][d]['수단별'][cash]['판매이익'] += (each.공급가 + each.면세)
+                    cnt_days['일자별'][d]['수단별'][cash]['영수건수'] += 1
+
+
+
+                else:
+                    cnt_days['일자별'][d]['수단별반품'][cash]['실거래액'] += each.합계
+                    cnt_days['일자별'][d]['수단별반품'][cash]['세금'] += each.세
+                    cnt_days['일자별'][d]['수단별반품'][cash]['면세'] += each.면세
+                    cnt_days['일자별'][d]['수단별반품'][cash]['판매이익'] += (each.공급가 + each.면세)
+                    cnt_days['일자별'][d]['수단별반품'][cash]['영수건수'] += 1
+
+                    cnt_days['일자별'][d]['수단별'][cash]['실거래액'] += each.합계
+                    cnt_days['일자별'][d]['수단별'][cash]['세금'] += each.세
+                    cnt_days['일자별'][d]['수단별'][cash]['면세'] += each.면세
+                    cnt_days['일자별'][d]['수단별'][cash]['판매이익'] += (each.공급가 + each.면세)
+                    cnt_days['일자별'][d]['수단별'][cash]['영수건수'] += -1
+
 
             lst4 = ss.query(orm.판매) \
                 .filter_by(s=store_id) \
@@ -187,6 +279,7 @@ def _earnings_day_(_id,dates,datee):
                 r = each.i
                 if r not in cnt_days['일자별'][d]['영수증별']:
                     cnt_days['일자별'][d]['영수증별'][r] = { '총거래액': 0, '총할인액': 0, '실거래액': 0, '세금': 0, '면세' :0, '판매이익': 0, '주문일시': d1 , '결제일시': d2, '취소일시': d3 ,'테이블명': "" ,'상품' : {},'영수건수':0 }
+
                 cnt_days['일자별'][d]['영수증별'][r]['총거래액'] = each.총금액
                 cnt_days['일자별'][d]['영수증별'][r]['총할인액'] = each.총할인
                 cnt_days['일자별'][d]['영수증별'][r]['실거래액'] = each.합계
@@ -194,30 +287,42 @@ def _earnings_day_(_id,dates,datee):
                 cnt_days['일자별'][d]['영수증별'][r]['면세'] = each.면세
                 cnt_days['일자별'][d]['영수증별'][r]['판매이익'] = (each.공급가 + each.면세)
                 cnt_days['일자별'][d]['영수증별'][r]['테이블명'] = each.table_idx+1
+                cnt_days['일자별'][d]['영수증별'][r]['구분'] = each.유형
                 cnt_days['일자별'][d]['영수건수'] += 1
 
                 for each2 in cashm:
                     cnt_days['일자별'][d]['영수증별'][r][each2] = 0
 
                 for each1 in lst3:
-                    if each1.판매i == r:
+                    if each1.판매i == r or each1.판매i == each.ci:
                         cash1 = each1.결제수단
-                        cnt_days['일자별'][d]['영수증별'][r][cash1] += each1.합계
+                        if each1.유형 == each.유형:
+                            cnt_days['일자별'][d]['영수증별'][r][cash1] += each1.합계
+
 
                 for each3 in lst:
                     g = each3.품목i
 
 
-                    if each3.판매i == r:
+                    if each3.판매i == r or each.ci == each3.판매i:
                         if g not in cnt_days['일자별'][d]['영수증별'][r]['상품']:
                             cnt_days['일자별'][d]['영수증별'][r]['상품'][g] = {  '총거래액': 0, '총할인액': 0, '실거래액': 0, '세금': 0, '판매이익': 0,'영수건수' : 0 }
 
-                        cnt_days['일자별'][d]['영수증별'][r]['상품'][g]['총거래액'] += each3.단가
-                        cnt_days['일자별'][d]['영수증별'][r]['상품'][g]['총할인액'] += each3.할인
-                        cnt_days['일자별'][d]['영수증별'][r]['상품'][g]['실거래액'] += each3.합계
-                        cnt_days['일자별'][d]['영수증별'][r]['상품'][g]['세금'] += each3.세
-                        cnt_days['일자별'][d]['영수증별'][r]['상품'][g]['판매이익'] += (each3.공급가 + each3.면세)
-                        cnt_days['일자별'][d]['영수증별'][r]['상품'][g]['영수건수'] += 1
+                        if each.ci == each3.판매i:
+                            cnt_days['일자별'][d]['영수증별'][r]['상품'][g]['총거래액'] += -each3.단가
+                            cnt_days['일자별'][d]['영수증별'][r]['상품'][g]['총할인액'] += -each3.할인
+                            cnt_days['일자별'][d]['영수증별'][r]['상품'][g]['실거래액'] += -each3.합계
+                            cnt_days['일자별'][d]['영수증별'][r]['상품'][g]['세금'] += -each3.세
+                            cnt_days['일자별'][d]['영수증별'][r]['상품'][g]['판매이익'] += -(each3.공급가 + each3.면세)
+                            cnt_days['일자별'][d]['영수증별'][r]['상품'][g]['영수건수'] += -1
+
+                        else:
+                            cnt_days['일자별'][d]['영수증별'][r]['상품'][g]['총거래액'] += each3.단가
+                            cnt_days['일자별'][d]['영수증별'][r]['상품'][g]['총할인액'] += each3.할인
+                            cnt_days['일자별'][d]['영수증별'][r]['상품'][g]['실거래액'] += each3.합계
+                            cnt_days['일자별'][d]['영수증별'][r]['상품'][g]['세금'] += each3.세
+                            cnt_days['일자별'][d]['영수증별'][r]['상품'][g]['판매이익'] += (each3.공급가 + each3.면세)
+                            cnt_days['일자별'][d]['영수증별'][r]['상품'][g]['영수건수'] += 1
 
 
         return c.jsonify(cnt_days)

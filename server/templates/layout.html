@@ -100,8 +100,8 @@
               <a class="item" href="{{ url_for('_info_staff') }}">사원정보조회</a>
               <a class="item" href="{{ url_for('_info_storepwd_') }}">패스워드변경</a>
               <a class="item red" href="#" style="color:red;">VAN/코너 정보</a>
-              <a class="item" href="{{ url_for('_system_config1') }}">테이블속성</a>
-              <a class="item" href="#" onclick="테이블()">테이블관리</a>
+              <a class="item" href="#">테이블속성</a>
+              <a class="item" href="{{ url_for('_system_table2') }}">테이블관리</a>
               <a class="item" href="{{ url_for('_system_config') }}">포스기능정의</a>
             </div>
           </div>
@@ -128,7 +128,7 @@
               <a class="item" href="{{ url_for('_goods_item_modify') }}">상품정보일괄변경</a>
               <a class="item" href="{{ url_for('_goods_item_barcode') }}">상품바코드등록</a>
               <a class="item" href="#">사이드메뉴등록</a>
-              <a class="item" href="#" onclick="메뉴()">판매터치키등록</a>
+              <a class="item" href="{{ url_for('_system_menu2') }}">판매터치키등록</a>
               <a class="item" href="#">상품별코너변경</a>
               <a class="item" href="#">주방프린터-상품연결</a>
               <a class="item" href="#">주방프린터-시간대제어</a>

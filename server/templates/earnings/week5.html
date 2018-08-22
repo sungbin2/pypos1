@@ -1,6 +1,8 @@
+
 {% include 'ax5.html' %}
 
-<table class="box week" >
+
+<table class="box day" >
     <tr>
         <th >
          <div class="row" >
@@ -13,6 +15,9 @@
                     <span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
                 </div>
                 <button class="btn" id="load" style=" margin-top: 8">조회</button>
+                <div style="float:right;">
+                    <button class="btn" id="excel" style="margin-top: 8">엑셀</button>
+                </div>
             </div>
         </div>
         </th>
@@ -21,263 +26,139 @@
         <td>
                  <div data-ax5grid="first-grid" data-ax5grid-config="{
                         header: { align: 'center' },
-                        frozenColumnIndex: 1,
-                        showLineNumber: true,
+                        frozenColumnIndex: 3,
                         page: { display: false  }
-                    }" style="height: 270;"></div>
+                    }" style="height: 100%;"></div>
         </td>
 
     </tr>
 </table>
-<table class="box" >
-    <tr>
-        <td style="height:100%">
-            <div class="chart">
-                 <canvas id="myChart" height="20vh" width="100vw"></canvas>
-            </div>
-
-        </td>
-    </tr>
-</table>
-
 
 
 <script type="text/javascript" src="{{ url_for('static',filename='datepicker.js') }} "></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
 
 <script type="text/javascript">
 
-
+var _data = []; var data0 = [];
 var  gridList = [];
-var  data0 = [];
+var  gridList1 = [];
+var result = [];
+var data =[] ; var sum = [];
 var  week = new Array('일', '월', '화', '수', '목', '금', '토');
+var firstGrid
+
 load()
 
-
-
-var mask = new ax5.ui.mask();
-var modal = new ax5.ui.modal();
-var modalCallBack = function(){
-    modal.close();
-};
-
-function modal1() {
-        modal.open({
-            width: 600,
-            iframe: {
-                method: "get",
-                url: "{{ url_for('_earnings_modal') }}",
-                param: "callBack=modalCallBack"
-            },
-            onStateChanged: function () {
-                // mask
-                if (this.state === "open") {
-                    mask.open();
-                }
-                else if (this.state === "close") {
-                    mask.close();
-                }
-            }
-        })
-}
 
 function load() {
 
 
-        var firstGrid = new ax5.ui.grid({
-        target: $('[data-ax5grid="first-grid"]'),
-        columns: [
-            {key: "요일", label: "요일", width: 35, align: "center" ,formatter: function(){
-                return '<a onClick=modal1(); >' + this.value + '</a>';
-            }},
-            {
-                label: "매출현황", columns: [ // child columns
-                    {key: "총매출", label: "총매출" ,width: 80 , formatter: "money",align: "right"},
-                    {key: "총할인", label: "총할인" ,width: 80 , formatter: "money",align: "right"},
-                    {key: "실매출", label: "실매출" ,width: 80 , formatter: "money",align: "right"},
-                    {key: "가액", label: "가액" ,width: 80 , formatter: "money",align: "right"},
-                    {key: "부가세", label: "부가세" ,width: 80 , formatter: "money",align: "right"},
-                    {key: "영수건수", label: "영수건수" ,width: 60 ,align: "right"},
-                    {key: "영수단가", label: "영수단가" ,width: 80 , formatter: "money",align: "right"}
-                ]
-            },
-            {key: "봉사료", label: "봉사료", width: 80 ,align: "right", formatter: "money"},
-            {key: "에누리", label: "에누리", width: 80 ,align: "right", formatter: "money"},
-            {
-                label: "결제수단", columns: [ // child columns
-                    {key: "결제합계", label: "결제합계" ,align: "right", formatter: "money"},
-                    {key: "단순현금", label: "단순현금" ,align: "right", formatter: "money"},
-                    {key: "현금영수", label: "현금영수" ,align: "right", formatter: "money"},
-                    {key: "신용카드", label: "신용카드" ,align: "right", formatter: "money"},
-                    {key: "외상", label: "외상" ,align: "right", formatter: "money"},
-                    {key: "상품권", label: "상품권" ,align: "right", formatter: "money"},
-                    {key: "식권", label: "식권" ,align: "right", formatter: "money"},
-                    {key: "회원포인트", label: "회원포인트" ,align: "right", formatter: "money"},
-                    {key: "제휴카드", label: "제휴카드" ,align: "right", formatter: "money"},
-                    {key: "사원카드", label: "사원카드" ,align: "right", formatter: "money"},
-                    {key: "모바일쿠폰", label: "모바일쿠폰" ,align: "right", formatter: "money"},
-                    {key: "캐시비", label: "캐시비" ,align: "right", formatter: "money"},
-                    {key: "선불카드", label: "선불카드" ,align: "right", formatter: "money"}
-                ]
-            },
-            {
-                label: "포장/배달현황", columns: [ // child columns
-                    {key: "일반", label: "일반" ,align: "right", formatter: "money"},
-                    {key: "포장", label: "포장" ,align: "right", formatter: "money"},
-                    {key: "배달", label: "배달" ,align: "right", formatter: "money"},
-
-                ]
-            },
-        ],
-        footSum: [
-            [
+    data = [
+            {key: "요일", label: "요일", width: 35, align: "center"},
+            {key: "실매출", label: "실매출합계" ,width: 80 , formatter: "money",align: "right"},
+            {key: "판매건수", label: "수량합계" ,width: 60 ,align: "right"},
+        ]
+     sum =[
                 {label: "합계", colspan: 1, align: "center"},
-                {key: "총매출", collector: "sum", formatter: "money", align: "center"},
-                {key: "총할인", collector: "sum", formatter: "money", align: "right"},
                 {key: "실매출", collector: "sum", formatter: "money", align: "right"},
-                {key: "가액", collector: "sum", formatter: "money", align: "right"},
-                {key: "부가세", collector: "sum", formatter: "money", align: "right"},
-                {key: "영수건수", collector: "sum", formatter: "money", align: "right"},
-                {key: "영수단가", collector: "sum", formatter: "money", align: "right"},
-                {key: "d7"},
-                {key: "e1", collector: "sum", formatter: "money", align: "right"},
-                {key: "e2", collector: "sum", formatter: "money", align: "right"},
-                {key: "e3", collector: "sum", formatter: "money", align: "right"},
-                {key: "e4", collector: "sum", formatter: "money", align: "right"},
-                {key: "e5", collector: "sum", formatter: "money", align: "right"},
-                {key: "e6", collector: "sum", formatter: "money", align: "right"},
-                {key: "f1", collector: "sum", formatter: "money", align: "right"},
-                {key: "f2", collector: "sum", formatter: "money", align: "right"},
-                {key: "f3", collector: "sum", formatter: "money", align: "right"},
-                {key: "g", collector: "sum", formatter: "money", align: "right"},
-                {key: "h", collector: "sum", formatter: "money", align: "right"},
-                {key: "l5", collector: "sum", formatter: "money", align: "right"},
+                {key: "판매건수", collector: "sum", formatter: "money", align: "right"},
+            ]
 
 
-            ]]
+    firstGrid = new ax5.ui.grid({
+        target: $('[data-ax5grid="first-grid"]'),
+        columns: data ,
+        footSum: [ sum         ]
     });
+}
+
+$('#excel').click(function () {
+    firstGrid.exportExcel("grid-to-excel.xls")
+})
+
+$('#load').click(function () {
+     gridList = [];
+    _data = [];  data0 = [];
+
+    var dates = $('input[id=dates]').val();
+    var datee = $('input[id=datee]').val();
 
 
+    $.getJSON("{{ url_for('_earnings_day' ) }}/"+"{{ store_id }}&"+dates+"&"+datee, function (json) {
+        _data = json;
 
-    $('#load').click(function () {
+    }).done(function () {
 
-        gridList = [];
-        data0 = [];
-        var dates = $('input[id=dates]').val();
-        var datee = $('input[id=datee]').val();
-
+        
 
 
+        load()
 
-        $.getJSON("{{ url_for('_earnings_day' ) }}/"+"{{ store_id }}&"+dates+"&"+datee, function (json) {
-            _data = json;
+        for( i in _data['상품분류'] ) {
 
-        }).done(function () {
+            data.push( {label: _data['상품분류'][i] , columns : [
+                { key : '실매출'+i , label : "실매출" ,width: 80 , formatter: "money",align: "right"} ,
+                { key : '수량'+i,  label : "수량" ,width: 60 ,align: "right"} ]}
+                )
+            sum.push( { key : '실매출'+i , collector: "sum", formatter: "money", align: "center"},
+                      { key : '수량'+i, collector: "sum", align: "center"} )
+        }
 
-            for( i in _data['일자별'] ) {
-                data0.push(_data['일자별'][i]);
-            }
+         firstGrid = new ax5.ui.grid({
+            target: $('[data-ax5grid="first-grid"]'),
+            columns: data ,
+            footSum: [ sum
+                ]
+         });
 
-            for ( i in data0 ) {
-                if ( dates <= data0[i]['영업일자'] && datee >= data0[i]['영업일자'] ) {
-                    d = new Date(data0[i]['영업일자']).getDay()
 
-                    for ( j in week ) {
-                            if ( j == d ) {
+        for( i in _data['일자별'] ) {
+            data0.push(_data['일자별'][i]);
+        }
+        for( i in data0) {
+            d = new Date(data0[i]['영업일자']).getDay()
+            for ( j in week ) {
+                if ( j == d ) {
+                    for (k in data0[i]['분류별']) {
+                        if ( gridList[j] == undefined ) {
 
-                                n = parseInt(data0[i]['총거래액']) / parseInt(data0[i]['영수건수'])
-                                if ( gridList[j] == undefined ) { gridList[j] = {'요일' : week[j] , '총매출' : 0, '총할인' : 0 ,'실매출' : 0, '영수건수' : 0 , '영수단가' : 0 , '가액' :0 , '부가세' : 0,'봉사료' : 0,'에누리' : 0,'결제합계' : 0,'단순현금' : 0,'현금영수' : 0,'신용카드' : 0,'외상' : 0,'상품권' : 0,'식권' : 0,'회원포인트' : 0,'제휴카드' : 0,'사원카드' : 0,'모바일쿠폰' : 0,'캐시비' : 0,'선불카드' : 0,'일반' : 0,'포장' : 0,'배달' : 0 } };
-                                gridList[j]['총매출'] += data0[i]['총거래액'];
-                                gridList[j]['총할인'] += data0[i]['총할인액'];
-                                gridList[j]['실매출'] += data0[i]['실거래액'];
-                                gridList[j]['영수건수'] += data0[i]['영수건수'];
-                                gridList[j]['영수단가'] += Math.round(n);
-                                gridList[j]['가액'] += data0[i]['판매이익'];
-                                gridList[j]['부가세'] += data0[i]['세금'];
-                                gridList[j]['봉사료'] += 0
-                                gridList[j]['에누리'] += 0
-                                gridList[j]['결제합계'] += data0[i]['실거래액'];
-                                gridList[j]['단순현금'] += data0[i]['수단별']['현금']['실거래액'];
-                                gridList[j]['현금영수'] += 0
-                                gridList[j]['신용카드'] += data0[i]['수단별']['카드']['실거래액'] + data0[i]['수단별']['카드(임의)']['실거래액'];
-                                gridList[j]['외상'] += 0
-                                gridList[j]['상품권'] += 0
-                                gridList[j]['식권'] += 0
-                                gridList[j]['회원포인트'] += 0
-                                gridList[j]['제휴카드'] += 0
-                                gridList[j]['사원카드'] += 0
-                                gridList[j]['모바일쿠폰'] += 0
-                                gridList[j]['캐시비'] += 0
-                                gridList[j]['선불카드'] += 0
-                                gridList[j]['일반'] += data0[i]['실거래액'];
-                                gridList[j]['포장'] += 0
-                                gridList[j]['배달'] += 0
+                            gridList[j] = { '요일' : week[j]  };
+                            gridList[j]['실매출'] = 0
+                            gridList[j]['판매건수'] = 0
 
-                            }
+                        }
+                        gridList[j]['실매출'+k] = 0
+                        gridList[j]['수량'+k] = 0
+
+                        gridList[j]['실매출'] +=  data0[i]['분류별'][k]['실거래액'];
+                        gridList[j]['판매건수'] +=  data0[i]['분류별'][k]['영수건수'];
                     }
+
+
+                    for (k in data0[i]['분류별']) {
+                        gridList[j]['실매출'+k] += data0[i]['분류별'][k]['실거래액'];
+                        gridList[j]['수량'+k] += data0[i]['분류별'][k]['영수건수'];
+
+                    }
+
                 }
             }
+        }
+
 
         firstGrid.setData(gridList);
 
-        data = {};
-        data1 = [];
-
-        data = {
-            datasets: [{
-                label: '요일별 종합현황',
-                data: data1,
-                backgroundColor: [
-                'rgba(255, 99, 132)',
-                'rgba(54, 162, 235)',
-                'rgba(255, 206, 86)',
-                'rgba(75, 192, 192)',
-                'rgba(153, 102, 255)',
-                'rgba(255, 159, 64)',
-                'rgba(255, 206, 86)',
-                'rgba(54, 162, 235)',
-                  ],
-            }],
-
-            // These labels appear in the legend and in the tooltips when hovering different arcs
-            labels: []
-        };
-
-        for ( i in gridList ) {
-            data1.push( gridList[i]['총매출'] )
-            data['labels'].push( week[i] )
-        }
-
-        $("canvas").remove();
-        $("div.chart").append('<canvas id="myChart" height="20vh" width="100vw"></canvas>');
-
-        var ctx = document.getElementById("myChart");
-        var myChart = new Chart(ctx, {
-                        type: 'bar',
-                        data: data,
-                        options: {
-                            responsive: true
-                        }
-                    });
-        console.log(data)
-    });
-});
-
+        });
 
 
 
         <!--for ( i=1 ; i<10 ; i++){-->
-            <!--$('input[id=dates]', parent.frames["week"+i].document).val(dates)-->
-            <!--$('input[id=datee]', parent.frames["week"+i].document).val(datee)-->
+            <!--$('input[id=dates]', parent.frames["day"+i].document).val(dates)-->
+            <!--$('input[id=datee]', parent.frames["day"+i].document).val(datee)-->
         <!--}-->
 
 
 
-}
-
-
+})
 
 </script>
-
-

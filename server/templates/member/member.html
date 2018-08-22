@@ -24,45 +24,31 @@
 <title></title>
 </head>
 <body>
-<table width="100%" background="/image/title_bg.gif" border="0" cellspacing="0" cellpadding="0"><tbody><tr height="30"><td width="10"></td><td>  <table border="0" cellspacing="0" cellpadding="0">  <tbody><tr>  <td><img src="/image/title_icon.gif"></td>  <td width="10"></td>  <td>    <table border="0" cellspacing="0" cellpadding="0"><tbody><tr><td height="3"></td></tr><tr>    <td><font color="#ffffff" style="font-size: 14px;"><b>회원등급설정</b></font></td>    </tr></tbody></table>  </td>  <td width="40"></td>  <td><span id="span_mymenu"><img style="cursor: hand;" onclick="top.HistoryFrm.fnEditMyMenu('Y','000052')" src="/image/icon01/mymenu_plus.gif"></span></td>  <td width="10"></td>  <td><img style="cursor: hand;" onclick="parent.set_menu_item();" src="/image/icon01/btn_column.gif"></td>  </tr>  </tbody></table></td><td align="right"><font color="#ffffff">회원관리 &gt; 회원정보 &gt; 회원등급설정</font></td><td width="10"></td></tr></tbody></table>
-
-<form name="form1">
-<!-- IBFrame 을 위한 변수 선언 (필수)-->
-<input name="S_CONTROLLER" type="hidden" value="master.cust.cls010">
-<input name="S_METHOD" type="hidden" value="search">
-<input name="S_SAVENAME" type="hidden" value="sStatus|sCheckBox|CST_OGN_CD|CST_CLS_CD|CST_SEQ|CST_CLS_NM|BASE_CLS_YN|DC_RATE|ACC_UNIT_FG|ACC_BASE_CSH|ACC_BASE_CRD|NEW_ENTRY_POINT|MIN_USE_POINT|">
-<!-- IBFrame 을 위한 변수 선언 (선택)-->
-<input name="S_FORWARD" type="hidden" value="">
-<input name="S_TREECOL" type="hidden" value="">
-
-<input name="SHEETSEQ" type="hidden" value="1">
-<input name="p_CST_CLS_CD" type="hidden" value="">
-
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tbody><tr height="6"><td></td></tr>
 <tr>
     <td>
-    <table width="100%" height="28" background="/image/sub_title_bg.gif" border="0" cellspacing="0" cellpadding="0">
+    <table width="100%" height="28"  border="0" cellspacing="0" cellpadding="0">
 <tbody><tr>
 <td width="8"></td>
-<td align="left"><img align="absmiddle" src="/image/list_icon.gif"> <font color="#ffffff"><b>등급입력</b></font></td>
+<td align="left"> <font color="#ffffff"><b>등급입력</b></font></td>
 <td align="right"><span id="layerTab1_button"><table border="0" cellspacing="0" cellpadding="0"><tbody><tr><td><table style="cursor: pointer;" onclick="iframe2.location.href='cls011.jsp';" border="0" cellspacing="0" cellpadding="0">
 <tbody><tr valign="middle">
-<td><img id="btn_l_bg" src="/image/btn_red_l_bg.gif"></td>
-<td background="/image/btn_red_c_bg.gif"><img width="4" height="13" src="/image/blank.gif"><font color="#ffffff">신규등록</font><img width="4" height="13" src="/image/blank.gif"></td>
-<td><img id="btn_r_bg" src="/image/btn_red_r_bg.gif"></td>
+<td></td>
+<td ><font color="#ffffff">신규등록</font></td>
+<td></td>
 </tr>
 </tbody></table></td><td width="10"></td><td><table style="cursor: pointer;" onclick="iframe2.doSave();" border="0" cellspacing="0" cellpadding="0">
 <tbody><tr valign="middle">
-<td><img id="btn_l_bg" src="/image/btn_red_l_bg.gif"></td>
-<td background="/image/btn_red_c_bg.gif"><img width="4" height="13" src="/image/blank.gif"><font color="#ffffff">저장</font><img width="4" height="13" src="/image/blank.gif"></td>
-<td><img id="btn_r_bg" src="/image/btn_red_r_bg.gif"></td>
+<td></td>
+<td ><font color="#ffffff">저장</font></td>
+<td></td>
 </tr>
 </tbody></table></td><td width="10"></td><td><table style="cursor: pointer;" onclick="doAction('delete','1');" border="0" cellspacing="0" cellpadding="0">
 <tbody><tr valign="middle">
-<td><img id="btn_l_bg" src="/image/btn_red_l_bg.gif"></td>
-<td background="/image/btn_red_c_bg.gif"><img width="4" height="13" src="/image/blank.gif"><font color="#ffffff">삭제</font><img width="4" height="13" src="/image/blank.gif"></td>
-<td><img id="btn_r_bg" src="/image/btn_red_r_bg.gif"></td>
+<td></td>
+<td ><font color="#ffffff">삭제</font></td>
+<td></td>
 </tr>
 </tbody></table></td></tr></tbody></table></span></td>
 <td width="8"></td>
@@ -79,42 +65,12 @@
               <td>
 
 
-<body><form name="formAJAX" action="/common/jsp/select_qry.jsp">
-<input name="select_source" id="select_source" type="hidden" value="/master/cust/cls011.jsp">
-<input name="select_idx" id="select_idx" type="hidden" size="100">
-<input name="select_objidx" id="select_objidx" type="hidden" size="100">
-<input name="select_name" id="select_name" type="hidden" size="100">
-<input name="select_value" id="select_value" type="hidden" size="100">
-<input name="select_option" id="select_option" type="hidden" size="100">
-<input name="select_query" id="select_query" type="hidden" size="100">
-<input name="select_title" id="select_title" type="hidden" size="100">
-<input name="select_change" id="select_change" type="hidden" size="100">
-<input name="select_etc" id="select_etc" type="hidden" size="100">
-</form>
-<script src="/common/js/calendar1.js"></script>
 <div id="cal_div1" style="overflow: hidden; display: none; position: absolute; z-index: 99;">
 <table border="0" cellspacing="0" cellpadding="0">
 <tbody><tr><td><iframe name="cal_frm" width="162" height="199" id="cal_frm" src="/common/jsp/calendar.html" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></td></tr>
 <tr><td><iframe name="cal_close_frm" width="162" height="28" id="cal_close_frm" src="/common/jsp/calendar_close.jsp?target=1" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></td></tr>
 </tbody></table>
 </div>
-
-
-<form name="form1" method="post">
-<input name="PROC_FG" type="hidden" value="I">
-<input name="CST_OGN_CD" type="hidden" value="S57992">
-<input name="CST_SEQ" type="hidden" value="0">
-<input name="ACC_BASE_CSH" type="hidden">
-<input name="ACC_BASE_CSB" type="hidden">
-<input name="ACC_BASE_CRD" type="hidden">
-<input name="ACC_BASE_GFT" type="hidden">
-<input name="ACC_BASE_FOD" type="hidden">
-<input name="ACC_BASE_JCD" type="hidden">
-<input name="ACC_BASE_WES" type="hidden">
-<input name="ACC_BASE_CST" type="hidden">
-<input name="ACC_BASE_RFC" type="hidden">
-<input name="ACC_BASE_MCP" type="hidden">
-<input name="ACC_BASE_PCD" type="hidden">
 
 
 <table width="100%" bgcolor="#aaaaaa" border="0" cellspacing="1" cellpadding="4">

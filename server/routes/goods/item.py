@@ -46,7 +46,13 @@ def _goods_item_(_id):
                 only = c.newitem_web(orm.상품_품목, c.session)
                 for k, v in c.data_POST().items():
                     if hasattr(only, k) and k != 'i':
+
                         if getattr(only, k) != v:
+                            if k == '프린터j':
+                                _lst = []
+                                for ch in v.split(','):
+                                    _lst.append(int(ch.strip()))
+                                v = _lst
                             setattr(only, k, v)
 
                 ss.add(only)
@@ -61,6 +67,12 @@ def _goods_item_(_id):
                         for k, v in c.data_POST().items():
                             if hasattr(x, k) and k != 'i':
                                 if getattr(x, k) != v:
+                                    if k == '프린터j':
+                                        _lst=[]
+                                        if v != '':
+                                            for ch in v.split(','):
+                                                _lst.append(int(ch.strip()))
+                                        v=_lst
                                     print(k, 'is changed')
                                     setattr(x, k, v)
                         x.issync = None

@@ -197,12 +197,13 @@ function today() {
   return getDateStr(d)
 }
 
+var week = new Array('일', '월', '화', '수', '목', '금', '토');
 var dates = lastWeek()
 var datee = today()
 
 var gridList = [];
 var gridList1 = [];
-var data = {};
+var data = {};var data0 = [];
 var data1 = [];
 
 $.getJSON("{{ url_for('_earnings_day' ) }}/"+"{{ store_id }}&"+dates+"&"+datee, function (json) {
@@ -228,14 +229,41 @@ function fnLoadChart(n) {
 
 			}).done(function () {
 
-                loaddata();
+                for( i in _data['일자별'] ) {
+                    data0.push(_data['일자별'][i]);
+                }
+
+                for ( var n=0 ; n < 8 ; n++ ) {
+                      var d = new Date()
+                      var dayOfMonth = d.getDate()
+                      d.setDate(dayOfMonth - n)
+                      if( gridList[n] == undefined ) gridList[n] = {}
+                      gridList[n]['일자'] = getDateStr(d)
+                      gridList[n]['요일'] = week[new Date(getDateStr(d)).getDay()]
+                      gridList[n]['총매출'] = 0
+                }
+
+
+
+
+
+                for( i in data0) {
+                    for( j in gridList ) {
+                        if (data0[i]['영업일자'] == gridList[j]['일자']) {
+
+                            gridList[j]['총매출'] = data0[i]['총거래액'];
+                        }
+                    }
+                }
+
+
 
                 firstGrid = new ax5.ui.grid({
                     target: $('[data-ax5grid="first-grid"]'),
                     columns: [
                         {key: "일자", label: "일자", width: 150, align: "center" },
                         {key: "요일", label: "요일", width: 50, align: "center" },
-                        {key: "총매출", label: "매출액" ,width: 150 , formatter: "money",align: "right"},
+                        {key: "총매출", label: "매출액" ,width: 120 , formatter: "money",align: "right"},
                     ]
                 });
 
@@ -266,6 +294,9 @@ function fnLoadChart(n) {
                     data1.push(gridList[i]['총매출'])
                     data['labels'].push(gridList[i]['일자'])
                 }
+                 data1.reverse();
+                 data['labels'].reverse()
+
 
                 $("canvas").remove();
                 $("div.chart").append('<canvas id="myChart" height="30vh" width="70vw"></canvas>');

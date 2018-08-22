@@ -72,12 +72,13 @@ free_for_all = [
 def before_request():
     c.session['current_menu'] = c.request.path.replace('/', '_')
     print('c.current_menu is updated: ', c.session['current_menu'])
-
     FREE_FOR_ALL = []
     for x in free_for_all:
         FREE_FOR_ALL.append(c.url_for(x))
 
     if 'logged_in' in c.session and c.session['logged_in'] is True:
+        pass
+    elif '_storelogin_' in c.session['current_menu']:
         pass
     elif '_static' in c.session['current_menu']:
         pass
@@ -118,6 +119,27 @@ def _autosession():
             account = ss.query(orm.account) \
                 .filter_by(아이디=id) \
                 .first()
+            if account is None:
+                rtn = 'FAILED'
+            elif account is None:
+                rtn = 'FAILED'
+            else:
+                c.account_session(orm, account, c.session)
+                return c.redirect(c.url_for('_dashboard'))
+            return rtn
+
+
+@app.route('/storelogin/<int:sid>', methods=['GET'])
+def _storelogin_(sid):
+    if c.is_GET():
+        with orm.session_scope() as ss:  # type:c.typeof_Session
+
+            rtn = 'SUCCESS'
+
+            account = ss.query(orm.account) \
+                .filter_by(s=str(sid)) \
+                .first()
+
             if account is None:
                 rtn = 'FAILED'
             elif account is None:

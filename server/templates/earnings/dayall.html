@@ -238,7 +238,7 @@ function load() {
         $.getJSON("{{ url_for('_earnings_day' ) }}/"+"{{ store_id }}&"+dates+"&"+datee, function (json) {
             _data = json;
 
-
+        console.log(data0)
 
         }).done(function () {
 
@@ -253,6 +253,7 @@ function load() {
                 gridList1[i]['총매출'] = data0[i]['총거래액'];
                 gridList1[i]['할인'] = data0[i]['총할인액'];
                 gridList1[i]['실매출'] = data0[i]['실거래액'];
+                gridList1[i]['취소금액'] = data0[i]['구분']['반품']['실거래액'];
                 gridList1[i]['영업일자'] = data0[i]['영업일자'];
 
                 for (j in data0[i]['수단별']) {

@@ -92,60 +92,77 @@ var  gridList1 = [];var  gridList2 = [];
         for( i in _data['일자별'] ) {
             data0.push(_data['일자별'][i]);
         }
-
+        console.log(data0)
         var n=0; var avr=0;
 
         for ( i in data0) {
-            avr = parseInt(data0[i]['총거래액']) / parseInt(Object.keys(data0[i]['영수증별']).length)
 
-            gridList1[i] = {};
-            gridList1[i]['구분'] = '매출'
-            gridList1[i]['총매출액'] = data0[i]['총거래액'];
-            gridList1[i]['총할인액'] = data0[i]['총할인액'];
-            gridList1[i]['실매출액'] = data0[i]['실거래액'];
-            gridList1[i]['가액'] = data0[i]['판매이익'];
-            gridList1[i]['부가세'] = data0[i]['세금'];
-            gridList1[i]['봉사료'] = '0'
-            gridList1[i]['에누리'] = '0'
-            gridList1[i]['거스름돈'] = '0'
-            gridList1[i]['영수건수'] = Object.keys(data0[i]['영수증별']).length;
-            gridList1[i]['영수단가'] = Math.round(avr);
-            gridList1[i]['결제합계'] = data0[i]['실거래액'];
-            gridList1[i]['단순현금'] = data0[i]['수단별']['현금']['실거래액'];
-            gridList1[i]['현금영수'] = '0'
-            gridList1[i]['신용카드'] = data0[i]['수단별']['카드(임의)']['실거래액']+data0[i]['수단별']['카드']['실거래액'];
-            gridList1[i]['외상'] = '0'
-            gridList1[i]['상품권'] = '0'
-            gridList1[i]['식권'] = '0'
-            gridList1[i]['회원포인트'] = data0[i]['수단별']['포인트']['실거래액'];
-            gridList1[i]['제휴카드'] = '0'
-            gridList1[i]['사원카드'] = '0'
-            gridList1[i]['모바일쿠폰'] = '0'
-            gridList1[i]['캐시비'] = '0'
-            gridList1[i]['선불카드'] = '0'
-            gridList1[i]['일반'] = data0[i]['총할인액'];
-            gridList1[i]['서비스'] = '0'
-            gridList1[i]['제휴'] = '0'
-            gridList1[i]['쿠폰'] = '0'
-            gridList1[i]['회원'] = '0'
-            gridList1[i]['식권'] = '0'
-            gridList1[i]['포장'] = '0'
-            gridList1[i]['YAP'] = '0'
-            gridList1[i]['객수합계'] = '0'
-            gridList1[i]['남'] = '0'
-            gridList1[i]['여'] = '0'
-            gridList1[i]['e5'] = '0'
-            gridList1[i]['e6'] = '0'
-            gridList1[i]['객단가'] = '0'
-            gridList1[i]['테이블수'] = '0'
-            gridList1[i]['단가'] = '0'
-            gridList1[i]['회전율'] = '0'
-            gridList1[i]['사후환급액'] = '0'
-            gridList1[i]['즉시환급액'] = '0'
-            gridList1[i]['환급수수료'] = '0'
+            for ( j in data0[i]['구분'] ) {
+                avr = 0;
+                if (data0[i]['총거래액'] != '0') avr = parseInt(data0[i]['구분'][j]['총거래액']) / parseInt(data0[i]['구분'][j]['판매건수'])
 
-            gridList1[i]['영업일자'] = data0[i]['영업일자'];
+                gridList1[n] = {};
+                gridList1[n]['구분'] = j
+                gridList1[n]['총매출액'] = data0[i]['구분'][j]['총거래액'];
+                gridList1[n]['총할인액'] = data0[i]['구분'][j]['총할인액'];
+                gridList1[n]['실매출액'] = data0[i]['구분'][j]['실거래액'];
+                gridList1[n]['가액'] = data0[i]['구분'][j]['판매이익'];
+                gridList1[n]['부가세'] = data0[i]['구분'][j]['세금'];
+                gridList1[n]['봉사료'] = '0'
+                gridList1[n]['에누리'] = '0'
+                gridList1[n]['거스름돈'] = '0'
+                gridList1[n]['영수건수'] = data0[i]['구분'][j]['판매건수']
+                gridList1[n]['영수단가'] = Math.round(avr);
+                gridList1[n]['결제합계'] = data0[i]['구분'][j]['실거래액'];
+                if ( j == '판매') {
+                    gridList1[n]['단순현금'] = data0[i]['수단별']['현금']['실거래액'];
+                    gridList1[n]['현금영수'] = '0'
+                    gridList1[n]['신용카드'] = data0[i]['수단별']['카드(임의)']['실거래액']+data0[i]['수단별']['카드']['실거래액'];
+                    gridList1[n]['외상'] = '0'
+                    gridList1[n]['상품권'] = '0'
+                    gridList1[n]['식권'] = '0'
+                    gridList1[n]['회원포인트'] = data0[i]['수단별']['포인트']['실거래액'];
+                 }else {
+                    gridList1[n]['단순현금'] = data0[i]['수단별반품']['현금']['실거래액'];
+                    gridList1[n]['현금영수'] = '0'
+                    gridList1[n]['신용카드'] = data0[i]['수단별반품']['카드(임의)']['실거래액']+data0[i]['수단별반품']['카드']['실거래액'];
+                    gridList1[n]['외상'] = '0'
+                    gridList1[n]['상품권'] = '0'
+                    gridList1[n]['식권'] = '0'
+                    gridList1[n]['회원포인트'] = data0[i]['수단별반품']['포인트']['실거래액'];
+                }
+                gridList1[n]['제휴카드'] = '0'
+                gridList1[n]['사원카드'] = '0'
+                gridList1[n]['모바일쿠폰'] = '0'
+                gridList1[n]['캐시비'] = '0'
+                gridList1[n]['선불카드'] = '0'
+                gridList1[n]['일반'] = data0[i]['구분'][j]['총할인액'];
+                gridList1[n]['서비스'] = '0'
+                gridList1[n]['제휴'] = '0'
+                gridList1[n]['쿠폰'] = '0'
+                gridList1[n]['회원'] = '0'
+                gridList1[n]['식권'] = '0'
+                gridList1[n]['포장'] = '0'
+                gridList1[n]['YAP'] = '0'
+                gridList1[n]['객수합계'] = '0'
+                gridList1[n]['남'] = '0'
+                gridList1[n]['여'] = '0'
+                gridList1[n]['e5'] = '0'
+                gridList1[n]['e6'] = '0'
+                gridList1[n]['객단가'] = '0'
+                gridList1[n]['테이블수'] = '0'
+                gridList1[n]['단가'] = '0'
+                gridList1[n]['회전율'] = '0'
+                gridList1[n]['사후환급액'] = '0'
+                gridList1[n]['즉시환급액'] = '0'
+                gridList1[n]['환급수수료'] = '0'
 
+                gridList1[n]['영업일자'] = data0[i]['영업일자'];
+
+                n++
+            }
+            n=0;
+            var sale = { 'A' : '판매', 'B' : '판매' , 'C' :'반품' }
             for( j in data0[i]['영수증별'] ) {
 
 
@@ -156,7 +173,7 @@ var  gridList1 = [];var  gridList2 = [];
 
                 gridList2[n]['영수증번호'] = j
                 gridList2[n]['결제시각'] = data0[i]['영수증별'][j]['결제일시']
-                gridList2[n]['구분'] = '매출'
+                gridList2[n]['구분'] = sale[data0[i]['영수증별'][j]['구분']]
                 gridList2[n]['총매출액'] = data0[i]['영수증별'][j]['총거래액']
                 gridList2[n]['총할인액'] = data0[i]['영수증별'][j]['총할인액']
                 gridList2[n]['실매출액'] = data0[i]['영수증별'][j]['실거래액']
@@ -234,7 +251,7 @@ var  gridList1 = [];var  gridList2 = [];
                 footSum: [ foot2 ]
         });
 
-
+        console.log(gridList1)
 
         Grid1.setData(gridList1);
         Grid2.setData(gridList2);
@@ -433,7 +450,15 @@ function reset() {
                 {key: "에누리", collector: "sum", formatter: "money", align: "right"},
                 {key: "거스름돈", collector: "sum", formatter: "money", align: "right"},
                 {key: "영수건수", collector: "sum", formatter: "money", align: "right"},
-                {key: "영수단가", collector: "sum", formatter: "money", align: "right"},
+                {key: "영수단가", collector: function () {
+                            var value = 0; var value1 = 0; var value2 = 0;
+                            this.list.forEach(function (n) {
+                                if (!n.__isGrouping) value1 += n.실매출액;
+                                if (!n.__isGrouping) value2 += n.영수건수;
+                                if (!n.__isGrouping) value = value1 / value2;
+                            });
+                            return ax5.util.number(value, {"money": 1});
+                        }, align: "right"},
                 {key: "결제합계", collector: "sum", formatter: "money", align: "right"},
                 {key: "단순현금", collector: "sum", formatter: "money", align: "right"},
                 {key: "현금영수", collector: "sum", formatter: "money", align: "right"},
@@ -532,18 +557,20 @@ function remove(r,d,f) {
 
     for( i in d0 ) {
         for ( j in d0[i] ) {
-            if (typeof d1[j] == "undefined") {  d1[j] = 0 }
+            if (typeof d1[j] == "undefined" ) {  d1[j] = 0 }
             d1[j] = parseInt(d1[j]) + parseInt(d0[i][j])
         }
 
     }
     for ( i in d1 ) {
-        if ( d1[i] == 0 ) {
-            a.push(i)
+        if ( d1[i] == 0  ) {
+            for ( j in d0 ) {
+                if ( d0[j][i] == 0 ) a.push(i)
+            }
+
         }
 
     }
-
     for ( i in a) {
         for ( j in d ) {
             if ( a[i] == d[j]['key'] ) {

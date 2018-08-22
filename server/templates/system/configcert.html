@@ -155,7 +155,6 @@ function load() {
 
 
 function checkall(namex){
-    console.log(namex)
     if ( $('input[name='+namex+']').is(":checked") == true ) {
        for ( i =0; i< gridList2.length; i ++ ) {
             secondGrid.setValue(i, namex ,"y")

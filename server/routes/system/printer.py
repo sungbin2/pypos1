@@ -26,6 +26,7 @@ form_types = [
 @app.route('/system/printer', methods=['GET', 'POST'])
 def _system_printer():
     store_id = c.session['store']
+    print(store_id)
     only = c.get_settings(orm, store_id)
     available_networks = []
     networks = only.j['네트워크']
