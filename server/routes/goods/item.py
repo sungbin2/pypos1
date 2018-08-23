@@ -50,8 +50,9 @@ def _goods_item_(_id):
                         if getattr(only, k) != v:
                             if k == '프린터j':
                                 _lst = []
-                                for ch in v.split(','):
-                                    _lst.append(int(ch.strip()))
+                                if v != '':
+                                    for ch in v.split(','):
+                                        _lst.append(int(ch.strip()))
                                 v = _lst
                             setattr(only, k, v)
 

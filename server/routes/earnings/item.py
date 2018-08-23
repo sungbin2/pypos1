@@ -2,8 +2,8 @@ from server.main_ import app, orm, c
 
 
 
-@app.route('/earnings/week', methods=['GET', ])
-def _earnings_week():
+@app.route('/earnings/item', methods=['GET', ])
+def _earnings_item():
     store_id = c.session['store']
     if c.is_GET():
 
@@ -12,8 +12,8 @@ def _earnings_week():
         return c.display(store_id=store_id)
 
 
-@app.route('/earnings/week1', methods=['GET', ])
-def _earnings_week1():
+@app.route('/earnings/item1', methods=['GET', ])
+def _earnings_item1():
     store_id = c.session['store']
     if c.is_GET():
 
@@ -21,18 +21,8 @@ def _earnings_week1():
     else:
         return c.display(store_id=store_id)
 
-@app.route('/earnings/week2', methods=['GET', ])
-def _earnings_week2():
-    store_id = c.session['store']
-    if c.is_GET():
-
-        return c.display(store_id=store_id)
-    else:
-        return c.display(store_id=store_id)
-
-
-@app.route('/earnings/week3', methods=['GET', ])
-def _earnings_week3():
+@app.route('/earnings/item2', methods=['GET', ])
+def _earnings_item2():
     store_id = c.session['store']
     if c.is_GET():
 
@@ -41,8 +31,8 @@ def _earnings_week3():
         return c.display(store_id=store_id)
 
 
-@app.route('/earnings/week4', methods=['GET', ])
-def _earnings_week4():
+@app.route('/earnings/item3', methods=['GET', ])
+def _earnings_item3():
     store_id = c.session['store']
     if c.is_GET():
 
@@ -51,8 +41,8 @@ def _earnings_week4():
         return c.display(store_id=store_id)
 
 
-@app.route('/earnings/week5', methods=['GET', ])
-def _earnings_week5():
+@app.route('/earnings/item4', methods=['GET', ])
+def _earnings_item4():
     store_id = c.session['store']
     if c.is_GET():
 
@@ -61,8 +51,8 @@ def _earnings_week5():
         return c.display(store_id=store_id)
 
 
-@app.route('/earnings/week6', methods=['GET', ])
-def _earnings_week6():
+@app.route('/earnings/item5', methods=['GET', ])
+def _earnings_item5():
     store_id = c.session['store']
     if c.is_GET():
 
@@ -71,8 +61,8 @@ def _earnings_week6():
         return c.display(store_id=store_id)
 
 
-@app.route('/earnings/week7', methods=['GET', ])
-def _earnings_week7():
+@app.route('/earnings/item6', methods=['GET', ])
+def _earnings_item6():
     store_id = c.session['store']
     if c.is_GET():
 
@@ -81,8 +71,8 @@ def _earnings_week7():
         return c.display(store_id=store_id)
 
 
-@app.route('/earnings/week8', methods=['GET', ])
-def _earnings_week8():
+@app.route('/earnings/item7', methods=['GET', ])
+def _earnings_item7():
     store_id = c.session['store']
     if c.is_GET():
 
@@ -91,8 +81,18 @@ def _earnings_week8():
         return c.display(store_id=store_id)
 
 
-@app.route('/earnings/week9', methods=['GET', ])
-def _earnings_week9():
+@app.route('/earnings/item8', methods=['GET', ])
+def _earnings_item8():
+    store_id = c.session['store']
+    if c.is_GET():
+
+        return c.display(store_id=store_id)
+    else:
+        return c.display(store_id=store_id)
+
+
+@app.route('/earnings/item9', methods=['GET', ])
+def _earnings_item9():
     store_id = c.session['store']
     if c.is_GET():
 

@@ -55,6 +55,7 @@ import server.routes.earnings.week
 import server.routes.earnings.month
 import server.routes.earnings.daydate
 import server.routes.earnings.table
+import server.routes.earnings.item
 
 import server.routes.member.member
 import server.routes.member.memberdata

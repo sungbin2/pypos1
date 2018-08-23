@@ -1,39 +1,45 @@
-
+{% include 'ax5.html' %}
 <table class="box day" >
     <tr>
+        <th >
+         <div class="row" >
+            <div class="col-md-6">
+                <label style=" margin-top: 8; float:left;">조회일자</label>
+                <div class="input-group" data-ax5picker="basic" style="height:20px;width:300px; float:left;" >
+                    <input id='dates' type="text" class="form-control" placeholder="yyyy/mm/dd" >
+                    <span class="input-group-addon">~</span>
+                    <input id='datee'type="text" class="form-control" placeholder="yyyy/mm/dd">
+                    <span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
+                </div>
+                <button class="btn" id="load" style=" margin-top: 8">조회</button>&nbsp&nbsp<input type="checkbox" id="hide" >이력없는 항목표시
+                <div style="float:right;">
+                    <button class="btn" id="excel" style="margin-top: 8">엑셀</button>
+                </div>
+            </div>
+        </div>
+        </th>
+    </tr>
+    <tr>
         <td>
-
-            <table  style="border :1px solid white; width : 100%">
-            <table class="func" style="float:left;width: 100%;" >
-                <tr>
-                    <th>
-                     상품시간대별
-                    </th>
-                </tr>
-                <tr>
-                    <td>
-                        <div data-ax5grid="first-grid3" data-ax5grid-config="{
+                 <div data-ax5grid="first-grid3" data-ax5grid-config="{
                                     showLineNumber: true,
                                    header: { align: 'center' },
                                      page: { display: false  },
                                 }" style="height:500px;"></div>
-                    </td>
-
-                </tr>
-
-            </table>
-              </table>
         </td>
 
     </tr>
 </table>
 
 
-
+<script type="text/javascript" src="{{ url_for('static',filename='datepicker.js') }} "></script>
 <script type="text/javascript">
-
+  var _data = [];var data0 = [];var a = 0;
+    var  gridList = [];
+    var  gridList1 = [];
 var firstGrid3;
 
+load3()
 
  function load3() {
 
@@ -120,13 +126,13 @@ function loaddata3() {
             for (e =0 ; e < 24 ; e ++  ) {
                 var n3 = ("0" + e).slice(-2)
                 data3.push( {'label' : n3+'시' , columns:
-                                [ {key : 't수량'+n3, label: "수량" ,collector: "sum", formatter: "money", align: "center" },
-                                  {key : 't매출액'+n3, label: "매출액" ,collector: "sum", formatter: "money", align: "center" },
+                                [ {key : 't수량'+n3, label: "수량" ,collector: "sum", formatter: "money", align: "right" },
+                                  {key : 't매출액'+n3, label: "매출액" ,collector: "sum", formatter: "money", align: "right" },
                     ]}
                 );
 
-                footsum3.push( {key : 't수량'+n3 ,collector: "sum", formatter: "money", align: "center"} )
-                footsum3.push( {key : 't매출액'+n3 ,collector: "sum", formatter: "money", align: "center"})
+                footsum3.push( {key : 't수량'+n3 ,collector: "sum", formatter: "money", align: "right"} )
+                footsum3.push( {key : 't매출액'+n3 ,collector: "sum", formatter: "money", align: "right"})
 
             }
 
@@ -156,8 +162,6 @@ function loaddata3() {
                 footSum: [footsum3 ]
             });
 
-            console.log(time)
-            console.log(data0)
 
             firstGrid3.setData(gridList);
 
@@ -173,6 +177,10 @@ function loaddata3() {
 
 
 }
+
+$('#load').click(function () {
+    loaddata3()
+});
 
 
 $("#hide").click(function () {
